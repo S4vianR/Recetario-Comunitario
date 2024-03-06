@@ -1,0 +1,145 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Bienvenido a Recetas Unidas">
+  <div class="main">
+	  <!-- <header>
+		<h2>Recetas Unidas</h2>
+		<nav>
+		  <ul>
+			<li>
+			  <a href="#">Inicio</a>
+			</li>
+			<li>
+			  <a href="#">Inicio de sesión</a>
+			</li>
+		  </ul>
+		</nav>
+	  </header> -->
+	  <main>
+		<div class="container">
+			<section>
+				<h1>Bienvenido a Recetas Unidas</h1>
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea explicabo fuga minus quae, unde voluptates, maiores ex cumque totam cum eius maxime delectus recusandae odit ratione. Distinctio fugit ex maiores!
+				Expedita at laboriosam officia doloribus ipsum reprehenderit velit, iste saepe cupiditate adipisci rerum ut, officiis praesentium alias. Tenetur expedita in nam distinctio similique! Tempora debitis distinctio iste repellat veritatis praesentium!</p>
+			</section>
+			<section>
+				<form action="/feed" method="POST">
+					<div>
+						<label for="nombreUsuario">Nombre de usuario:</label>
+						<input type="text" name="nombreUsuario" id="nombreUsuario" />
+					</div>
+					<div>
+						<label for="passwdUsuario">Contraseña:</label>
+						<input type="password" name="passwdUsuario" id="passwdUsuario">
+					</div>
+					<div>
+						<input type="submit" value="Iniciar Sesion">
+					</div>
+				</form>
+			</section>
+		</div>
+	  </main>
+  </div>
+</Layout>
+
+<style>
+  :root {
+    /* 
+			Color palette 1
+			---------
+			1. #194320
+			2. #FF8822
+			3. #FFC2B4
+			4. #9DBEB9
+		*/
+    --main-green: #194320;
+    --main-salmon: #ff8822;
+    --secondary-salmon: #ffc2b4;
+    --secondary-green: #9dbeb9;
+	--off-white: #FAF9F6;
+	--nyanza: #ECFFDC;
+  }
+
+  main {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+  }
+
+  .container {
+	padding: 1rem;
+	border: 0.1px solid #000;
+	display: grid;
+	grid-template-columns: repeat(2,1fr);
+	gap: 5rem;
+	width: 85%;
+	height: 45%;
+	background-color: var(--nyanza);
+  }
+
+  .container section {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+  }
+
+  .container section:nth-child(1) {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: start;
+  }
+   
+  .container section > form {
+	padding: 1rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: end;
+	gap: 1rem;
+  }
+
+  .container section > form > div {
+
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+  }
+
+  .container section > form label {
+	font-size: 1.1rem;
+	font-weight: 600;
+  }
+
+  .container section > form input[type="text"], 
+  .container section > form input[type="password"{
+	padding: 0.5rem;
+	border: 1px solid #000;
+	border-radius: 5px;
+	width: 20rem
+  }
+  
+  .container section > form input[type="submit"] {
+	padding: 0.5rem;
+	border: 1px solid #000;
+	border-radius: 5px;
+	width: 10rem;
+	background-color: var(--main-salmon);
+	color: #fff;
+	font-size: 1.1rem;
+	font-weight: 600;
+  }
+
+  .container section > form input[type="submit"]:hover {
+	background-color: var(--secondary-salmon);
+	cursor: pointer;
+  }
+
+  .container section > form input[type="submit"] {
+</style>

@@ -1,0 +1,39 @@
+---
+import Layout from "../../layouts/Layout.astro"
+import { Image } from "astro:assets"
+---
+
+<Layout title="Home">
+    <header>
+       <section>
+           <Image src="/Logo.jpg" alt="Astro Logo" width={50} height={50} style={"border: 1px solid #cecece; border-radius: 0.5rem;"} />
+           <form action="#" method="post">
+                <input type="text" name="search" id="search" placeholder="Busca una receta" />
+                <button type="submit">Search</button>
+           </form>
+       </section>
+       <section>
+           <Image src={"/user-icon-2-icon-original.svg"} alt={"Logo icon"} width={50} height={50}>
+       </section>
+    </header>
+</Layout>
+
+<style>
+    header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        gap: 1rem;
+        border-bottom: 2px solid #cecece;
+    }
+
+    header section {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+    }
+</style>
