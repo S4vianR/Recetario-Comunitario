@@ -1,39 +1,63 @@
 ---
-import Layout from "../../layouts/Layout.astro"
-import { Image } from "astro:assets"
+import Layout from "../../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import Header from "../../components/Header.svelte";
 ---
 
 <Layout title="Home">
-    <header>
+  <!-- <header>
        <section>
-           <Image src="/Logo.jpg" alt="Astro Logo" width={50} height={50} style={"border: 1px solid #cecece; border-radius: 0.5rem;"} />
+           <Image src="/Logo.jpg" alt="Astro Logo" width={50} height={50} />
            <form action="#" method="post">
                 <input type="text" name="search" id="search" placeholder="Busca una receta" />
                 <button type="submit">Search</button>
            </form>
        </section>
        <section>
-           <Image src={"/user-icon-2-icon-original.svg"} alt={"Logo icon"} width={50} height={50}>
+           <Image src={"/user-icon-2-icon-original.svg"} alt={"Logo icon"} width={50} height={50} title={"Usuario"}>
        </section>
-    </header>
+    </header> -->
+  <Header client:only="svelte" />
+  <main>
+    <aside>Este es el aside</aside>
+    <section>Seccion principal</section>
+  </main>
 </Layout>
 
 <style>
-    header {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem;
-        gap: 1rem;
-        border-bottom: 2px solid #cecece;
-    }
+    :root {
+    /* 
+		Color palette 1
+		---------
+		1. #194320
+		2. #FF8822
+		3. #FFC2B4
+		4. #9DBEB9
+		5. #F8DE22
+		6. #FFE569
+	*/
+    --main-green: #194320;
+    --main-salmon: #ff8822;
+	--main-yellow: #F8DE22; 
+    --secondary-salmon: #ffc2b4;
+    --secondary-green: #9dbeb9;
+	--secondary-yellow: #FFE569;
+	--off-white: #FAF9F6;
+	--nyanza: #ECFFDC;
+  }
 
-    header section {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        gap: 1rem;
-    }
+  main {
+    height: 92svh;
+    display: grid;
+    grid-template-columns: 10% 90%;
+  }
+
+  main > aside,
+  main > section {
+    padding: 0.5rem;
+  }
+
+  main > aside {
+    border-right: 0.5px solid #9e9e9e;
+  }
 </style>

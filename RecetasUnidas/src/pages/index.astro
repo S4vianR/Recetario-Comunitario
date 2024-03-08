@@ -4,19 +4,6 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout title="Bienvenido a Recetas Unidas">
   <div class="main">
-	  <!-- <header>
-		<h2>Recetas Unidas</h2>
-		<nav>
-		  <ul>
-			<li>
-			  <a href="#">Inicio</a>
-			</li>
-			<li>
-			  <a href="#">Inicio de sesión</a>
-			</li>
-		  </ul>
-		</nav>
-	  </header> -->
 	  <main>
 		<div class="container">
 			<section>
@@ -35,6 +22,10 @@ import Layout from "../layouts/Layout.astro";
 						<input type="password" name="passwdUsuario" id="passwdUsuario">
 					</div>
 					<div>
+						<label for="verPasswd">Ver contraseña</label>
+						<input type="checkbox" name="verPasswd" id="verPasswd" onchange="">
+					</div>
+					<div>
 						<input type="submit" value="Iniciar Sesion">
 					</div>
 				</form>
@@ -44,20 +35,37 @@ import Layout from "../layouts/Layout.astro";
   </div>
 </Layout>
 
+<script is:inline type="module">
+	  const verPasswd = document.getElementById('verPasswd');
+  const passwdUsuario = document.getElementById('passwdUsuario');
+
+  verPasswd.addEventListener('change', () => {
+	if (verPasswd.checked) {
+	  passwdUsuario.type = 'text';
+	} else {
+	  passwdUsuario.type = 'password';
+	}
+  });
+</script>
+
 <style>
   :root {
     /* 
-			Color palette 1
-			---------
-			1. #194320
-			2. #FF8822
-			3. #FFC2B4
-			4. #9DBEB9
-		*/
+		Color palette 1
+		---------
+		1. #194320
+		2. #FF8822
+		3. #FFC2B4
+		4. #9DBEB9
+		5. #F8DE22
+		6. #FFE569
+	*/
     --main-green: #194320;
     --main-salmon: #ff8822;
+	--main-yellow: #F8DE22; 
     --secondary-salmon: #ffc2b4;
     --secondary-green: #9dbeb9;
+	--secondary-yellow: #FFE569;
 	--off-white: #FAF9F6;
 	--nyanza: #ECFFDC;
   }
@@ -78,6 +86,7 @@ import Layout from "../layouts/Layout.astro";
 	width: 85%;
 	height: 45%;
 	background-color: var(--nyanza);
+	border-radius: 2rem;
   }
 
   .container section {
@@ -118,11 +127,11 @@ import Layout from "../layouts/Layout.astro";
   }
 
   .container section > form input[type="text"], 
-  .container section > form input[type="password"{
+  .container section > form input[type="password"]{
 	padding: 0.5rem;
 	border: 1px solid #000;
 	border-radius: 5px;
-	width: 20rem
+	width: 20rem;
   }
   
   .container section > form input[type="submit"] {
@@ -130,14 +139,23 @@ import Layout from "../layouts/Layout.astro";
 	border: 1px solid #000;
 	border-radius: 5px;
 	width: 10rem;
-	background-color: var(--main-salmon);
-	color: #fff;
+	background-color: var(--main-yellow);
+	color: #1b1b1b;
 	font-size: 1.1rem;
 	font-weight: 600;
   }
 
+  .container section > form input[type="checkbox"] {
+	width: 1.1rem;
+	aspect-ratio: 1;
+  }
+  
+  .container section > form input[type="checkbox"]:hover {
+	cursor: pointer;
+  }
+
   .container section > form input[type="submit"]:hover {
-	background-color: var(--secondary-salmon);
+	background-color: var(--secondary-yellow);
 	cursor: pointer;
   }
 
