@@ -4,19 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48c22e38-e801-4f4d-a5e4-855dc3431d21" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../.idea/Recetas-Unidas.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/assets/food-stand-day.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/assets/logo-removebg.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/assets/logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/assets/recipe-book.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/assets/restaurant-night.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/assets/vegetable-recipe-book.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/favicon.png" afterDir="false" />
+    <list default="true" id="48c22e38-e801-4f4d-a5e4-855dc3431d21" name="Changes" comment="Created new project">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/+page.svelte" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +16,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;S4vianR&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/S4vianR/Recetas-Unidas.git&quot;,
+    &quot;accountId&quot;: &quot;34548c14-9aae-4d4c-9b66-fc35e2e6ca08&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -37,24 +39,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/reuben/Documentos/Code/Recetas-Unidas/RecetasUnidas/static",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "prettierjs.PrettierConfiguration.Package": "/home/reuben/Documentos/Code/Recetas-Unidas/RecetasUnidas/node_modules/prettier",
-    "settings.editor.selected.configurable": "settings.javascript.prettier",
-    "ts.external.directory.path": "/home/reuben/Documentos/Code/Recetas-Unidas/RecetasUnidas/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/reuben/Documentos/Code/Recetas-Unidas/RecetasUnidas/static&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/home/reuben/Documentos/Code/Recetas-Unidas/RecetasUnidas/node_modules/prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/home/reuben/Documentos/Code/Recetas-Unidas/RecetasUnidas/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/static" />
@@ -82,8 +84,18 @@
       <workItem from="1712676979294" duration="1878000" />
       <workItem from="1712679661982" duration="464000" />
       <workItem from="1712680138030" duration="854000" />
-      <workItem from="1712762372579" duration="4094000" />
+      <workItem from="1712762372579" duration="5568000" />
+      <workItem from="1712852053686" duration="380000" />
     </task>
+    <task id="LOCAL-00001" summary="Created new project">
+      <option name="closed" value="true" />
+      <created>1712766579095</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1712766579095</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -102,5 +114,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Created new project" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created new project" />
   </component>
 </project>
