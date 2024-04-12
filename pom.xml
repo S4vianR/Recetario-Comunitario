@@ -13,12 +13,19 @@
     </properties>
 
     <dependencies>
-        <!-- Aquí es donde agregarías tus dependencias -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>3.2.4</version>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <!-- Aquí es donde agregarías tus plugins -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
 </project>
