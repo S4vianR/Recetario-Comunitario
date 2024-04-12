@@ -140,6 +140,11 @@
 		align-self: flex-end;
 	}
 
+	.right_pane > form button[type='submit']:hover {
+		background-color: #de775a;
+		cursor: pointer;
+	}
+
 	.right_pane > form #mensaje_registro {
 		display: flex;
 		flex-direction: row;

@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48c22e38-e801-4f4d-a5e4-855dc3431d21" name="Changes" comment="Update" />
+    <list default="true" id="48c22e38-e801-4f4d-a5e4-855dc3431d21" name="Changes" comment="Moved pom.xml to the Backend folder">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/feed/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/feed/+page.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/registro/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/registro/+page.svelte" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -84,7 +88,7 @@
       <workItem from="1712762372579" duration="5568000" />
       <workItem from="1712852053686" duration="2205000" />
       <workItem from="1712854931262" duration="704000" />
-      <workItem from="1712937412460" duration="1501000" />
+      <workItem from="1712937412460" duration="3395000" />
     </task>
     <task id="LOCAL-00001" summary="Created new project">
       <option name="closed" value="true" />
@@ -118,7 +122,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712938734632</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Moved pom.xml to the Backend folder">
+      <option name="closed" value="true" />
+      <created>1712939329131</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1712939329131</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -139,6 +151,7 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Created new project" />
     <MESSAGE value="Update" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update" />
+    <MESSAGE value="Moved pom.xml to the Backend folder" />
+    <option name="LAST_COMMIT_MESSAGE" value="Moved pom.xml to the Backend folder" />
   </component>
 </project>
