@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48c22e38-e801-4f4d-a5e4-855dc3431d21" name="Changes" comment="Created new project">
+    <list default="true" id="48c22e38-e801-4f4d-a5e4-855dc3431d21" name="Changes" comment="Update">
+      <change afterPath="$PROJECT_DIR$/src/routes/feed/+page.svelte" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/registro/+page.svelte" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/+page.svelte" afterDir="false" />
     </list>
@@ -85,7 +87,9 @@
       <workItem from="1712679661982" duration="464000" />
       <workItem from="1712680138030" duration="854000" />
       <workItem from="1712762372579" duration="5568000" />
-      <workItem from="1712852053686" duration="380000" />
+      <workItem from="1712852053686" duration="2205000" />
+      <workItem from="1712854931262" duration="704000" />
+      <workItem from="1712937412460" duration="994000" />
     </task>
     <task id="LOCAL-00001" summary="Created new project">
       <option name="closed" value="true" />
@@ -95,7 +99,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712766579095</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Update">
+      <option name="closed" value="true" />
+      <created>1712852497965</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1712852497966</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -115,6 +127,7 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Created new project" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created new project" />
+    <MESSAGE value="Update" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update" />
   </component>
 </project>
