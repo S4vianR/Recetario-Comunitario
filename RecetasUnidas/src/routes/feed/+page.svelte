@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import logo from '/src/lib/assets/logo-removebg.png';
+	import food_stand_day from '/src/lib/assets/food-stand-day.png';
 
 	onMount(() => {
-		const logo = (document.getElementById('logo') as HTMLElement) || null;
-		logo.addEventListener('click', () => {
+		const logoElement = (document.getElementById('logo') as HTMLElement) || null;
+
+		logoElement.addEventListener('click', () => {
 			window.location.href = '/feed';
 		});
 	});
@@ -13,8 +15,8 @@
 <nav>
 	<img src={logo} alt="Logo" width="60" height="60" id="logo" />
 	<div class="first_div">
-		<div id="searchBar">
-			<input type="search" name="" id="" />
+		<div id="searchBarContainer">
+			<input type="search" name="searchBar" id="searchBar" />
 			<button>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -30,13 +32,25 @@
 			</button>
 		</div>
 		<ul>
-			<li><a href="#">Inicio</a></li>
+			<li><a href="/feed">Inicio</a></li>
 			<li><a href="#">Perfil</a></li>
-			<li><a href="/">Cerrar sesión</a></li>
+			<li><a href="/cerrarSesion">Cerrar sesión</a></li>
 		</ul>
 	</div>
 </nav>
-<main>Este es el feed principal</main>
+<main>
+	<section>
+		<button id="crearRecetaButton"> Crear receta </button>
+		<div id="profile">
+			<img src={food_stand_day} alt="food_stand_day" width="80" height="80" />
+			<div>
+				<h4>Lalito Pamez</h4>
+				<button>Ver perfil</button>
+			</div>
+		</div>
+	</section>
+	<section>b</section>
+</main>
 
 <style>
 	nav {
@@ -46,6 +60,7 @@
 		flex-direction: row;
 		align-items: center;
 		justify-content: space-between;
+		height: 7svh;
 	}
 
 	nav #logo:hover {
@@ -60,7 +75,7 @@
 		gap: 3rem;
 	}
 
-	nav #searchBar {
+	nav #searchBarContainer {
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
@@ -68,13 +83,13 @@
 		gap: 0.5rem;
 	}
 
-	nav #searchBar > button {
+	nav #searchBarContainer > button {
 		background-color: transparent;
 		border: none;
 		cursor: pointer;
 	}
 
-	nav #searchBar > input[type='search'] {
+	nav #searchBarContainer > input[type='search'] {
 		padding: 0.3rem;
 		font-size: 0.875rem;
 		border-radius: 0.5rem;
@@ -83,7 +98,7 @@
 		height: fit-content;
 	}
 
-	nav #searchBar > input[type='search']:focus {
+	nav #searchBarContainer > input[type='search']:focus {
 		outline: 0.05rem solid #000;
 	}
 
@@ -101,5 +116,93 @@
 		color: white;
 		text-decoration: none;
 		font-weight: 600;
+	}
+
+	main {
+		display: grid;
+		grid-template-columns: 15% 85%;
+		height: 93svh;
+	}
+
+	main > section:nth-child(1),
+	main > section:nth-child(2) {
+		padding: 0.875rem 1rem;
+	}
+
+	main > section:nth-child(1) {
+		background-color: #fdf5e4;
+		width: 100%;
+		border-right: 1px solid #a99f89;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: center;
+		gap: 2rem;
+	}
+
+	main > section:nth-child(2) {
+		background-color: #fff;
+		width: 100%;
+	}
+
+	#crearRecetaButton {
+		width: 9.6875rem;
+		height: 2.5625rem;
+		border-radius: 3.125rem;
+		border: 1px solid #000;
+		background: #9d3726;
+		color: #fff;
+		text-align: center;
+		font-size: 0.775rem;
+		font-weight: 700;
+		transition: background-color 0.2s ease-in-out;
+	}
+
+	#crearRecetaButton:hover {
+		cursor: pointer;
+		background: #7e2719;
+	}
+
+	#profile {
+		padding: 0.5rem;
+		border: 1px solid #000;
+		display: flex;
+		flex-direction: row;
+		gap: 0.875rem;
+		justify-content: center;
+		align-items: center;
+	}
+
+	#profile div {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 0.875rem;
+	}
+
+	#profile h4 {
+		font-size: 1rem;
+	}
+
+	#profile button {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 1.875rem;
+		width: 6rem;
+		font-size: 0.875rem;
+		background-color: #236569;
+		color: #fff;
+		font-weight: 600;
+		padding: 0.5rem;
+		border-radius: 2rem;
+		border: 1px solid #000;
+		transition: background-color 0.3s ease-in-out;
+	}
+
+	#profile button:hover {
+		background-color: #2d7e83;
+		cursor: pointer;
 	}
 </style>
