@@ -1,10 +1,47 @@
 <script lang="ts">
-	// Image imports
+	// Imports
 	import food_stand_day from '/src/lib/assets/food-stand-day.png';
 	import logo from '/src/lib/assets/logo-removebg.png';
+	import { supabase } from '$lib/supabaseClient';
 
 	// Page title
 	const titulo = 'Recetas Unidas';
+
+	let usuario = '';
+	let password = '';
+	let repeat_password = '';
+	let correo = '';
+
+	async function signUpNewUser() {
+		const { data, error } = await supabase.auth.signUp({
+			email: correo,
+			password: password,
+			options: {
+				data: {
+					first_name: usuario
+				}
+			}
+		});
+		if (error) {
+			alert('Error al crear el usuario');
+		} else {
+			alert('Usuario registrado');
+			window.location.href = '/';
+		}
+	}
+
+	const handleSignUp = (e) => {
+		e.preventDefault();
+		if (password == repeat_password) {
+			signUpNewUser();
+		} else {
+			alert('Las contraseñas no coinciden');
+			let passwordInput = (document.getElementById('password') as HTMLInputElement) || null;
+			password = '';
+			repeat_password = '';
+			passwordInput?.focus();
+		}
+	};
 </script>
 
 <head>
@@ -19,23 +56,51 @@
 		</section>
 		<section class="white right_pane">
 			<h2>Registro de usuario</h2>
-			<form action="#" method="post">
+			<form on:submit={handleSignUp} method="post">
 				<section>
 					<div>
 						<label for="username">Usuario</label>
-						<input type="text" name="usuario" id="username" autocomplete="off" />
+						<input
+							type="text"
+							name="usuario"
+							id="username"
+							autocomplete="off"
+							bind:value={usuario}
+							required
+						/>
 					</div>
 					<div>
 						<label for="password">Contraseña</label>
-						<input type="text" name="password" id="password" autocomplete="off" />
+						<input
+							type="password"
+							name="password"
+							id="password"
+							autocomplete="off"
+							bind:value={password}
+							required
+						/>
 					</div>
 					<div>
 						<label for="repeat_password">Repetir contraseña</label>
-						<input type="text" name="repeat_password" id="repeat_password" autocomplete="off" />
+						<input
+							type="password"
+							name="repeat_password"
+							id="repeat_password"
+							autocomplete="off"
+							bind:value={repeat_password}
+							required
+						/>
 					</div>
 					<div>
 						<label for="email">Correo</label>
-						<input type="text" name="email" id="email" autocomplete="off" />
+						<input
+							type="text"
+							name="email"
+							id="email"
+							autocomplete="on"
+							bind:value={correo}
+							required
+						/>
 					</div>
 					<div class="footer-form">
 						<button type="submit"> Registrarte</button>
@@ -116,7 +181,8 @@
 		font-weight: 600;
 	}
 
-	.right_pane > form input[type='text'] {
+	.right_pane > form input[type='text'],
+	.right_pane > form input[type='password'] {
 		background-color: #cecece;
 		outline: none;
 		border: 0.12rem solid #3f3f3f;
