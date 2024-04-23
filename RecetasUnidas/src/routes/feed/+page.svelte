@@ -10,6 +10,10 @@
 			window.location.href = '/feed';
 		});
 	});
+
+	const handleCrearRecetaButton = () => {
+		window.location.href = '/crearReceta';
+	};
 </script>
 
 <nav>
@@ -33,14 +37,14 @@
 		</div>
 		<ul>
 			<li><a href="/feed">Inicio</a></li>
-			<li><a href="#">Perfil</a></li>
+			<li><a href="/perfil">Perfil</a></li>
 			<li><a href="/cerrarSesion">Cerrar sesión</a></li>
 		</ul>
 	</div>
 </nav>
 <main>
 	<section>
-		<button id="crearRecetaButton"> Crear receta </button>
+		<button id="crearRecetaButton" on:click={handleCrearRecetaButton}> Crear receta </button>
 		<div id="profile">
 			<img src={food_stand_day} alt="food_stand_day" width="80" height="80" />
 			<div>
@@ -49,7 +53,41 @@
 			</div>
 		</div>
 	</section>
-	<section>b</section>
+	<section>
+		<h2>Publicaciones</h2>
+		<div id="publicaciones_container">
+			<div id="publicacion">
+				<h4>Huevos a la mexicana</h4>
+				<div>
+					<p>
+						Los huevos a la mexicana son una receta muy sencilla y rápida de preparar, además de ser
+						muy sabrosa. Se pueden acompañar con arroz, frijoles, tortillas, pan o lo que más te
+						guste.
+					</p>
+				</div>
+				<img
+					src="https://cocinamia.com.mx/wp-content/uploads/2021/01/huevos-a-la-mexicana-1-1100x500.jpg"
+					alt="Huevos a la mexicana"
+					height="200"
+				/>
+			</div>
+			<div id="publicacion">
+				<h4>Mole poblano</h4>
+				<div>
+					<p>
+						El mole poblano es uno de los platillos más representativos de la gastronomía mexicana.
+						Es un platillo muy sabroso y con un sabor muy característico. Se puede acompañar con
+						arroz, tortillas, pollo o lo que más te guste.
+					</p>
+				</div>
+				<img
+					src="https://laroussecocina.mx/wp-content/uploads/2017/12/mole-poblano-001-larousse-cocina_0-e1671586546996.jpg"
+					alt="Mole poblano"
+					height="200"
+				/>
+			</div>
+		</div>
+	</section>
 </main>
 
 <style>
@@ -143,6 +181,32 @@
 	main > section:nth-child(2) {
 		background-color: #fff;
 		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	main > section:nth-child(2) > h2 {
+		justify-self: center;
+		align-self: flex-start;
+	}
+
+	#publicacion {
+		border: 1px solid #363636;
+		padding: 0.5rem 1rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: flex-start;
+		gap: 1rem;
+	}
+
+	#publicaciones_container {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem;
 	}
 
 	#crearRecetaButton {
