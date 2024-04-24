@@ -3,7 +3,7 @@
 	import logo from '/src/lib/assets/logo-removebg.png';
 	import { supabase } from '$lib/supabaseClient';
 
-	let mensajeUsuario = '';
+	let usuario = '';
 
 	const handleMensajeUsuario = async () => {
 		const { data, error } = await supabase.auth.getUserIdentities();
@@ -11,8 +11,7 @@
 		if (error) {
 			console.error(error);
 		} else {
-			let usuario = data?.identities[0].identity_data?.first_name;
-			mensajeUsuario = `Hola, ${usuario}`;
+			usuario = data?.identities[0].identity_data?.first_name;
 		}
 	};
 
@@ -38,7 +37,7 @@
 <nav>
 	<div class="first_div">
 		<img src={logo} alt="Logo" width="60" height="60" id="logo" />
-		<p>{mensajeUsuario}</p>
+		<p>{usuario}</p>
 	</div>
 	<div class="second_div">
 		<div id="searchBarContainer">
