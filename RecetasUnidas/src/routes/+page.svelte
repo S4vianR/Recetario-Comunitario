@@ -27,7 +27,7 @@
 					</div>
 					<div>
 						<label for="password">Contraseña</label>
-						<input type="text" name="password" id="password" />
+						<input type="password" name="password" id="password" />
 					</div>
 					<button type="submit"> Iniciar sesión</button>
 					<div id="mensaje_registro">
@@ -106,7 +106,8 @@
 		font-weight: 600;
 	}
 
-	.right_pane > form input[type='text'] {
+	.right_pane > form input[type='text'],
+	.right_pane > form input[type='password'] {
 		background-color: #cecece;
 		outline: none;
 		border: 0.12rem solid #3f3f3f;

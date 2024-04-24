@@ -17,6 +17,7 @@
 			email: correo,
 			password: password,
 			options: {
+				emailRedirectTo: 'http://localhost:5173/registrado',
 				data: {
 					first_name: usuario
 				}
@@ -67,6 +68,8 @@
 							autocomplete="off"
 							bind:value={usuario}
 							required
+							placeholder="Mínimo 8 caracteres"
+							minlength="8"
 						/>
 					</div>
 					<div>
@@ -78,6 +81,8 @@
 							autocomplete="off"
 							bind:value={password}
 							required
+							placeholder="Mínimo 6 caracteres"
+							minlength="6"
 						/>
 					</div>
 					<div>
@@ -89,6 +94,8 @@
 							autocomplete="off"
 							bind:value={repeat_password}
 							required
+							placeholder="Mínimo 6 caracteres"
+							minlength="6"
 						/>
 					</div>
 					<div>
@@ -100,6 +107,7 @@
 							autocomplete="on"
 							bind:value={correo}
 							required
+							placeholder="Correo electrónico"
 						/>
 					</div>
 					<div class="footer-form">
