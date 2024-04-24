@@ -41,11 +41,11 @@
 </script>
 
 <nav>
-	<div>
+	<div class="first_div">
 		<img src={logo} alt="Logo" width="60" height="60" id="logo" />
 		<span>{mensajeUsuario}</span>
 	</div>
-	<div class="first_div">
+	<div class="second_div">
 		<div id="searchBarContainer">
 			<input type="search" name="searchBar" id="searchBar" />
 			<button>
@@ -132,7 +132,7 @@
 		cursor: pointer;
 	}
 
-	nav .first_div {
+	nav .second_div {
 		display: flex;
 		flex-direction: row;
 		align-items: center;
