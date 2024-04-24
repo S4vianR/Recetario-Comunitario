@@ -41,7 +41,6 @@
 		<p>{mensajeUsuario}</p>
 	</div>
 	<div class="second_div">
-		/
 		<div id="searchBarContainer">
 			<input type="search" name="searchBar" id="searchBar" />
 			<button>
