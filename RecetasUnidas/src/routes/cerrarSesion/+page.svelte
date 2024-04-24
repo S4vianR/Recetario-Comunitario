@@ -1,5 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { supabase } from '$lib/supabaseClient';
+
+	const handleSignOut = async () => {
+		await supabase.auth.signOut();
+	};
 
 	let mensaje = '';
 	onMount(() => {
@@ -17,6 +22,7 @@
 			mensajeCerrarSesion.textContent = 'Volviendo a la pantalla principal';
 		}, 1300);
 		setTimeout(() => {
+			handleSignOut();
 			window.location.href = '/';
 		}, 2500);
 	});

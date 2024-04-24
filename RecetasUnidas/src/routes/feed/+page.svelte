@@ -2,6 +2,20 @@
 	import { onMount } from 'svelte';
 	import logo from '/src/lib/assets/logo-removebg.png';
 	import food_stand_day from '/src/lib/assets/food-stand-day.png';
+	import { supabase } from '$lib/supabaseClient';
+
+	let mensajeUsuario = '';
+
+	const handleMensajeUsuario = async () => {
+		const { data, error } = await supabase.auth.getUserIdentities();
+
+		if (error) {
+			console.error(error);
+		} else {
+			let usuario = data?.identities[0].identity_data?.first_name;
+			mensajeUsuario = `Hola, ${usuario}`;
+		}
+	};
 
 	onMount(() => {
 		const logoElement = (document.getElementById('logo') as HTMLElement) || null;
@@ -9,6 +23,16 @@
 		logoElement.addEventListener('click', () => {
 			window.location.href = '/feed';
 		});
+
+		handleMensajeUsuario();
+	});
+
+	supabase.auth.onAuthStateChange((event) => {
+		if (event === 'SIGNED_IN') {
+			handleMensajeUsuario();
+		} else if (event === 'SIGNED_OUT') {
+			window.location.href = '/login';
+		}
 	});
 
 	const handleCrearRecetaButton = () => {
@@ -17,7 +41,10 @@
 </script>
 
 <nav>
-	<img src={logo} alt="Logo" width="60" height="60" id="logo" />
+	<div>
+		<img src={logo} alt="Logo" width="60" height="60" id="logo" />
+		<span>{mensajeUsuario}</span>
+	</div>
 	<div class="first_div">
 		<div id="searchBarContainer">
 			<input type="search" name="searchBar" id="searchBar" />

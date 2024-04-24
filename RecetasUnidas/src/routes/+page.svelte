@@ -2,9 +2,35 @@
 	// Image imports
 	import vegetable_recipe_book from '/src/lib/assets/vegetable-recipe-book.png';
 	import logo from '/src/lib/assets/logo-removebg.png';
+	import { supabase } from '$lib/supabaseClient';
+	import { onMount } from 'svelte';
 
 	// Page title
 	const titulo = 'Recetas Unidas';
+
+	// Variables
+	let correo = '';
+	let password = '';
+
+	onMount(() => {
+		correo = (document.getElementById('correo') as HTMLInputElement)?.value || '';
+		password = (document.getElementById('password') as HTMLInputElement)?.value || '';
+	});
+
+	// Sign in
+	async function signInWithEmail() {
+		const { data, error } = await supabase.auth.signInWithPassword({
+			email: correo,
+			password: password
+		});
+
+		// After a successful sign in, console log a success message
+		if (error) {
+			alert('Error al iniciar sesión');
+		} else {
+			window.location.href = '/feed';
+		}
+	}
 </script>
 
 <head>
@@ -19,15 +45,15 @@
 		</section>
 		<section class="white right_pane">
 			<h2>Inicio de sesión</h2>
-			<form action="/feed" method="get">
+			<form on:submit={signInWithEmail} method="get">
 				<section>
 					<div>
 						<label for="username">Usuario</label>
-						<input type="text" name="usuario" id="username" />
+						<input type="text" name="username" id="username" required bind:value={correo} />
 					</div>
 					<div>
 						<label for="password">Contraseña</label>
-						<input type="password" name="password" id="password" />
+						<input type="password" name="password" id="password" required bind:value={password} />
 					</div>
 					<button type="submit"> Iniciar sesión</button>
 					<div id="mensaje_registro">
