@@ -48,7 +48,7 @@
 			<form on:submit={signInWithEmail} method="get">
 				<section>
 					<div>
-						<label for="username">Usuario</label>
+						<label for="username">Correo</label>
 						<input type="text" name="username" id="username" required bind:value={correo} />
 					</div>
 					<div>
