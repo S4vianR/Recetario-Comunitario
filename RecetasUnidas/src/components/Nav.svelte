@@ -29,7 +29,7 @@
 		if (event === 'SIGNED_IN') {
 			handleMensajeUsuario();
 		} else if (event === 'SIGNED_OUT') {
-			window.location.href = '/login';
+			window.location.href = '/';
 		}
 	});
 </script>
