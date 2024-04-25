@@ -1,178 +1,197 @@
 <script lang="ts">
-	import logo from '$lib/assets/logo-removebg.png';
-	import { onMount } from 'svelte';
+	import Nav from '../../components/Nav.svelte';
 
-	onMount(() => {
-		const logoElement = (document.getElementById('logo') as HTMLElement) || null;
+	const handleFocusDesctiption = () => {
+		const descripcion = document.getElementById('descripcion') as HTMLDivElement;
+		descripcion.classList.remove('hidden');
+		descripcion.classList.add('visible');
+	};
 
-		logoElement.addEventListener('click', () => {
-			window.location.href = '/feed';
-		});
-	});
-
-	const handlePasos = (event: any) => {
-		event.preventDefault();
-		const pasosCotainer = document.getElementById('pasos-container');
-		const pasos = document.getElementById('pasos');
-		const agregarPasos = document.getElementById('agregarPasos');
-
-		if (pasosCotainer && pasos && agregarPasos) {
-			const pasosLength = pasos.children.length;
-
-			if (agregarPasos.parentNode) {
-				agregarPasos.parentNode.removeChild(agregarPasos);
-			}
-
-			const paso = document.createElement('div');
-			const label = document.createElement('label');
-			const input = document.createElement('input');
-			const button = document.createElement('button');
-
-			label.setAttribute('for', `paso${pasosLength}`);
-			label.textContent = `Paso ${pasosLength}`;
-
-			input.setAttribute('type', 'text');
-			input.setAttribute('name', `paso${pasosLength}`);
-			input.setAttribute('id', `paso${pasosLength}`);
-			input.setAttribute('placeholder', `Paso ${pasosLength}`);
-
-			button.onclick = handlePasos;
-			button.textContent = 'Agregar otro paso';
-
-			paso.appendChild(label);
-			paso.appendChild(input);
-			pasosCotainer.appendChild(button);
-			pasos.appendChild(paso);
-		}
+	const handleConfirmDescription = () => {
+		const descripcion = document.getElementById('descripcion') as HTMLDivElement;
+		const descripcionPlatillo = document.getElementById(
+			'descripcionPlatillo'
+		) as HTMLTextAreaElement;
+		const descripcionTextArea = document.getElementById(
+			'descripcionTextArea'
+		) as HTMLTextAreaElement;
+		descripcionPlatillo.value = descripcionTextArea.value;
+		descripcion.classList.remove('visible');
+		descripcion.classList.add('hidden');
 	};
 </script>
 
+<Nav />
 <main>
-	<nav>
-		<img src={logo} alt="Logo" width="60" height="60" id="logo" />
-		<div class="first_div">
-			<div id="searchBarContainer">
-				<input type="search" name="searchBar" id="searchBar" />
-				<button>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 24 24"
-						width="32"
-						height="32"
-						fill="currentColor"
-					>
-						<path
-							d="M18.031 16.6168L22.3137 20.8995L20.8995 22.3137L16.6168 18.031C15.0769 19.263 13.124 20 11 20C6.032 20 2 15.968 2 11C2 6.032 6.032 2 11 2C15.968 2 20 6.032 20 11C20 13.124 19.263 15.0769 18.031 16.6168ZM16.0247 15.8748C17.2475 14.6146 18 12.8956 18 11C18 7.1325 14.8675 4 11 4C7.1325 4 4 7.1325 4 11C4 14.8675 7.1325 18 11 18C12.8956 18 14.6146 17.2475 15.8748 16.0247L16.0247 15.8748Z"
-						></path>
-					</svg>
-				</button>
+	<a href="/feed">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
+			><path
+				d="M12 2C17.52 2 22 6.48 22 12C22 17.52 17.52 22 12 22C6.48 22 2 17.52 2 12C2 6.48 6.48 2 12 2ZM12 20C16.42 20 20 16.42 20 12C20 7.58 16.42 4 12 4C7.58 4 4 7.58 4 12C4 16.42 7.58 20 12 20ZM12 11H16V13H12V16L8 12L12 8V11Z"
+			></path></svg
+		>
+		Volver atrás
+	</a>
+	<div class="formWrapper">
+		<form action="#">
+			<h2>Creación de platillo</h2>
+			<button></button>
+			<div>
+				<label for="nombrePlatillo">Nombre platillo:</label>
+				<input
+					type="text"
+					name="nombrePlatillo"
+					id="nombrePlatillo"
+					placeholder="Nombre del platillo"
+					required
+				/>
 			</div>
-			<ul>
-				<li><a href="/feed">Inicio</a></li>
-				<li><a href="/perfil">Perfil</a></li>
-				<li><a href="/cerrarSesion">Cerrar sesión</a></li>
-			</ul>
-		</div>
-	</nav>
-	<form action="#">
-		<div>
-			<label for="nombrePlatillo">Nombre platillo</label>
-			<input
-				type="text"
-				name="nombrePlatillo"
-				id="nombrePlatillo"
-				placeholder="Nombre del platillo"
-			/>
-		</div>
-		<div>
-			<label for="descripcionPlatillo">Descripción</label>
-			<textarea
-				name="descripcionPlatillo"
-				id="descripcionPlatillo"
-				placeholder="Descripción del platillo"
-			></textarea>
-		</div>
-		<div id="pasos-container">
-			<label for="pasos">Pasos</label>
-			<div id="pasos">
-				<div>
-					<label for="paso1">Paso 1</label>
-					<input type="text" name="paso1" id="paso1" placeholder="Paso 1" />
-				</div>
-				<div>
-					<label for="paso2">Paso 2</label>
-					<input type="text" name="paso2" id="paso2" placeholder="Paso 2" />
-				</div>
+			<div>
+				<label for="descripcionPlatillo">Descripción:</label>
+				<textarea
+					name="descripcionPlatillo"
+					id="descripcionPlatillo"
+					placeholder="Descripción del platillo"
+					on:focus={handleFocusDesctiption}
+					required
+				></textarea>
 			</div>
-			<button on:click={handlePasos} id="agregarPasos"> Agregar otro paso </button>
+			<div>
+				<label for="imagenReceta">Imagén de la receta:</label>
+				<input type="file" name="imagenReceta" id="imagenReceta" disabled />
+			</div>
+			<div>
+				<label for="tiempoPreparacion">Tiempo de preparación:</label>
+				<input
+					type="number"
+					name="tiempoPreparación"
+					id="tiempoPreparacion"
+					placeholder="El número debe de ser en minutos"
+					title="El número debe de ser en minutos"
+					required
+				/>
+			</div>
+			<div>
+				<label for="dificultad">Dificultad:</label>
+				<select name="dificultad" id="dificultad" required>
+					<option value="facil">Fácil</option>
+					<option value="medio">Medio</option>
+					<option value="dificil">Difícil</option>
+				</select>
+			</div>
+		</form>
+		<div id="descripcion" class="hidden">
+			<textarea id="descripcionTextArea" name="descripcionTextArea" rows="40" cols="120"></textarea>
+			<button on:click={handleConfirmDescription}>Confirmar</button>
 		</div>
-	</form>
-	gitu
+	</div>
 </main>
 
 <style>
-	nav {
-		background-color: #3c8085;
-		padding: 0.35rem 1rem;
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		justify-content: space-between;
-		height: 7svh;
+	.visible {
+		display: block;
+		visibility: visible;
 	}
 
-	nav #logo:hover {
-		cursor: pointer;
+	.hidden {
+		display: none;
+		visibility: collapse;
 	}
 
-	nav .first_div {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		justify-content: flex-end;
-		gap: 3rem;
+	main {
+		height: 91svh;
+		padding: 1rem;
 	}
 
-	nav #searchBarContainer {
+	main > a {
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
 		align-items: center;
-		gap: 0.5rem;
+		text-decoration: none;
+		color: #000;
+		font-weight: 600;
+		font-size: 1.1rem;
+		border-bottom: 2px solid #000;
+		width: 9rem;
+		transition:
+			color 0.5s ease-in-out,
+			fill 0.5s ease-in-out,
+			border-color 0.5s ease-in-out;
 	}
 
-	nav #searchBarContainer > button {
-		background-color: transparent;
-		border: none;
-		cursor: pointer;
+	main > a:hover {
+		color: #3c8085;
+		fill: #3c8085;
+		border-color: #3c8085;
 	}
 
-	nav #searchBarContainer > input[type='search'] {
-		padding: 0.3rem;
-		font-size: 0.875rem;
-		border-radius: 0.5rem;
-		border: 1px solid #000;
-		width: 20rem;
-		height: fit-content;
-	}
-
-	nav #searchBarContainer > input[type='search']:focus {
-		outline: 0.05rem solid #000;
-	}
-
-	nav ul {
+	form {
+		margin-top: 2rem;
+		padding: 1rem;
 		display: flex;
-		flex-direction: row;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: flex-start;
+		height: 100%;
 		gap: 1rem;
 	}
 
-	nav ul li {
-		list-style: none;
+	form label {
+		font-size: 1.1rem;
 	}
 
-	nav ul li a {
-		color: white;
-		text-decoration: none;
-		font-weight: 600;
+	form input,
+	form textarea,
+	form select {
+		width: 25rem;
+		font-size: 1.1rem;
+	}
+
+	form textarea {
+		resize: none;
+	}
+
+	form div {
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-end;
+		align-items: center;
+		gap: 0.5rem;
+		width: 40rem;
+	}
+
+	.formWrapper {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	#descripcion {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: flex-end;
+		gap: 1.875rem;
+	}
+
+	#descripcion textarea {
+		padding: 0.5rem;
+	}
+
+	#descripcion textarea:focus {
+		border: none;
+		outline: 3px solid #3c8085;
+	}
+
+	#descripcion button {
+		padding: 0.5rem 1rem;
+		background-color: #3c8085;
+		color: #fff;
+		font-size: 1.1rem;
+		border: none;
+		border-radius: 0.5rem;
+		cursor: pointer;
+		transition:
+			background-color 0.5s ease-in-out,
+			color 0.5s ease-in-out;
 	}
 </style>
