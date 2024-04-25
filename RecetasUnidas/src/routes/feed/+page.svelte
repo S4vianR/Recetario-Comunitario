@@ -1,7 +1,8 @@
 <script lang="ts">
+	export let data;
 	import food_stand_day from '/src/lib/assets/food-stand-day.png';
-	import { supabase } from '$lib/supabaseClient';
 	import Nav from '../../components/Nav.svelte';
+	import { onMount } from 'svelte';
 
 	const handleCrearRecetaButton = () => {
 		window.location.href = '/crearReceta';
@@ -23,36 +24,29 @@
 	<section>
 		<h2>Publicaciones</h2>
 		<div id="publicaciones_container">
-			<div id="publicacion">
-				<h4>Huevos a la mexicana</h4>
-				<div>
-					<p>
-						Los huevos a la mexicana son una receta muy sencilla y rápida de preparar, además de ser
-						muy sabrosa. Se pueden acompañar con arroz, frijoles, tortillas, pan o lo que más te
-						guste.
-					</p>
+			{#each data.recetas as receta}
+				<div id="publicacion">
+					<h4>{receta.tituloreceta}</h4>
+					{#if receta.valoracionreceta == null || receta.valoracionreceta == 0}
+						<p><span>Valoración:</span> Sin valoración</p>
+					{:else}
+						<p><span>Valoración:</span> {receta.valoracionreceta}</p>
+					{/if}
+					{#if receta.tiempopreparacionreceta == 1}
+						<p><span>Tiempo de preparación:</span> {receta.tiempopreparacionreceta} minuto</p>
+					{:else}
+						<p><span>Tiempo de preparación:</span> {receta.tiempopreparacionreceta} minutos</p>
+					{/if}
+					<span>{receta.descripcionreceta}</span>
+					{#if receta.imagenreceta}
+						<img src={receta.imagenreceta} alt={receta.tituloreceta} width="200" height="200" />
+					{:else}
+						<img src={food_stand_day} alt="food_stand_day" height="200" />
+					{/if}
+					<p><span>Tiempo de preparación:</span> {receta.tiempopreparacionreceta} minutos</p>
+					<p><span>Dificultad:</span> {receta.dificultadreceta}</p>
 				</div>
-				<img
-					src="https://cocinamia.com.mx/wp-content/uploads/2021/01/huevos-a-la-mexicana-1-1100x500.jpg"
-					alt="Huevos a la mexicana"
-					height="200"
-				/>
-			</div>
-			<div id="publicacion">
-				<h4>Mole poblano</h4>
-				<div>
-					<p>
-						El mole poblano es uno de los platillos más representativos de la gastronomía mexicana.
-						Es un platillo muy sabroso y con un sabor muy característico. Se puede acompañar con
-						arroz, tortillas, pollo o lo que más te guste.
-					</p>
-				</div>
-				<img
-					src="https://laroussecocina.mx/wp-content/uploads/2017/12/mole-poblano-001-larousse-cocina_0-e1671586546996.jpg"
-					alt="Mole poblano"
-					height="200"
-				/>
-			</div>
+			{/each}
 		</div>
 	</section>
 </main>
@@ -103,6 +97,14 @@
 		justify-content: center;
 		align-items: flex-start;
 		gap: 1rem;
+	}
+
+	#publicacion p {
+		text-transform: capitalize;
+	}
+
+	#publicacion p > span {
+		font-weight: 600;
 	}
 
 	#publicaciones_container {
