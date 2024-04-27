@@ -10,29 +10,33 @@
 		window.location.href = '/crearReceta';
 	};
 
+	// onMount(() => {
+	// 	// When the url has a get parameter, it means that the user is searching for something
+	// 	const urlParams = new URLSearchParams(window.location.search);
+	// 	const searchQuery = urlParams.get('search');
+
+	// 	// If the user is searching for something, filter the recetas
+	// 	if (searchQuery) {
+	// 		data.recetas = data.recetas.filter((receta) => {
+	// 			return receta.tituloreceta.toLowerCase().includes(searchQuery.toLowerCase());
+	// 		});
+	// 	}
+	// });
+
 	onMount(() => {
-		// When the url has a get parameter, it means that the user is searching for something
+		// Cuando la url tiene un parámetro get, significa que el usuario está buscando algo
 		const urlParams = new URLSearchParams(window.location.search);
 		const searchQuery = urlParams.get('search');
 
-		// If the user is searching for something, filter the recetas
+		// Si el usuario está buscando algo, filtra las recetas
 		if (searchQuery) {
-			// If the query is empty, return respuesta as false
-			if (searchQuery === '') {
-				respuesta = false;
-			} else {
-				// Filter the recetas
-				const recetas = data.recetas.filter((receta) => {
-					return receta.tituloreceta.toLowerCase().includes(searchQuery.toLowerCase());
-				});
+			data.recetas = data.recetas.filter((receta) => {
+				return receta.tituloreceta.toLowerCase().includes(searchQuery.toLowerCase());
+			});
 
-				// If there are no recetas, return respuesta as false
-				if (recetas.length === 0) {
-					respuesta = false;
-				} else {
-					// If there are recetas, return respuesta as true
-					respuesta = true;
-				}
+			// Si no se encontraron recetas, establece respuesta en un mensaje de error
+			if (data.recetas.length === 0) {
+				respuesta = false;
 			}
 		}
 	});
@@ -57,14 +61,10 @@
 	<section>
 		<h2>Publicaciones</h2>
 		<div id="publicaciones_container">
-			{#if respuesta === false}
+			{#if respuesta == false}
 				<div id="mensajeContainer">
-					<h3 id="mensajeNoEncontrado">
-						No se encontraron recetas con ese nombre o similares
-					</h3>
-					<button on:click={handleButtonRefresh}>
-						Refrescar
-					</button>
+					<h3 id="mensajeNoEncontrado">No se encontraron recetas con ese nombre o similares</h3>
+					<button on:click={handleButtonRefresh}> Refrescar </button>
 				</div>
 			{:else}
 				{#each data.recetas as receta}
@@ -139,6 +139,7 @@
 		padding: 0.5rem 1rem;
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
+		min-height: 20rem;
 	}
 
 	#publicacion > div:nth-child(1) {
@@ -238,7 +239,7 @@
 		background-color: #2d7e83;
 		cursor: pointer;
 	}
-	
+
 	#mensajeContainer {
 		display: flex;
 		flex-direction: column;
@@ -251,7 +252,7 @@
 	#mensajeNoEncontrado {
 		text-align: center;
 		font-size: 1.2rem;
-		color: #D2042D;
+		color: #d2042d;
 	}
 
 	#mensajeContainer button {
