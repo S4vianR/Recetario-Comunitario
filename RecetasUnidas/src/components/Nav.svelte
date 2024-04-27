@@ -42,6 +42,25 @@
 			window.location.href = '/';
 		}
 	});
+
+	// HandleSearch
+	const handleSearch = (event: any) => {
+		event.preventDefault();
+		const searchBar = (document.getElementById('searchBar') as HTMLInputElement).value;
+
+		if (searchBar) {
+			window.location.href = `/feed?search=${searchBar}`;
+		} else {
+			// Reload the feed page with the search query
+			window.location.href = '/feed';
+		}
+	};
+
+	const handleSearchEnter = (event: any) => {
+		if (event.key === 'Enter') {
+			handleSearch(event);
+		}
+	};
 </script>
 
 <nav>
@@ -51,8 +70,8 @@
 	</div>
 	<div class="second_div">
 		<div id="searchBarContainer">
-			<input type="search" name="searchBar" id="searchBar" />
-			<button>
+			<input on:keydown={handleSearchEnter} type="search" name="searchBar" id="searchBar" placeholder="Buscar receta" />
+			<button on:click={handleSearch}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 24 24"

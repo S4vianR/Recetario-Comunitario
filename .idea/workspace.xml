@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="48c22e38-e801-4f4d-a5e4-855dc3431d21" name="Changes" comment="&#9;&#10;Reordered the file system structure" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;S4vianR&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/S4vianR/Recetas-Unidas.git&quot;,
+    &quot;accountId&quot;: &quot;34548c14-9aae-4d4c-9b66-fc35e2e6ca08&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2erxfXOETdYoQfDjBECdhG3JT99" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;//wsl.localhost/opensuse-tumbleweed/home/reuben/Code/Recetas-Unidas&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;\\\\wsl.localhost\\opensuse-tumbleweed\\home\\reuben\\Code\\Recetas-Unidas&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/home/reuben/Documentos/Code/Recetas-Unidas/RecetasUnidas/node_modules/prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm 2024.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/routes" />
+      <recent name="$PROJECT_DIR$/static" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="\\wsl.localhost\opensuse-tumbleweed\home\reuben\Code\Recetas-Unidas" />
+      <recent name="$PROJECT_DIR$/src/lib/assets" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-2e7d6887c066-JavaScript-WS-241.15989.47" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="48c22e38-e801-4f4d-a5e4-855dc3431d21" name="Changes" comment="" />
+      <created>1712676602073</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1712676602073</updated>
+      <workItem from="1712676603117" duration="368000" />
+      <workItem from="1712676979294" duration="1878000" />
+      <workItem from="1712679661982" duration="464000" />
+      <workItem from="1712680138030" duration="854000" />
+      <workItem from="1712762372579" duration="5568000" />
+      <workItem from="1712852053686" duration="2205000" />
+      <workItem from="1712854931262" duration="704000" />
+      <workItem from="1712937412460" duration="3783000" />
+      <workItem from="1712944625543" duration="1113000" />
+      <workItem from="1712947798122" duration="3525000" />
+      <workItem from="1713366792697" duration="5065000" />
+      <workItem from="1713373571575" duration="998000" />
+      <workItem from="1713801578567" duration="3000000" />
+      <workItem from="1713876024856" duration="14000" />
+      <workItem from="1713891808675" duration="677000" />
+      <workItem from="1713892499521" duration="704000" />
+      <workItem from="1713971510983" duration="20000" />
+      <workItem from="1713971676036" duration="4000" />
+      <workItem from="1713971713376" duration="15000" />
+      <workItem from="1713971748269" duration="27000" />
+      <workItem from="1713971785777" duration="2519000" />
+      <workItem from="1713974646428" duration="304000" />
+      <workItem from="1714014604113" duration="133000" />
+      <workItem from="1714014746530" duration="253000" />
+      <workItem from="1714022236150" duration="182000" />
+      <workItem from="1714022427233" duration="448000" />
+    </task>
+    <task id="LOCAL-00001" summary="Created new project">
+      <option name="closed" value="true" />
+      <created>1712766579095</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1712766579095</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Update">
+      <option name="closed" value="true" />
+      <created>1712852497965</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1712852497966</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Update">
+      <option name="closed" value="true" />
+      <created>1712938668191</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1712938668191</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Update">
+      <option name="closed" value="true" />
+      <created>1712938734632</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1712938734632</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Moved pom.xml to the Backend folder">
+      <option name="closed" value="true" />
+      <created>1712939329131</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1712939329131</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Updated the feed page">
+      <option name="closed" value="true" />
+      <created>1712941187371</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1712941187371</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Updated the feed page">
+      <option name="closed" value="true" />
+      <created>1712941261747</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1712941261747</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Updated the feed page and deleted the search route">
+      <option name="closed" value="true" />
+      <created>1713372251472</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1713372251472</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Add the supabaseClient.js file">
+      <option name="closed" value="true" />
+      <created>1713891842764</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1713891842764</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Fixed register and fixed input text on password field on signIn">
+      <option name="closed" value="true" />
+      <created>1713972939195</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1713972939195</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/.." />
+    </ignored-roots>
+    <MESSAGE value="Created new project" />
+    <MESSAGE value="Update" />
+    <MESSAGE value="Moved pom.xml to the Backend folder" />
+    <MESSAGE value="Updated the feed page" />
+    <MESSAGE value="Added Main.java, launch.json, and updated pom.xml" />
+    <MESSAGE value="Updated the feed page and deleted the search route" />
+    <MESSAGE value="Add the supabaseClient.js file" />
+    <MESSAGE value="Fixed register and fixed input text on password field on signIn" />
+    <MESSAGE value="&#9;&#10;Reordered the file system structure" />
+    <option name="LAST_COMMIT_MESSAGE" value="&#9;&#10;Reordered the file system structure" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/routes/feed/+page.svelte</url>
+          <line>42</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

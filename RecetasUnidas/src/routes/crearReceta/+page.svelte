@@ -14,6 +14,9 @@
 	// Funciones
 	const handleFocusDesctiption = () => {
 		const descripcion = document.getElementById('descripcion') as HTMLDivElement;
+		const descripcionTextArea = document.getElementById(
+			'descripcionTextArea'
+		) as HTMLTextAreaElement;
 		descripcion.classList.remove('hidden');
 		descripcion.classList.add('visible');
 		const descripcionPlatillo = document.getElementById(
@@ -21,6 +24,7 @@
 		) as HTMLTextAreaElement;
 
 		descripcionPlatillo.disabled = true;
+		descripcionTextArea.focus();
 	};
 
 	const handleConfirmDescription = () => {
@@ -45,7 +49,6 @@
 	};
 
 	const handleEraseDescription = () => {
-		const descripcion = document.getElementById('descripcion') as HTMLDivElement;
 		const descripcionPlatillo = document.getElementById(
 			'descripcionPlatillo'
 		) as HTMLTextAreaElement;
@@ -57,24 +60,16 @@
 		descripcionPlatillo.disabled = false;
 	};
 
-	const handleFormReset = (event) => {
+	const handleFormReset = (event: any) => {
 		event.preventDefault();
 		const form = document.querySelector('form') as HTMLFormElement;
 		form.reset();
 	};
 
-	const handleFormSubmit = async (event) => {
+	const handleFormSubmit = async (event: any) => {
 		const { data } = await supabase.auth.getUserIdentities();
 		userId = data?.identities[0].user_id;
 		event.preventDefault();
-		// console.log(
-		// 	nombrePlatillo,
-		// 	descripcionPlatilloValue,
-		// 	tiempoPreparacion,
-		// 	dificultad,
-		// 	numeroRacionesValue,
-		// 	userId
-		// );
 		// Assuming userId is a valid UUID, proceed with the insertion
 		let { data: recetas, error } = await supabase.from('recetas').insert([
 			{
@@ -93,6 +88,7 @@
 		} else {
 			alert('Formulario enviado');
 			handleFormReset(event);
+			window.location.href = '/feed';
 		}
 	};
 </script>
@@ -129,7 +125,6 @@
 					placeholder="Descripción del platillo"
 					on:focus={handleFocusDesctiption}
 					required
-					
 				></textarea>
 			</div>
 			<div>
@@ -179,7 +174,13 @@
 			</div>
 		</form>
 		<div id="descripcion" class="hidden">
-			<textarea id="descripcionTextArea" name="descripcionTextArea" rows="40" cols="120" bind:value={descripcionPlatilloValue} />
+			<textarea
+				id="descripcionTextArea"
+				name="descripcionTextArea"
+				rows="40"
+				cols="120"
+				bind:value={descripcionPlatilloValue}
+			/>
 			<div class="descriptionButtonWrapper">
 				<button on:click={handleConfirmDescription}>Confirmar</button>
 				<button on:click={handleEraseDescription}>Borrar descripción</button>

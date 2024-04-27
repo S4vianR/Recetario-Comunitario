@@ -34,10 +34,6 @@
 			window.location.href = '/login';
 		}
 	});
-
-	const handleCrearRecetaButton = () => {
-		window.location.href = '/crearReceta';
-	};
 </script>
 
 <head>

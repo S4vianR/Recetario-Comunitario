@@ -2,9 +2,43 @@
 	export let data;
 	import food_stand_day from '/src/lib/assets/food-stand-day.png';
 	import Nav from '../../components/Nav.svelte';
+	import { onMount } from 'svelte';
+
+	let respuesta: boolean;
 
 	const handleCrearRecetaButton = () => {
 		window.location.href = '/crearReceta';
+	};
+
+	onMount(() => {
+		// When the url has a get parameter, it means that the user is searching for something
+		const urlParams = new URLSearchParams(window.location.search);
+		const searchQuery = urlParams.get('search');
+
+		// If the user is searching for something, filter the recetas
+		if (searchQuery) {
+			// If the query is empty, return respuesta as false
+			if (searchQuery === '') {
+				respuesta = false;
+			} else {
+				// Filter the recetas
+				const recetas = data.recetas.filter((receta) => {
+					return receta.tituloreceta.toLowerCase().includes(searchQuery.toLowerCase());
+				});
+
+				// If there are no recetas, return respuesta as false
+				if (recetas.length === 0) {
+					respuesta = false;
+				} else {
+					// If there are recetas, return respuesta as true
+					respuesta = true;
+				}
+			}
+		}
+	});
+
+	const handleButtonRefresh = () => {
+		window.location.href = '/feed';
 	};
 </script>
 
@@ -23,28 +57,39 @@
 	<section>
 		<h2>Publicaciones</h2>
 		<div id="publicaciones_container">
-			{#each data.recetas as receta}
-				<div id="publicacion">
-					<div>
-						<h3>{receta.tituloreceta}</h3>
-						{#if receta.valoracionreceta == null || receta.valoracionreceta === 0}
-							<p><span>Valoración:</span> Sin valoración</p>
-						{:else}
-							<p><span>Valoración:</span> {receta.valoracionreceta}</p>
-						{/if}
-						<span>{receta.descripcionreceta}</span>
-						<p><span>Tiempo de preparación:</span> {receta.tiempopreparacionreceta} minutos</p>
-						<p><span>Dificultad:</span> {receta.dificultadreceta}</p>
-					</div>
-					<div>
-						{#if receta.imagenreceta}
-							<img src={receta.imagenreceta} alt={receta.tituloreceta} />
-						{:else}
-							<img src={food_stand_day} alt="food_stand_day" />
-						{/if}
-					</div>
+			{#if respuesta === false}
+				<div id="mensajeContainer">
+					<h3 id="mensajeNoEncontrado">
+						No se encontraron recetas con ese nombre o similares
+					</h3>
+					<button on:click={handleButtonRefresh}>
+						Refrescar
+					</button>
 				</div>
-			{/each}
+			{:else}
+				{#each data.recetas as receta}
+					<div id="publicacion">
+						<div>
+							<h3>{receta.tituloreceta}</h3>
+							{#if receta.valoracionreceta == null || receta.valoracionreceta === 0}
+								<p><span>Valoración:</span> Sin valoración</p>
+							{:else}
+								<p><span>Valoración:</span> {receta.valoracionreceta}</p>
+							{/if}
+							<span>{receta.descripcionreceta}</span>
+							<p><span>Tiempo de preparación:</span> {receta.tiempopreparacionreceta} minutos</p>
+							<p><span>Dificultad:</span> {receta.dificultadreceta}</p>
+						</div>
+						<div>
+							{#if receta.imagenreceta}
+								<img src={receta.imagenreceta} alt={receta.tituloreceta} />
+							{:else}
+								<img src={food_stand_day} alt="food_stand_day" />
+							{/if}
+						</div>
+					</div>
+				{/each}
+			{/if}
 		</div>
 	</section>
 </main>
@@ -129,6 +174,7 @@
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
 		gap: 2rem;
+		align-items: center;
 		padding: 0 1rem;
 	}
 
@@ -191,5 +237,38 @@
 	#profile button:hover {
 		background-color: #2d7e83;
 		cursor: pointer;
+	}
+	
+	#mensajeContainer {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: flex-start;
+		gap: 1rem;
+		padding: 1rem;
+	}
+
+	#mensajeNoEncontrado {
+		text-align: center;
+		font-size: 1.2rem;
+		color: #D2042D;
+	}
+
+	#mensajeContainer button {
+		width: 7.6875rem;
+		height: 1.8625rem;
+		border-radius: 3.125rem;
+		border: 1px solid #000;
+		background: #9d3726;
+		color: #fff;
+		text-align: center;
+		font-size: 0.775rem;
+		font-weight: 700;
+		transition: background-color 0.2s ease-in-out;
+	}
+
+	#mensajeContainer button:hover {
+		cursor: pointer;
+		background: #7e2719;
 	}
 </style>
