@@ -2,7 +2,6 @@
 	export let data;
 	import food_stand_day from '/src/lib/assets/food-stand-day.png';
 	import Nav from '../../components/Nav.svelte';
-	import { onMount } from 'svelte';
 
 	const handleCrearRecetaButton = () => {
 		window.location.href = '/crearReceta';
@@ -26,25 +25,24 @@
 		<div id="publicaciones_container">
 			{#each data.recetas as receta}
 				<div id="publicacion">
-					<h4>{receta.tituloreceta}</h4>
-					{#if receta.valoracionreceta == null || receta.valoracionreceta == 0}
-						<p><span>Valoración:</span> Sin valoración</p>
-					{:else}
-						<p><span>Valoración:</span> {receta.valoracionreceta}</p>
-					{/if}
-					{#if receta.tiempopreparacionreceta == 1}
-						<p><span>Tiempo de preparación:</span> {receta.tiempopreparacionreceta} minuto</p>
-					{:else}
+					<div>
+						<h3>{receta.tituloreceta}</h3>
+						{#if receta.valoracionreceta == null || receta.valoracionreceta === 0}
+							<p><span>Valoración:</span> Sin valoración</p>
+						{:else}
+							<p><span>Valoración:</span> {receta.valoracionreceta}</p>
+						{/if}
+						<span>{receta.descripcionreceta}</span>
 						<p><span>Tiempo de preparación:</span> {receta.tiempopreparacionreceta} minutos</p>
-					{/if}
-					<span>{receta.descripcionreceta}</span>
-					{#if receta.imagenreceta}
-						<img src={receta.imagenreceta} alt={receta.tituloreceta} width="200" height="200" />
-					{:else}
-						<img src={food_stand_day} alt="food_stand_day" height="200" />
-					{/if}
-					<p><span>Tiempo de preparación:</span> {receta.tiempopreparacionreceta} minutos</p>
-					<p><span>Dificultad:</span> {receta.dificultadreceta}</p>
+						<p><span>Dificultad:</span> {receta.dificultadreceta}</p>
+					</div>
+					<div>
+						{#if receta.imagenreceta}
+							<img src={receta.imagenreceta} alt={receta.tituloreceta} />
+						{:else}
+							<img src={food_stand_day} alt="food_stand_day" />
+						{/if}
+					</div>
 				</div>
 			{/each}
 		</div>
@@ -85,6 +83,8 @@
 	}
 
 	main > section:nth-child(2) > h2 {
+		padding-top: 0.5rem;
+		padding-left: 1rem;
 		justify-self: center;
 		align-self: flex-start;
 	}
@@ -92,11 +92,23 @@
 	#publicacion {
 		border: 1px solid #363636;
 		padding: 0.5rem 1rem;
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	#publicacion > div:nth-child(1) {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: flex-start;
 		gap: 1rem;
+	}
+
+	#publicacion > div:nth-child(2) {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
 	}
 
 	#publicacion p {
@@ -107,10 +119,17 @@
 		font-weight: 600;
 	}
 
+	#publicacion img {
+		border-radius: 0.5rem;
+		width: 230px;
+		aspect-ratio: 1;
+	}
+
 	#publicaciones_container {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
-		gap: 1rem;
+		gap: 2rem;
+		padding: 0 1rem;
 	}
 
 	#crearRecetaButton {

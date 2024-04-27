@@ -11,13 +11,13 @@
 	let password = '';
 	let repeat_password = '';
 	let correo = '';
+	let datosUsuarios;
 
 	async function signUpNewUser() {
 		const { data, error } = await supabase.auth.signUp({
 			email: correo,
 			password: password,
 			options: {
-				emailRedirectTo: 'http://localhost:5173/registrado',
 				data: {
 					first_name: usuario
 				}
@@ -57,7 +57,7 @@
 		</section>
 		<section class="white right_pane">
 			<h2>Registro de usuario</h2>
-			<form on:submit={handleSignUp} method="post">
+			<div id="form">
 				<section>
 					<div>
 						<label for="username">Usuario</label>
@@ -111,14 +111,14 @@
 						/>
 					</div>
 					<div class="footer-form">
-						<button type="submit"> Registrarte</button>
+						<button on:click={handleSignUp}> Registrarte</button>
 						<div id="mensaje_registro">
 							<p>¿Ya tienes una cuenta?</p>
 							<a href="/">¡Ingresa ahora mismo!</a>
 						</div>
 					</div>
 				</section>
-			</form>
+			</div>
 		</section>
 		<img src={food_stand_day} alt="Food Stand Day" id="vegetable_recipe_book" />
 	</section>
@@ -156,7 +156,7 @@
 		font-weight: 700;
 	}
 
-	.right_pane > form {
+	.right_pane > #form {
 		border: 1px solid #000;
 		padding: 2rem;
 		width: 50%;
@@ -167,7 +167,7 @@
 		align-items: center;
 	}
 
-	.right_pane > form > section {
+	.right_pane > #form > section {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -176,7 +176,7 @@
 		width: fit-content;
 	}
 
-	.right_pane > form div {
+	.right_pane > #form div {
 		display: flex;
 		flex-direction: row;
 		justify-content: flex-end;
@@ -184,13 +184,13 @@
 		align-items: center;
 	}
 
-	.right_pane > form label {
+	.right_pane > #form label {
 		font-size: 1.1rem;
 		font-weight: 600;
 	}
 
-	.right_pane > form input[type='text'],
-	.right_pane > form input[type='password'] {
+	.right_pane > #form input[type='text'],
+	.right_pane > #form input[type='password'] {
 		background-color: #cecece;
 		outline: none;
 		border: 0.12rem solid #3f3f3f;
@@ -202,7 +202,7 @@
 		font-size: 1rem;
 	}
 
-	.right_pane > form button[type='submit'] {
+	.right_pane > #form button {
 		border: 1px solid #000;
 		border-radius: 0.5rem;
 		background-color: #c99669;
@@ -214,7 +214,7 @@
 		align-self: flex-end;
 	}
 
-	.right_pane > form button[type='submit']:hover {
+	.right_pane > #form button:hover {
 		background-color: #de775a;
 		cursor: pointer;
 	}

@@ -23,6 +23,16 @@
 		});
 
 		handleMensajeUsuario();
+
+		const navEl = document.querySelector('nav') as HTMLElement;
+		window.addEventListener('scroll', () => {
+			if (window.scrollY > 10) {
+				navEl.style.borderBottomLeftRadius = '0.8rem';
+				navEl.style.borderBottomRightRadius = '0.8rem';
+			} else {
+				navEl.style.borderRadius = '0';
+			}
+		});
 	});
 
 	supabase.auth.onAuthStateChange((event) => {
@@ -73,6 +83,12 @@
 		align-items: center;
 		justify-content: space-between;
 		height: 7svh;
+		position: sticky;
+		top: 0;
+		right: 0;
+		left: 0;
+		bottom: 0;
+		transition: border-radius 0.1s ease-in-out;
 	}
 
 	nav #logo:hover {
@@ -141,6 +157,11 @@
 
 	nav ul li {
 		list-style: none;
+		transition: transform 0.3s ease-in-out;
+	}
+
+	nav ul li:hover {
+		transform: translateY(-2px);
 	}
 
 	nav ul li a {

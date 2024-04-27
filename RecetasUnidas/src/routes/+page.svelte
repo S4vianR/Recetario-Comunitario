@@ -4,9 +4,7 @@
 	import logo from '/src/lib/assets/logo-removebg.png';
 	import { supabase } from '$lib/supabaseClient';
 	import { onMount } from 'svelte';
-
-	// Page title
-	const titulo = 'Recetas Unidas';
+	import { redirect } from '@sveltejs/kit';
 
 	// Variables
 	let correo = '';
@@ -33,11 +31,6 @@
 	}
 </script>
 
-<head>
-	<title>
-		{titulo}
-	</title>
-</head>
 <main>
 	<section>
 		<section class="purple left_pane">

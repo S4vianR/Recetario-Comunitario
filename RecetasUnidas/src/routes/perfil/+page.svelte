@@ -48,42 +48,31 @@
 
 <body>
 	<div class="container">
-		<div class="row">
-			<div class="col-12">
-				<h1>Perfil de {usuario}</h1>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-12">
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-12">
-
-			</div>
-		</div>
+		<section id="profileSection">
+			<h1>Perfil de {usuario}</h1>
+		</section>
 		<section id="publicacion_section">
-			<h2 >Publicaciones</h2>
 			<div id="publicaciones_container">
 				{#each data.recetas as receta}
 					<div id="publicacion">
-						<h4>{receta.tituloreceta}</h4>
-						{#if receta.valoracionreceta == null || receta.valoracionreceta == 0}
-							<p><span>Valoración:</span> Sin valoración</p>
-						{:else}
-							<p><span>Valoración:</span> {receta.valoracionreceta}</p>
-						{/if}
-						{#if receta.tiempopreparacionreceta == 1}
-							<p><span>Tiempo de preparación:</span> {receta.tiempopreparacionreceta} minuto</p>
-						{:else}
+						<div>
+							<h3>{receta.tituloreceta}</h3>
+							{#if receta.valoracionreceta == null || receta.valoracionreceta === 0}
+								<p><span>Valoración:</span> Sin valoración</p>
+							{:else}
+								<p><span>Valoración:</span> {receta.valoracionreceta}</p>
+							{/if}
+							<span>{receta.descripcionreceta}</span>
 							<p><span>Tiempo de preparación:</span> {receta.tiempopreparacionreceta} minutos</p>
-						{/if}
-						<span>{receta.descripcionreceta}</span>
-						{#if receta.imagenreceta}
-							<img src={receta.imagenreceta} alt={receta.tituloreceta} width="200" height="200" />
-						{:else}
-							<img src={food_stand_day} alt="food_stand_day" height="200" />
-						{/if}	
+							<p><span>Dificultad:</span> {receta.dificultadreceta}</p>
+						</div>
+						<div>
+							{#if receta.imagenreceta}
+								<img src={receta.imagenreceta} alt={receta.tituloreceta} />
+							{:else}
+								<img src={food_stand_day} alt="food_stand_day" />
+							{/if}
+						</div>
 					</div>
 				{/each}
 			</div>
@@ -93,22 +82,16 @@
 
 <style>
 	.container {
-		margin-top: 50px;
-		display: flex;
-	}
-	.col-12 {
-		text-align: left;
-		padding-left: 50px;
+		padding: 1rem;
+		display: grid;
+		grid-template-columns: 40% 60%;
 	}
 
 	#publicacion {
 		border: 1px solid #363636;
 		padding: 0.5rem 1rem;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: flex-start;
-		gap: 1rem;
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
 	}
 
 	#publicacion p {
@@ -119,25 +102,44 @@
 		font-weight: 600;
 	}
 
+	#publicacion img {
+		border-radius: 0.5rem;
+		width: 230px;
+		aspect-ratio: 1;
+	}
+
 	#publicaciones_container {
 		display: grid;
 		grid-template-columns: repeat(1, 1fr);
+		gap: 2rem;
+		padding: 0 1rem;
+	}
+
+	#publicacion > div:nth-child(1) {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: flex-start;
 		gap: 1rem;
-		width: auto;
-		
+	}
+
+	#publicacion > div:nth-child(2) {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: flex-end;
 	}
 
 	#publicacion_section {
 		padding: 1rem;
 		display: flex;
-		width: 50%;
-		flex-direction: column;
-		margin-left: auto;
-		margin-right: 5%;
-		margin-top: 2%;
 		flex-direction: column;
 		justify-content: flex-start;
 		align-items: flex-start;
 		gap: 1rem;
+	}
+
+	#profileSection h1 {
+		padding-top: 1rem;
 	}
 </style>
