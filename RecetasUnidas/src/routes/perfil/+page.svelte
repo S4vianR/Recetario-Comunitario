@@ -3,21 +3,19 @@
 	import { onMount } from 'svelte';
 	import Nav from '../../components/Nav.svelte';
 	import food_stand_day from '/src/lib/assets/food-stand-day.png';
-	export let data;
 
 	let usuario = '';
+	let dataRecetas: any[] = [];
 
 	const handleMensajeUsuario = async () => {
 		const { data, error } = await supabase.auth.getUserIdentities();
 
-		if (error) {
-			console.error(error);
-		} else {
+		if (data) {
 			usuario = data?.identities[0].identity_data?.first_name;
 		}
 	};
 
-	onMount(() => {
+	onMount(async () => {
 		const logoElement = (document.getElementById('logo') as HTMLElement) || null;
 
 		logoElement.addEventListener('click', () => {
@@ -25,6 +23,19 @@
 		});
 
 		handleMensajeUsuario();
+
+		// Obtén el usuario actual
+		const user = supabase.auth.getUser();
+
+		// Si el usuario está autenticado, obtén su ID
+		const userID = (await user).data.user?.id;
+
+		// Query para obtener las recetas del usuario
+		const {data} = await supabase.from('recetas').select('*').eq('idusuario', userID);
+
+		if (data) {
+			dataRecetas = data;
+		}
 	});
 
 	supabase.auth.onAuthStateChange((event) => {
@@ -49,7 +60,7 @@
 		</section>
 		<section id="publicacion_section">
 			<div id="publicaciones_container">
-				{#each data.recetas as receta}
+				{#each dataRecetas as receta}
 					<div id="publicacion">
 						<div>
 							<h3>{receta.tituloreceta}</h3>
