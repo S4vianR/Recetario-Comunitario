@@ -31,7 +31,7 @@
 		const userID = (await user).data.user?.id;
 
 		// Query para obtener las recetas del usuario
-		const {data} = await supabase.from('recetas').select('*').eq('idusuario', userID);
+		const { data } = await supabase.from('recetas').select('*').eq('idusuario', userID);
 
 		if (data) {
 			dataRecetas = data;
@@ -116,6 +116,7 @@
 	}
 
 	#publicaciones_container {
+		width: 100%;
 		display: grid;
 		grid-template-columns: repeat(1, 1fr);
 		gap: 2rem;
@@ -138,6 +139,7 @@
 	}
 
 	#publicacion_section {
+		width: 100%;
 		padding: 1rem;
 		display: flex;
 		flex-direction: column;
