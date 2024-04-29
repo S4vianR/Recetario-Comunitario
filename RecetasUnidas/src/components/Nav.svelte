@@ -22,6 +22,12 @@
 			window.location.href = '/feed';
 		});
 
+		const nombreUsuario = (document.getElementById('nombreUsuario') as HTMLElement) || null;
+
+		nombreUsuario?.addEventListener('click', () => {
+			window.location.href = '/perfil';
+		});
+
 		handleMensajeUsuario();
 
 		const navEl = document.querySelector('nav') as HTMLElement;
@@ -66,7 +72,7 @@
 <nav>
 	<div class="first_div">
 		<img src={logo} alt="Logo" width="60" height="60" id="logo" />
-		<p>{usuario}</p>
+		<p id="nombreUsuario">{usuario}</p>
 	</div>
 	<div class="second_div">
 		<div id="searchBarContainer">
@@ -166,6 +172,10 @@
 
 	nav #searchBarContainer > input[type='search']:focus {
 		outline: 0.05rem solid #000;
+	}
+
+	nav #nombreUsuario:hover {
+		cursor: pointer;
 	}
 
 	nav ul {
