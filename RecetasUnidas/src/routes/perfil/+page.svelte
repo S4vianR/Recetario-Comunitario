@@ -57,8 +57,12 @@
 	<div class="container">
 		<section id="profileSection">
 			<h1>Perfil de {usuario}</h1>
+			<div id="profile">
+
+			</div>
 		</section>
 		<section id="publicacion_section">
+			<h2>Publicaciones</h2>
 			<div id="publicaciones_container">
 				{#each dataRecetas as receta}
 					<div id="publicacion">
@@ -97,6 +101,7 @@
 	#publicacion {
 		border: 1px solid #363636;
 		padding: 0.5rem 1rem;
+		width: 100%;
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
 	}
@@ -139,6 +144,7 @@
 
 	#publicacion_section {
 		padding: 1rem;
+		padding-top: 10%;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
@@ -148,5 +154,6 @@
 
 	#profileSection h1 {
 		padding-top: 1rem;
+		border: #363636;
 	}
 </style>
