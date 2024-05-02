@@ -55,11 +55,12 @@
 	const handleFormSubmit = async (event: any) => {
 		event.preventDefault();
 		const { data, error } = await supabase.auth.updateUser({
-			data: {
-				email: mail,
-				first_name: name,
-			},
+			// Update user's email and first_name metadata
 			email: mail,
+			data: {
+				// First name
+				first_name: name
+			}
 		});
 		if (error) {
 			alert('Error al cambiar datos');
@@ -75,6 +76,7 @@
 	};
 
 	import Modal from './modal.svelte';
+
 	let isOpen = false;
 
 	function openModal() {
@@ -86,29 +88,26 @@
 	}
 </script>
 
-<head>
-	<title> Recetas Unidas </title>
-</head>
-
 <Nav />
-
 <body>
 	<div class="container">
 		<section id="profileSection">
 			<h1>Perfil de {usuario}</h1>
 			<Modal bind:isOpen src={profilePicture} on:close={closeModal} />
-			<img id="profilePicture" src={profilePicture} alt="Foto de perfil" on:click={openModal} />
+			<button id="profilePictureButton" on:click={openModal}>
+				<img id="profilePicture" src={profilePicture} alt="Foto de perfil" />
+			</button>
 			<div id="profile">
 				<h1>Modificar Datos</h1>
 				<div id="profileForm">
 					<form on:submit={handleFormSubmit} method="get">
-						<div style="padding-left: 5%;">
-							<label for="name">Nombre:</label>
-							<input id="name" type="text" bind:value={name}/>
-												</div>
+						<!--						<div style="padding-left: 5%;">-->
+						<!--							<label for="name">Nombre:</label>-->
+						<!--							<input id="name" type="text" bind:value={name} />-->
+						<!--						</div>-->
 						<div style="padding-left: 5%; padding-top: 1rem;">
 							<label for="email">Correo electrónico:</label>
-							<input id="email" type="email" bind:value={mail}/>
+							<input id="email" type="email" bind:value={mail} />
 						</div>
 						<button type="submit">Guardar Cambios</button>
 					</form>
@@ -211,6 +210,20 @@
 	#profileSection h1 {
 		padding-top: 1rem;
 		border: #363636;
+	}
+
+	#profilePictureButton {
+		background-color: transparent;
+		border: none;
+		border-radius: 10rem;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+	}
+
+	#profilePictureButton:hover {
+		cursor: pointer;
 	}
 
 	#profilePicture {

@@ -91,6 +91,13 @@
 			window.location.href = '/feed';
 		}
 	};
+
+	const handleImageUploadBucket = async () => {
+		// Upload the images upload to the bucket
+		const { data, error } = await supabase.storage
+			.from('avatars')
+			.createSignedUrl('folder/avatar1.png', 60);
+	};
 </script>
 
 <Nav />
@@ -104,7 +111,7 @@
 		Volver atrás
 	</a>
 	<div class="formWrapper">
-		<form on:submit={handleFormSubmit} method="get">
+		<form on:submit={handleImageUploadBucket} method="get">
 			<h2>Creación de platillo</h2>
 			<div>
 				<label for="nombrePlatillo">Nombre platillo:</label>
@@ -133,7 +140,7 @@
 					type="file"
 					name="imagenReceta"
 					id="imagenReceta"
-					disabled
+					accept="image/*"
 					bind:value={imagenReceta}
 				/>
 			</div>

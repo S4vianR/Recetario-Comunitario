@@ -45,11 +45,6 @@
 	};
 </script>
 
-<head>
-	<title>
-		{titulo}
-	</title>
-</head>
 <main>
 	<section>
 		<section class="green left_pane">
