@@ -53,10 +53,14 @@
 	});
 
 	const handleFormSubmit = async (event: any) => {
+		event.preventDefault();
 		const { data, error } = await supabase.auth.updateUser({
-			email: mail
+			data: {
+				email: mail,
+				first_name: name,
+			},
+			email: mail,
 		});
-
 		if (error) {
 			alert('Error al cambiar datos');
 		} else {
@@ -100,11 +104,11 @@
 					<form on:submit={handleFormSubmit} method="get">
 						<div style="padding-left: 5%;">
 							<label for="name">Nombre:</label>
-							<input id="name" type="text" bind:value={name} />
-						</div>
+							<input id="name" type="text" bind:value={name}/>
+												</div>
 						<div style="padding-left: 5%; padding-top: 1rem;">
 							<label for="email">Correo electrónico:</label>
-							<input id="email" type="email" bind:value={mail} />
+							<input id="email" type="email" bind:value={mail}/>
 						</div>
 						<button type="submit">Guardar Cambios</button>
 					</form>
