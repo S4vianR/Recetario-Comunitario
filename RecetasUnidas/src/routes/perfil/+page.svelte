@@ -4,22 +4,13 @@
 	import Nav from '../../components/Nav.svelte';
 	import food_stand_day from '/src/lib/assets/food-stand-day.png';
 
-	let usuario = '';
-	let name = '';
+	let usuario: string = '';
+	let password: string = '';
+	let name: string = '';
 	let mail: string;
 	let dataRecetas: any[] = [];
 	let profilePicture =
 		'https://kaonlhtranrfojpknofp.supabase.co/storage/v1/object/sign/Fotos%20de%20Perfil/Captura%20desde%202024-05-01%2013-02-36.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJGb3RvcyBkZSBQZXJmaWwvQ2FwdHVyYSBkZXNkZSAyMDI0LTA1LTAxIDEzLTAyLTM2LnBuZyIsImlhdCI6MTcxNDU5MTAwMSwiZXhwIjoyMDI5OTUxMDAxfQ.rLin9wagYkBo0n8twib4ejm7CwrFibSDhw4Fs3y4o-U&t=2024-05-01T19%3A16%3A41.998Z';
-
-	const handleMensajeUsuario = async () => {
-		const { data, error } = await supabase.auth.getUserIdentities();
-
-		if (data) {
-			usuario = data?.identities[0].identity_data?.first_name;
-			name = data?.identities[0].identity_data?.first_name;
-			mail = data?.identities[0].identity_data?.email;
-		}
-	};
 
 	onMount(async () => {
 		const logoElement = (document.getElementById('logo') as HTMLElement) || null;
@@ -28,7 +19,7 @@
 			window.location.href = '/feed';
 		});
 
-		handleMensajeUsuario();
+		handleSupabaseVariables();
 
 		// Obtén el usuario actual
 		const user = supabase.auth.getUser();
@@ -44,9 +35,14 @@
 		}
 	});
 
+	const handleSupabaseVariables = async () => {
+		const { data, error } = await supabase.auth.getUserIdentities();
+		usuario = data?.identities[0].identity_data?.first_name;
+	};
+
 	supabase.auth.onAuthStateChange((event) => {
 		if (event === 'SIGNED_IN') {
-			handleMensajeUsuario();
+			handleSupabaseVariables();
 		} else if (event === 'SIGNED_OUT') {
 			window.location.href = '/login';
 		}
@@ -56,16 +52,12 @@
 		event.preventDefault();
 		const { data, error } = await supabase.auth.updateUser({
 			// Update user's email and first_name metadata
-			email: mail,
-			data: {
-				// First name
-				first_name: name
-			}
+			email: mail
 		});
 		if (error) {
 			alert('Error al cambiar datos');
 		} else {
-			alert('Cambios guardados');
+			alert('Cambios guardados, porfavor revisa tu correo para confirmar los cambios');
 		}
 	};
 
@@ -98,20 +90,18 @@
 				<img id="profilePicture" src={profilePicture} alt="Foto de perfil" />
 			</button>
 			<div id="profile">
-				<h1>Modificar Datos</h1>
-				<div id="profileForm">
-					<form on:submit={handleFormSubmit} method="get">
-						<!--						<div style="padding-left: 5%;">-->
-						<!--							<label for="name">Nombre:</label>-->
-						<!--							<input id="name" type="text" bind:value={name} />-->
-						<!--						</div>-->
-						<div style="padding-left: 5%; padding-top: 1rem;">
-							<label for="email">Correo electrónico:</label>
-							<input id="email" type="email" bind:value={mail} />
-						</div>
-						<button type="submit">Guardar Cambios</button>
-					</form>
-				</div>
+				<form on:submit={handleFormSubmit} method="get">
+					<h3>Modificar Datos</h3>
+					<div>
+						<label for="email">Correo electrónico:</label>
+						<input id="email" type="email" bind:value={mail} />
+					</div>
+					<div>
+						<label for="password">Contraseña:</label>
+						<input id="password" type="password" bind:value={password} />
+					</div>
+					<button type="submit">Guardar Cambios</button>
+				</form>
 			</div>
 		</section>
 		<section id="publicacion_section">
@@ -199,7 +189,6 @@
 	#publicacion_section {
 		width: 100%;
 		padding: 1rem;
-		padding-top: 10%;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
@@ -207,9 +196,13 @@
 		gap: 1rem;
 	}
 
-	#profileSection h1 {
+	#profileSection {
 		padding-top: 1rem;
-		border: #363636;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: flex-start;
+		gap: 1rem;
 	}
 
 	#profilePictureButton {
@@ -233,43 +226,60 @@
 		border: #000 2px solid;
 	}
 
-	#profileForm {
-		display: grid;
-		gap: 1rem;
-		grid-template-rows: repeat(3, 3fr);
-		grid-auto-flow: row;
-	}
-
 	form button {
 		padding: 0.5rem 1rem;
-		margin-left: 5%;
 		background-color: #3c8085;
 		color: #fff;
 		font-size: 1.1rem;
-		border: none;
+		border: 1px solid rgba(0, 0, 0, 0.5);
 		border-radius: 0.5rem;
 		cursor: pointer;
-		transition:
-			background-color 0.5s ease-in-out,
-			opacity 0.5s ease-in-out;
-		align-self: flex-end;
+		transition: background-color 0.5s ease-in-out;
+		width: 15rem;
 	}
 
 	form button:hover {
-		background-color: #3c8085;
-		opacity: 0.5;
+		background-color: #4a9ca2;
 	}
 
-	form input {
-		width: auto;
-		font-size: 1.1rem;
+	form input[type='email'],
+	form input[type='password'] {
+		width: 100%;
 		border-radius: 0.3875rem;
 		border: 1px solid #000;
 		padding: 0.7rem;
-		margin-left: 0.5rem;
+	}
+
+	form label,
+	form input[type='email'],
+	form input[type='password'] {
+		font-size: 1rem;
 	}
 
 	form label {
-		font-size: 1.5rem;
+		font-weight: 600;
+	}
+
+	form {
+		padding: 1rem;
+		display: flex;
+		flex-direction: column;
+		width: 25rem;
+		justify-content: center;
+		align-items: flex-end;
+		gap: 1rem;
+	}
+
+	form h3 {
+		align-self: flex-start;
+	}
+
+	form div {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: flex-start;
+		gap: 0.5rem;
 	}
 </style>
