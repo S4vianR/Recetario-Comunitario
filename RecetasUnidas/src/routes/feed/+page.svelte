@@ -1,5 +1,6 @@
 <script lang="ts">
 	export let data;
+	import { supabase } from '$lib/supabaseClient';
 	import food_stand_day from '/src/lib/assets/food-stand-day.png';
 	import Nav from '../../components/Nav.svelte';
 	import { onMount } from 'svelte';
@@ -10,20 +11,7 @@
 		window.location.href = '/crearReceta';
 	};
 
-	// onMount(() => {
-	// 	// When the url has a get parameter, it means that the user is searching for something
-	// 	const urlParams = new URLSearchParams(window.location.search);
-	// 	const searchQuery = urlParams.get('search');
-
-	// 	// If the user is searching for something, filter the recetas
-	// 	if (searchQuery) {
-	// 		data.recetas = data.recetas.filter((receta) => {
-	// 			return receta.tituloreceta.toLowerCase().includes(searchQuery.toLowerCase());
-	// 		});
-	// 	}
-	// });
-
-	onMount(() => {
+	onMount(async () => {
 		// Cuando la url tiene un parámetro get, significa que el usuario está buscando algo
 		const urlParams = new URLSearchParams(window.location.search);
 		const searchQuery = urlParams.get('search');
@@ -39,7 +27,57 @@
 				respuesta = false;
 			}
 		}
+		// Obtiene el id de la receta
+		for (let receta of data.recetas) {
+			const recetaID = receta.idreceta;
+			const nombreReceta = receta.tituloreceta;
+			handleUserLiked(recetaID, nombreReceta);
+		}
 	});
+
+	const handleUserLiked = async (recetaID: number) => {
+		const userID = (await supabase.auth.getSession()).data.session?.user?.id;
+		const buttonLike = document.getElementById(`buttonLike-${recetaID}`) as HTMLButtonElement;
+		const buttonLikeImg = document.getElementById(`buttonLikeImg-${recetaID}`) as HTMLImageElement;
+
+		const { data, error } = await supabase
+			.from('likes')
+			.select('idreceta')
+			.eq('idreceta', recetaID)
+			.eq('idusuario', userID);
+
+		// Si el data no está vacío, significa que el usuario ya le dio like a la receta
+		if ((data?.length ?? 0) > 0) {
+			buttonLike.style.backgroundColor = '#f0f0f0';
+			buttonLikeImg.src = '/icons/thumb-up-checked.svg';
+		}
+	};
+
+	const handleLike = async (idreceta: number) => {
+		// Obtiene el id del usuario
+		const userID = (await supabase.auth.getSession()).data.session?.user?.id;
+		// Obtiene el botón de like y la imagen del botón
+		const buttonLikeImg = document.getElementById(`buttonLikeImg-${idreceta}`) as HTMLImageElement;
+		// Obtiene el contador de likes
+		const likeCounter = document.getElementById('likeCounter') as HTMLSpanElement;
+
+		// Inserta el like en la base de datos
+		const { data, error } = await supabase.from('likes').insert([
+			{
+				idreceta,
+				idusuario: userID
+			}
+		]);
+
+		if (error) {
+			alert('Error al dar like');
+		} else {
+			// Cambia la imagen del botón
+			buttonLikeImg.src = '/icons/thumb-up-checked.svg';
+			// Incrementa el contador de likes
+			likeCounter.textContent = (parseInt(likeCounter.textContent ?? '0') + 1).toString();
+		}
+	};
 
 	const handleButtonRefresh = () => {
 		window.location.href = '/feed';
@@ -71,11 +109,6 @@
 					<div id="publicacion">
 						<div>
 							<h3>{receta.tituloreceta}</h3>
-							{#if receta.valoracionreceta == null || receta.valoracionreceta === 0}
-								<p><span>Valoración:</span> Sin valoración</p>
-							{:else}
-								<p><span>Valoración:</span> {receta.valoracionreceta}</p>
-							{/if}
 							<span>{receta.descripcionreceta}</span>
 							<p><span>Tiempo de preparación:</span> {receta.tiempopreparacionreceta} minutos</p>
 							<p><span>Dificultad:</span> {receta.dificultadreceta}</p>
@@ -86,6 +119,19 @@
 							{:else}
 								<img src={food_stand_day} alt="food_stand_day" />
 							{/if}
+						</div>
+						<div id="likeContainer">
+							<button
+								id={`buttonLike-${receta.idreceta}`}
+								on:click={() => handleLike(receta.idreceta)}
+							>
+								<img
+									src="/icons/thumb-up-unchecked.svg"
+									alt="icono like"
+									id={`buttonLikeImg-${receta.idreceta}`}
+								/>
+							</button>
+							<p><span id="likeCounter">{receta.numlikes}</span>likes</p>
 						</div>
 					</div>
 				{/each}
@@ -157,18 +203,59 @@
 		align-items: center;
 	}
 
-	#publicacion p {
+	#publicacion div:nth-child(1) p {
 		text-transform: capitalize;
 	}
 
-	#publicacion p > span {
+	#publicacion div:nth-child(1) p > span {
 		font-weight: 600;
 	}
 
 	#publicacion img {
 		border-radius: 0.5rem;
-		width: 230px;
+		width: 320px;
+		height: 220px;
+	}
+
+	#publicacion > #likeContainer {
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-start;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	#publicacion #likeContainer > button {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 2rem;
+		height: 2rem;
+		border-radius: 50%;
+		background-color: #fff;
+		border: 1px solid #000;
+		transition: background-color 0.1s ease-in-out;
+	}
+
+	#publicacion #likeContainer > button:hover {
+		cursor: pointer;
+		background-color: #f0f0f0;
+	}
+
+	#publicacion #likeContainer > button:active {
+		background-color: #cecece;
+	}
+
+	#publicacion #likeContainer > button img {
+		width: 1.2rem;
 		aspect-ratio: 1;
+	}
+
+	#publicacion #likeContainer p {
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
+		gap: 0.2rem;
 	}
 
 	#publicaciones_container {
