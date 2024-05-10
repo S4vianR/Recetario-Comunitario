@@ -1,9 +1,9 @@
 <script lang="ts">
 	export let data;
 	import { supabase } from '$lib/supabaseClient';
-	import food_stand_day from '/src/lib/assets/food-stand-day.png';
-	import Nav from '../../components/Nav.svelte';
 	import { onMount } from 'svelte';
+	import Nav from '../../components/Nav.svelte';
+	import food_stand_day from '/src/lib/assets/food-stand-day.png';
 
 	let respuesta: boolean;
 
@@ -30,9 +30,34 @@
 		// Obtiene el id de la receta
 		for (let receta of data.recetas) {
 			const recetaID = receta.idreceta;
-			const nombreReceta = receta.tituloreceta;
-			handleUserLiked(recetaID, nombreReceta);
+			handleUserLiked(recetaID);
 		}
+
+		const { data: usuario } = await supabase.auth.getUserIdentities();
+		const userID = usuario?.identities[0].user_id;
+		const userFirstName = usuario?.identities[0].identity_data?.first_name;
+		const correo = usuario?.identities[0].identity_data?.email;
+
+		const { data: existingUser } = await supabase
+            .from('usuarios')
+            .select('usuario')
+            .eq('correo', correo);
+		console.log(usuario);
+        // If user does not exist, insert new user
+        if (!existingUser || existingUser.length === 0) {
+            const { error: insertError } = await supabase.from('usuarios').insert([
+                {
+					usuario_uuid: userID,
+					nombreusuario: userFirstName,
+                    correousuario: correo,
+					usuario_admin: false
+                }
+            ]);
+
+            if (insertError) {
+                console.error('Error inserting user:', insertError);
+            }
+        }
 	});
 
 	const handleUserLiked = async (recetaID: number) => {
@@ -90,9 +115,9 @@
 		<button id="crearRecetaButton" on:click={handleCrearRecetaButton}> Crear receta </button>
 		<div id="profile">
 			<img src={food_stand_day} alt="food_stand_day" width="80" height="80" />
-			<div>
-				<h4>Lalito Pamez</h4>
-				<button>Ver perfil</button>
+			<div id="users_container">
+				<h4>{data}</h4>
+				<button>Editar perfil</button>
 			</div>
 		</div>
 	</section>

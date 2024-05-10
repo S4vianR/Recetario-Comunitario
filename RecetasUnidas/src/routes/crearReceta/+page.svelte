@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Nav from '../../components/Nav.svelte';
 	import { supabase } from '$lib/supabaseClient';
+	import Nav from '../../components/Nav.svelte';
 
 	// Variables
 	let nombrePlatillo: string;
@@ -81,11 +81,11 @@
 				idusuario: userId
 			}
 		]);
-
 		if (error) {
 			alert('Error al enviar el formulario');
 			console.error(error);
 		} else {
+			handleImageUploadBucket;
 			alert('Formulario enviado');
 			handleFormReset(event);
 			window.location.href = '/feed';
@@ -111,7 +111,7 @@
 		Volver atrás
 	</a>
 	<div class="formWrapper">
-		<form on:submit={handleImageUploadBucket} method="get">
+		<form on:submit={handleFormSubmit} method="get">
 			<h2>Creación de platillo</h2>
 			<div>
 				<label for="nombrePlatillo">Nombre platillo:</label>

@@ -57,7 +57,8 @@
 		if (error) {
 			alert('Error al cambiar datos');
 		} else {
-			alert('Cambios guardados, porfavor revisa tu correo para confirmar los cambios');
+			alert('Cambios guardados');
+			handleFormReset(event);
 		}
 	};
 

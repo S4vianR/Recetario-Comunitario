@@ -1,10 +1,9 @@
 <script lang="ts">
 	// Image imports
-	import vegetable_recipe_book from '/src/lib/assets/vegetable-recipe-book.png';
-	import logo from '/src/lib/assets/logo-removebg.png';
 	import { supabase } from '$lib/supabaseClient';
 	import { onMount } from 'svelte';
-	import { redirect } from '@sveltejs/kit';
+	import logo from '/src/lib/assets/logo-removebg.png';
+	import vegetable_recipe_book from '/src/lib/assets/vegetable-recipe-book.png';
 
 	// Variables
 	let correo = '';
@@ -21,14 +20,12 @@
 			email: correo,
 			password: password
 		});
-
-		// After a successful sign in, console log a success message
-		if (error) {
-			alert('Error al iniciar sesión');
-		} else {
-			window.location.href = '/feed';
-		}
-	}
+    if (error) {
+        alert('Error al iniciar sesión');
+    } else {
+        window.location.href = '/feed';
+    }
+}
 </script>
 
 <main>
