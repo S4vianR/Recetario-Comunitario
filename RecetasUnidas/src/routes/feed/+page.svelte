@@ -32,6 +32,32 @@
 			const recetaID = receta.idreceta;
 			handleUserLiked(recetaID);
 		}
+
+		const { data: usuario } = await supabase.auth.getUserIdentities();
+		const userID = usuario?.identities[0].user_id;
+		const userFirstName = usuario?.identities[0].identity_data?.first_name;
+		const correo = usuario?.identities[0].identity_data?.email;
+
+		const { data: existingUser } = await supabase
+            .from('usuarios')
+            .select('usuario')
+            .eq('correo', correo);
+		console.log(usuario);
+        // If user does not exist, insert new user
+        if (!existingUser || existingUser.length === 0) {
+            const { error: insertError } = await supabase.from('usuarios').insert([
+                {
+					usuario_uuid: userID,
+					nombreusuario: userFirstName,
+                    correousuario: correo,
+					usuario_admin: false
+                }
+            ]);
+
+            if (insertError) {
+                console.error('Error inserting user:', insertError);
+            }
+        }
 	});
 
 	const handleUserLiked = async (recetaID: number) => {

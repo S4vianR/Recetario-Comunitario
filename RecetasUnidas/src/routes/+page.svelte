@@ -20,31 +20,12 @@
 			email: correo,
 			password: password
 		});
-
-		// After a successful sign in, console log a success message
-		if (error) {
-			alert('Error al iniciar sesión');
-		} else {
-			supabase
-				.from('usuarios')
-				.select('usuario')
-				.eq('correo', correo)
-				.then((data) => {
-					if (data.count == 0) {
-						async function getUserIdentities() {
-							const { data } = await supabase.auth.getUserIdentities();
-							supabase.from('usuarios').insert([
-								{
-									nombreusuario: data?.identities[0].identity_data?.first_name,
-									correousuario: data?.identities[0].identity_data?.email,
-								}
-							]);
-						}
-					}
-				});
-			window.location.href = '/feed';
-		}
-	}
+    if (error) {
+        alert('Error al iniciar sesión');
+    } else {
+        window.location.href = '/feed';
+    }
+}
 </script>
 
 <main>
