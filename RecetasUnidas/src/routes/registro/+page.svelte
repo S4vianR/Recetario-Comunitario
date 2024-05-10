@@ -1,8 +1,8 @@
 <script lang="ts">
 	// Imports
+	import { supabase } from '$lib/supabaseClient';
 	import food_stand_day from '/src/lib/assets/food-stand-day.png';
 	import logo from '/src/lib/assets/logo-removebg.png';
-	import { supabase } from '$lib/supabaseClient';
 
 	// Page title
 	const titulo = 'Recetas Unidas';
@@ -31,7 +31,7 @@
 		}
 	}
 
-	const handleSignUp = (e) => {
+	const handleSignUp = (e:any) => {
 		e.preventDefault();
 		if (password == repeat_password) {
 			signUpNewUser();

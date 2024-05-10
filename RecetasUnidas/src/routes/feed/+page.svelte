@@ -1,9 +1,9 @@
 <script lang="ts">
 	export let data;
 	import { supabase } from '$lib/supabaseClient';
-	import food_stand_day from '/src/lib/assets/food-stand-day.png';
-	import Nav from '../../components/Nav.svelte';
 	import { onMount } from 'svelte';
+	import Nav from '../../components/Nav.svelte';
+	import food_stand_day from '/src/lib/assets/food-stand-day.png';
 
 	let respuesta: boolean;
 
@@ -30,8 +30,7 @@
 		// Obtiene el id de la receta
 		for (let receta of data.recetas) {
 			const recetaID = receta.idreceta;
-			const nombreReceta = receta.tituloreceta;
-			handleUserLiked(recetaID, nombreReceta);
+			handleUserLiked(recetaID);
 		}
 	});
 
@@ -90,9 +89,9 @@
 		<button id="crearRecetaButton" on:click={handleCrearRecetaButton}> Crear receta </button>
 		<div id="profile">
 			<img src={food_stand_day} alt="food_stand_day" width="80" height="80" />
-			<div>
-				<h4>Lalito Pamez</h4>
-				<button>Ver perfil</button>
+			<div id="users_container">
+				<h4>{data}</h4>
+				<button>Editar perfil</button>
 			</div>
 		</div>
 	</section>
