@@ -1,6 +1,5 @@
 <script lang="ts">
 	export let data;
-	export let usuarios;
 	import { supabase } from '$lib/supabaseClient';
 	import { onMount } from 'svelte';
 	import Nav from '../../components/Nav.svelte';
@@ -40,25 +39,25 @@
 		const correo = usuario?.identities[0].identity_data?.email;
 
 		const { data: existingUser } = await supabase
-            .from('usuarios')
-            .select('usuario')
-            .eq('correo', correo);
+			.from('usuarios')
+			.select('usuario')
+			.eq('correo', correo);
 		console.log(usuario);
-        // If user does not exist, insert new user
-        if (!existingUser || existingUser.length === 0) {
-            const { error: insertError } = await supabase.from('usuarios').insert([
-                {
+		// If user does not exist, insert new user
+		if (!existingUser || existingUser.length === 0) {
+			const { error: insertError } = await supabase.from('usuarios').insert([
+				{
 					usuario_uuid: userID,
 					nombreusuario: userFirstName,
-                    correousuario: correo,
+					correousuario: correo,
 					usuario_admin: false
-                }
-            ]);
+				}
+			]);
 
-            if (insertError) {
-                console.error('Error inserting user:', insertError);
-            }
-        }
+			if (insertError) {
+				console.error('Error inserting user:', insertError);
+			}
+		}
 	});
 
 	const handleUserLiked = async (recetaID: number) => {
@@ -115,14 +114,15 @@
 	<section>
 		<button id="crearRecetaButton" on:click={handleCrearRecetaButton}> Crear receta </button>
 		<div id="profile">
-			{#each usuarios as usuario}
+			{#each data.usuarios as usuario}
 				<div id="user">
 					<img src={food_stand_day} alt="food_stand_day" width="80" height="80" />
+					<div>
 						<h4>{usuario.nombreusuario}</h4>
 						<button>Ver perfil</button>
+					</div>
 				</div>
 			{/each}
-
 		</div>
 	</section>
 	<section>
@@ -172,7 +172,7 @@
 <style>
 	main {
 		display: grid;
-		grid-template-columns: 15% 85%;
+		grid-template-columns: 13% 87%;
 		height: 93svh;
 	}
 
@@ -314,21 +314,30 @@
 	}
 
 	#profile {
-		padding: 0.5rem;
-		border: 1px solid #000;
 		display: flex;
-		flex-direction: row;
+		flex-direction: column;
 		gap: 0.875rem;
 		justify-content: center;
 		align-items: center;
 	}
 
-	#profile div {
+	#profile #user {
+		padding: 0.5rem;
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
 		justify-content: center;
 		align-items: center;
 		gap: 0.875rem;
+		border: 1px solid #000;
+		width: 100%;
+	}
+
+	#profile #user > div {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: flex-start;
+		gap: 0.5rem;
 	}
 
 	#profile h4 {
