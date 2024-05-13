@@ -1,5 +1,6 @@
 <script lang="ts">
 	export let data;
+	export let usuarios;
 	import { supabase } from '$lib/supabaseClient';
 	import { onMount } from 'svelte';
 	import Nav from '../../components/Nav.svelte';
@@ -114,11 +115,14 @@
 	<section>
 		<button id="crearRecetaButton" on:click={handleCrearRecetaButton}> Crear receta </button>
 		<div id="profile">
-			<img src={food_stand_day} alt="food_stand_day" width="80" height="80" />
-			<div id="users_container">
-				<h4>{data}</h4>
-				<button>Editar perfil</button>
-			</div>
+			{#each usuarios as usuario}
+				<div id="user">
+					<img src={food_stand_day} alt="food_stand_day" width="80" height="80" />
+						<h4>{usuario.nombreusuario}</h4>
+						<button>Ver perfil</button>
+				</div>
+			{/each}
+
 		</div>
 	</section>
 	<section>
