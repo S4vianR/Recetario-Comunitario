@@ -87,18 +87,16 @@
 		const likeCounter = document.getElementById('likeCounter') as HTMLSpanElement;
 
 		// Check if the user already liked the recipe
-		const { data, error } = await supabase
+		const { data } = await supabase
 			.from('likes')
 			.select('idreceta')
 			.eq('idreceta', idreceta)
 			.eq('idusuario', userID);
 
-		console.log(dataLikes?.length);
-
 		// Si el data no está vacío, significa que el usuario ya le dio like a la receta
 		if ((data?.length ?? 0) > 0) {
 			// Inserta el like en la base de datos
-			const { data, error } = await supabase
+			const { error } = await supabase
 				.from('likes')
 				.delete()
 				.eq('idreceta', idreceta)
@@ -107,16 +105,10 @@
 			if (error) {
 				alert('Error al quitar el like');
 			} else {
-				// Count the number of likes of the recipe
-				const { data: dataLikes, error: errorLikes } = await supabase
-					.from('likes')
-					.select('idreceta', { count: 'exact' })
-					.eq('idreceta', idreceta);
+				// Quitar el like de la receta
+				const { data, error } = await supabase.from('likes').delete().eq('idreceta', idreceta).eq('idusuario', userID);
 				// Cambia la imagen del botón
 				buttonLikeImg.src = '/icons/thumb-up-unchecked.svg';
-				// Decrementa el contador de likes
-				likeCounter.textContent = numlikes.toString();
-				console.log(likeCounter.textContent);
 			}
 		} else {
 			// Si el usuario no le ha dado like a la receta, le da like
@@ -131,18 +123,12 @@
 			if (error) {
 				alert('Error al dar like');
 			} else {
-				// Count the number of likes of the recipe
-				const { data: dataLikes, error: errorLikes } = await supabase
-					.from('likes')
-					.select('idreceta', { count: 'exact' })
-					.eq('idreceta', idreceta);
 				// Cambia la imagen del botón
 				buttonLikeImg.src = '/icons/thumb-up-checked.svg';
-				// Incrementa el contador de likes
-				likeCounter.textContent = numlikes.toString();
-				console.log(likeCounter.textContent);
 			}
 		}
+		
+		likeCounter.innerHTML = numlikes.toString();
 	};
 
 	const handleButtonRefresh = () => {
