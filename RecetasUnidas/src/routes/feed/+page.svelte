@@ -78,7 +78,7 @@
 		}
 	};
 
-	const handleLike = async (idreceta: number) => {
+	const handleLike = async (idreceta: number, numlikes: number) => {
 		// Obtiene el id del usuario
 		const userID = (await supabase.auth.getSession()).data.session?.user?.id;
 		// Obtiene el botón de like y la imagen del botón
@@ -86,22 +86,49 @@
 		// Obtiene el contador de likes
 		const likeCounter = document.getElementById('likeCounter') as HTMLSpanElement;
 
-		// Inserta el like en la base de datos
-		const { data, error } = await supabase.from('likes').insert([
-			{
-				idreceta,
-				idusuario: userID
-			}
-		]);
+		// Check if the user already liked the recipe
+		const { data } = await supabase
+			.from('likes')
+			.select('idreceta')
+			.eq('idreceta', idreceta)
+			.eq('idusuario', userID);
 
-		if (error) {
-			alert('Error al dar like');
+		// Si el data no está vacío, significa que el usuario ya le dio like a la receta
+		if ((data?.length ?? 0) > 0) {
+			// Inserta el like en la base de datos
+			const { error } = await supabase
+				.from('likes')
+				.delete()
+				.eq('idreceta', idreceta)
+				.eq('idusuario', userID);
+
+			if (error) {
+				alert('Error al quitar el like');
+			} else {
+				// Quitar el like de la receta
+				const { data, error } = await supabase.from('likes').delete().eq('idreceta', idreceta).eq('idusuario', userID);
+				// Cambia la imagen del botón
+				buttonLikeImg.src = '/icons/thumb-up-unchecked.svg';
+			}
 		} else {
-			// Cambia la imagen del botón
-			buttonLikeImg.src = '/icons/thumb-up-checked.svg';
-			// Incrementa el contador de likes
-			likeCounter.textContent = (parseInt(likeCounter.textContent ?? '0') + 1).toString();
+			// Si el usuario no le ha dado like a la receta, le da like
+			// Inserta el like en la base de datos
+			const { data, error } = await supabase.from('likes').insert([
+				{
+					idreceta,
+					idusuario: userID
+				}
+			]);
+
+			if (error) {
+				alert('Error al dar like');
+			} else {
+				// Cambia la imagen del botón
+				buttonLikeImg.src = '/icons/thumb-up-checked.svg';
+			}
 		}
+		
+		likeCounter.innerHTML = numlikes.toString();
 	};
 
 	const handleButtonRefresh = () => {
@@ -152,7 +179,7 @@
 						<div id="likeContainer">
 							<button
 								id={`buttonLike-${receta.idreceta}`}
-								on:click={() => handleLike(receta.idreceta)}
+								on:click={() => handleLike(receta.idreceta, receta.numlikes)}
 							>
 								<img
 									src="/icons/thumb-up-unchecked.svg"
