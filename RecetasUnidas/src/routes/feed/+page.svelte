@@ -6,6 +6,10 @@
 	import food_stand_day from '/src/lib/assets/food-stand-day.png';
 
 	let respuesta: boolean;
+	let profilePicture =
+		'https://kaonlhtranrfojpknofp.supabase.co/storage/v1/object/sign/Fotos%20de%20Perfil/Captura%20desde%202024-05-01%2013-02-36.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJGb3RvcyBkZSBQZXJmaWwvQ2FwdHVyYSBkZXNkZSAyMDI0LTA1LTAxIDEzLTAyLTM2LnBuZyIsImlhdCI6MTcxNDU5MTAwMSwiZXhwIjoyMDI5OTUxMDAxfQ.rLin9wagYkBo0n8twib4ejm7CwrFibSDhw4Fs3y4o-U&t=2024-05-01T19%3A16%3A41.998Z';
+	let usuarios = data.usuarios;
+	let imageRecetaURL: any;
 
 	const handleCrearRecetaButton = () => {
 		window.location.href = '/crearReceta';
@@ -42,14 +46,14 @@
 		}
 
 		const { data: existingUser } = await supabase
-            .from('usuarios')
-            .select('usuario')
-            .eq('correo', correo);
+			.from('usuarios')
+			.select('usuario')
+			.eq('correo', correo);
 		console.log(usuario);
-        // If user does not exist, insert new user
-        if (!existingUser || existingUser.length === 0) {
-            const { error: insertError } = await supabase.from('usuarios').insert([
-                {
+		// If user does not exist, insert new user
+		if (!existingUser || existingUser.length === 0) {
+			const { error: insertError } = await supabase.from('usuarios').insert([
+				{
 					usuario_uuid: userID,
 					nombreusuario: userFirstName,
 					correousuario: correo,
