@@ -28,12 +28,12 @@
 }
 </script>
 
-<main>
+<main class="white">
 	<section>
 		<section class="purple left_pane">
 			<img alt="" src={logo} class="logo" />
 		</section>
-		<section class="white right_pane">
+		<section class="right_pane">
 			<h2>Inicio de sesión</h2>
 			<form on:submit={signInWithEmail} method="get">
 				<section>

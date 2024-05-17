@@ -45,12 +45,12 @@
 	};
 </script>
 
-<main>
+<main class="white">
 	<section>
 		<section class="green left_pane">
 			<img alt="" src={logo} class="logo" />
 		</section>
-		<section class="white right_pane">
+		<section class="right_pane">
 			<h2>Registro de usuario</h2>
 			<div id="form">
 				<section>
@@ -154,7 +154,7 @@
 	.right_pane > #form {
 		border: 1px solid #000;
 		padding: 2rem;
-		width: 50%;
+		width: 55%;
 		aspect-ratio: 4/3;
 		display: flex;
 		flex-direction: column;
