@@ -153,8 +153,8 @@
 					<img src={profilePicture} width="80" height="80" />
 					<div>
 						<h4>{usuario.nombreusuario}</h4>
-						<a href="/perfil/U/{usuario.nombreusuario}">Ver perfil</a>
-					</div>
+						<a href="/perfilU/{usuario.nombreusuario}">Ver perfil</a>
+					</div>	
 				</div>
 			{/each}
 		</div>
