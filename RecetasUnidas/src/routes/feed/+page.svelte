@@ -6,12 +6,21 @@
 	import food_stand_day from '/src/lib/assets/food-stand-day.png';
 
 	let respuesta: boolean;
-
+	let profilePicture =
+		'https://kaonlhtranrfojpknofp.supabase.co/storage/v1/object/sign/Fotos%20de%20Perfil/Captura%20desde%202024-05-01%2013-02-36.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJGb3RvcyBkZSBQZXJmaWwvQ2FwdHVyYSBkZXNkZSAyMDI0LTA1LTAxIDEzLTAyLTM2LnBuZyIsImlhdCI6MTcxNDU5MTAwMSwiZXhwIjoyMDI5OTUxMDAxfQ.rLin9wagYkBo0n8twib4ejm7CwrFibSDhw4Fs3y4o-U&t=2024-05-01T19%3A16%3A41.998Z';
+	let usuarios = data.usuarios;
+		
 	const handleCrearRecetaButton = () => {
 		window.location.href = '/crearReceta';
 	};
 
 	onMount(async () => {
+		const { data: usuario } = await supabase.auth.getUserIdentities();
+		const userID = usuario?.identities[0].user_id;
+		const userFirstName = usuario?.identities[0].identity_data?.first_name;
+		const correo = usuario?.identities[0].identity_data?.email;
+
+		usuarios = usuarios.filter((usuario) => usuario.correousuario !== correo);
 		// Cuando la url tiene un parámetro get, significa que el usuario está buscando algo
 		const urlParams = new URLSearchParams(window.location.search);
 		const searchQuery = urlParams.get('search');
@@ -33,31 +42,25 @@
 			handleUserLiked(recetaID);
 		}
 
-		const { data: usuario } = await supabase.auth.getUserIdentities();
-		const userID = usuario?.identities[0].user_id;
-		const userFirstName = usuario?.identities[0].identity_data?.first_name;
-		const correo = usuario?.identities[0].identity_data?.email;
-
 		const { data: existingUser } = await supabase
-            .from('usuarios')
-            .select('usuario')
-            .eq('correo', correo);
-		console.log(usuario);
-        // If user does not exist, insert new user
-        if (!existingUser || existingUser.length === 0) {
-            const { error: insertError } = await supabase.from('usuarios').insert([
-                {
+			.from('usuarios')
+			.select()
+			.eq('correousuario', correo);
+		// If user does not exist, insert new user
+		if (!existingUser || existingUser.length === 0) {
+			const { error: insertError } = await supabase.from('usuarios').insert([
+				{
 					usuario_uuid: userID,
 					nombreusuario: userFirstName,
-                    correousuario: correo,
+					correousuario: correo,
 					usuario_admin: false
-                }
-            ]);
+				}
+			]);
 
-            if (insertError) {
-                console.error('Error inserting user:', insertError);
-            }
-        }
+			if (insertError) {
+				console.error('Error inserting user:', insertError);
+			}
+		}
 	});
 
 	const handleUserLiked = async (recetaID: number) => {
@@ -106,7 +109,11 @@
 				alert('Error al quitar el like');
 			} else {
 				// Quitar el like de la receta
-				const { data, error } = await supabase.from('likes').delete().eq('idreceta', idreceta).eq('idusuario', userID);
+				const { data, error } = await supabase
+					.from('likes')
+					.delete()
+					.eq('idreceta', idreceta)
+					.eq('idusuario', userID);
 				// Cambia la imagen del botón
 				buttonLikeImg.src = '/icons/thumb-up-unchecked.svg';
 			}
@@ -127,7 +134,7 @@
 				buttonLikeImg.src = '/icons/thumb-up-checked.svg';
 			}
 		}
-		
+
 		likeCounter.innerHTML = numlikes.toString();
 	};
 
@@ -141,11 +148,15 @@
 	<section>
 		<button id="crearRecetaButton" on:click={handleCrearRecetaButton}> Crear receta </button>
 		<div id="profile">
-			<img src={food_stand_day} alt="food_stand_day" width="80" height="80" />
-			<div id="users_container">
-				<h4>{data}</h4>
-				<button>Editar perfil</button>
-			</div>
+			{#each usuarios as usuario}
+				<div id="user">
+					<img src={profilePicture} width="80" height="80" />
+					<div>
+						<h4>{usuario.nombreusuario}</h4>
+						<a href="/perfil/U/{usuario.nombreusuario}">Ver perfil</a>
+					</div>
+				</div>
+			{/each}
 		</div>
 	</section>
 	<section>
@@ -195,7 +206,7 @@
 <style>
 	main {
 		display: grid;
-		grid-template-columns: 15% 85%;
+		grid-template-columns: 13% 87%;
 		height: 93svh;
 	}
 
@@ -337,21 +348,30 @@
 	}
 
 	#profile {
-		padding: 0.5rem;
-		border: 1px solid #000;
 		display: flex;
-		flex-direction: row;
+		flex-direction: column;
 		gap: 0.875rem;
 		justify-content: center;
 		align-items: center;
 	}
 
-	#profile div {
+	#profile #user {
+		padding: 0.5rem;
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
 		justify-content: center;
 		align-items: center;
 		gap: 0.875rem;
+		border: 1px solid #000;
+		width: 100%;
+	}
+
+	#profile #user > div {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: flex-start;
+		gap: 0.5rem;
 	}
 
 	#profile h4 {
@@ -410,5 +430,11 @@
 	#mensajeContainer button:hover {
 		cursor: pointer;
 		background: #7e2719;
+	}
+
+	a {
+		color: black;
+		text-decoration: none;
+		font-weight: 600;
 	}
 </style>
