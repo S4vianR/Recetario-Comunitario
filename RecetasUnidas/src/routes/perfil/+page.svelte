@@ -68,7 +68,7 @@
 		form.reset();
 	};
 
-	import Modal from './modal.svelte';
+	import Modal from '../../components/modal.svelte';
 
 	let isOpen = false;
 

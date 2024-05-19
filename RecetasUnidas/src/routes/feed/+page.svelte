@@ -20,14 +20,14 @@
 		const userFirstName = usuario?.identities[0].identity_data?.first_name;
 		const correo = usuario?.identities[0].identity_data?.email;
 
-		usuarios = usuarios.filter((usuario) => usuario.correousuario !== correo);
+		usuarios = usuarios.filter((usuario: any) => usuario.correousuario !== correo);
 		// Cuando la url tiene un parámetro get, significa que el usuario está buscando algo
 		const urlParams = new URLSearchParams(window.location.search);
 		const searchQuery = urlParams.get('search');
 
 		// Si el usuario está buscando algo, filtra las recetas
 		if (searchQuery) {
-			data.recetas = data.recetas.filter((receta) => {
+			data.recetas = data.recetas.filter((receta: any) => {
 				return receta.tituloreceta.toLowerCase().includes(searchQuery.toLowerCase());
 			});
 
