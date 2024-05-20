@@ -150,7 +150,7 @@
 		<div id="profile">
 			{#each usuarios as usuario}
 				<div id="user">
-					<img src={profilePicture} width="80" height="80" />
+					<img src={profilePicture} width="80" height="80" alt="Profile"/>
 					<div>
 						<h4>{usuario.nombreusuario}</h4>
 						<a href="/perfilU/{usuario.nombreusuario}">Ver perfil</a>
@@ -376,27 +376,6 @@
 
 	#profile h4 {
 		font-size: 1rem;
-	}
-
-	#profile button {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		height: 1.875rem;
-		width: 6rem;
-		font-size: 0.875rem;
-		background-color: #236569;
-		color: #fff;
-		font-weight: 600;
-		padding: 0.5rem;
-		border-radius: 2rem;
-		border: 1px solid #000;
-		transition: background-color 0.3s ease-in-out;
-	}
-
-	#profile button:hover {
-		background-color: #2d7e83;
-		cursor: pointer;
 	}
 
 	#mensajeContainer {
