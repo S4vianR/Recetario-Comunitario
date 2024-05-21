@@ -1,7 +1,7 @@
 <script lang="ts">
+	import { supabase } from '$lib/supabaseClient';
 	import { onMount } from 'svelte';
 	import logo from '/src/lib/assets/logo-removebg.png';
-	import { supabase } from '$lib/supabaseClient';
 
 	let usuario = '';
 
@@ -71,7 +71,7 @@
 
 <nav>
 	<div class="first_div">
-		<img src={logo} alt="Logo" width="60" height="60" id="logo" />
+		<img src={logo} alt="Logo" id="logo" />
 		<p id="nombreUsuario">{usuario}</p>
 	</div>
 	<div class="second_div">
@@ -107,7 +107,7 @@
 		flex-direction: row;
 		align-items: center;
 		justify-content: space-between;
-		height: 7svh;
+		height: 3.5rem;
 		position: sticky;
 		top: 0;
 		right: 0;
@@ -197,5 +197,10 @@
 		color: white;
 		text-decoration: none;
 		font-weight: 600;
+	}
+
+	img {
+		width: 2.5rem;
+		height: 2.5rem;
 	}
 </style>

@@ -1,7 +1,6 @@
 <script lang="ts">
 	// Imports
 	import { supabase } from '$lib/supabaseClient';
-	import food_stand_day from '/src/lib/assets/food-stand-day.png';
 	import logo from '/src/lib/assets/logo-removebg.png';
 
 	// Page title
@@ -115,25 +114,24 @@
 				</section>
 			</div>
 		</section>
-		<img src={food_stand_day} alt="Food Stand Day" id="vegetable_recipe_book" />
 	</section>
 </main>
 
 <style>
 	main > section:nth-child(1) {
 		display: grid;
-		grid-template-columns: 30% 70%;
+		grid-template-columns: 40rem auto;
 		height: 100svh;
 	}
 
+
 	.left_pane {
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		padding: 1rem;
 	}
 
-	.left_pane > img {
-		height: 100px;
-		aspect-ratio: 1.01;
-	}
 
 	.right_pane {
 		padding: 1rem;
@@ -231,13 +229,6 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
-	}
-
-	#vegetable_recipe_book {
-		position: absolute;
-		left: 10rem;
-		top: 13rem;
-		border-radius: 3rem;
 	}
 
 	.white {

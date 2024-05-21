@@ -21,14 +21,14 @@
 		const userFirstName = usuario?.identities[0].identity_data?.first_name;
 		const correo = usuario?.identities[0].identity_data?.email;
 
-		usuarios = usuarios.filter((usuario) => usuario.correousuario !== correo);
+		usuarios = usuarios.filter((usuario: any) => usuario.correousuario !== correo);
 		// Cuando la url tiene un parámetro get, significa que el usuario está buscando algo
 		const urlParams = new URLSearchParams(window.location.search);
 		const searchQuery = urlParams.get('search');
 
 		// Si el usuario está buscando algo, filtra las recetas
 		if (searchQuery) {
-			data.recetas = data.recetas.filter((receta) => {
+			data.recetas = data.recetas.filter((receta: any) => {
 				return receta.tituloreceta.toLowerCase().includes(searchQuery.toLowerCase());
 			});
 
@@ -182,11 +182,11 @@
 		<div id="profile">
 			{#each usuarios as usuario}
 				<div id="user">
-					<img src={profilePicture} width="80" height="80" />
+					<img class="profileImg" src={profilePicture} alt="Profile"/>
 					<div>
 						<h4>{usuario.nombreusuario}</h4>
-						<a href="/perfil/U/{usuario.nombreusuario}">Ver perfil</a>
-					</div>
+						<a href="/perfilU/{usuario.nombreusuario}">Ver perfil</a>
+					</div>	
 				</div>
 			{/each}
 		</div>
@@ -238,7 +238,7 @@
 <style>
 	main {
 		display: grid;
-		grid-template-columns: 13% 87%;
+		grid-template-columns: auto auto;
 		height: 93svh;
 	}
 
@@ -308,8 +308,8 @@
 
 	#publicacion img {
 		border-radius: 0.5rem;
-		width: 320px;
-		height: 220px;
+		width: 20rem;
+		height: 13.75rem;
 	}
 
 	#publicacion > #likeContainer {
@@ -395,7 +395,7 @@
 		align-items: center;
 		gap: 0.875rem;
 		border: 1px solid #000;
-		width: 100%;
+		width: 12rem;
 	}
 
 	#profile #user > div {
@@ -408,27 +408,6 @@
 
 	#profile h4 {
 		font-size: 1rem;
-	}
-
-	#profile button {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		height: 1.875rem;
-		width: 6rem;
-		font-size: 0.875rem;
-		background-color: #236569;
-		color: #fff;
-		font-weight: 600;
-		padding: 0.5rem;
-		border-radius: 2rem;
-		border: 1px solid #000;
-		transition: background-color 0.3s ease-in-out;
-	}
-
-	#profile button:hover {
-		background-color: #2d7e83;
-		cursor: pointer;
 	}
 
 	#mensajeContainer {
@@ -468,5 +447,11 @@
 		color: black;
 		text-decoration: none;
 		font-weight: 600;
+	}
+	
+	.profileImg {
+		border-radius: 50%;
+		width: 4rem;
+		height: 4rem;
 	}
 </style>
