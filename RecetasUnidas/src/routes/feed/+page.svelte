@@ -184,8 +184,8 @@
 				<div id="user">
 					<img class="profileImg" src={profilePicture} alt="Profile"/>
 					<div>
-						<h4>{usuario.nombreusuario}</h4>
-						<a href="/perfilU/{usuario.nombreusuario}">Ver perfil</a>
+						<h5>{usuario.	nombreusuario}</h5>
+						<button class="profileButton" on:click={() => window.location.href = `/perfilU/${usuario.nombreusuario}`}>Ver perfil</button>
 					</div>	
 				</div>
 			{/each}
@@ -248,9 +248,8 @@
 	}
 
 	main > section:nth-child(1) {
-		background-color: #fdf5e4;
+		background-color:#d0d7e9;
 		width: 100%;
-		border-right: 1px solid #a99f89;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
@@ -362,11 +361,11 @@
 	}
 
 	#crearRecetaButton {
+		border: none;
 		width: 9.6875rem;
 		height: 2.5625rem;
 		border-radius: 3.125rem;
-		border: 1px solid #000;
-		background: #9d3726;
+		background: #9f76a8;
 		color: #fff;
 		text-align: center;
 		font-size: 0.775rem;
@@ -376,7 +375,7 @@
 
 	#crearRecetaButton:hover {
 		cursor: pointer;
-		background: #7e2719;
+		background: #6f5275;
 	}
 
 	#profile {
@@ -390,11 +389,13 @@
 	#profile #user {
 		padding: 0.5rem;
 		display: flex;
+		flex: content;
 		flex-direction: row;
 		justify-content: center;
 		align-items: center;
 		gap: 0.875rem;
-		border: 1px solid #000;
+		background-color: #e9e2d0;
+		border: 0.01px solid #8a8a8a;
 		width: 12rem;
 	}
 
@@ -446,6 +447,7 @@
 	a {
 		color: black;
 		text-decoration: none;
+		font-size: 0.7rem;
 		font-weight: 600;
 	}
 	
@@ -453,5 +455,23 @@
 		border-radius: 50%;
 		width: 4rem;
 		height: 4rem;
+	}
+
+	.profileButton{
+		border: none;
+		width: fit-content;
+		height: fit-content;
+		padding: 0.2rem;
+		border-radius: 2.125rem;
+		background: #9f76a8;
+		color: #fff;
+		text-align: center;
+		font-size: 0.775rem;
+		font-weight: 700;
+		transition: background-color 0.2s ease-in-out;
+	}
+	.profileButton:hover {
+		cursor: pointer;
+		background: #6f5275;
 	}
 </style>

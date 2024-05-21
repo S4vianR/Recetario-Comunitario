@@ -96,9 +96,9 @@
 
 <style>
 	.container {
-		padding: 1rem;
 		display: grid;
 		grid-template-columns: 30% 70%;
+		height: 100%;
 	}
 
     h1 {
@@ -161,8 +161,8 @@
 	}
 
 	#profileSection {
-		padding-top: 2rem;
-        padding-left: 2rem;
+		padding: 2rem;
+		background-color: #d0d7e9;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
