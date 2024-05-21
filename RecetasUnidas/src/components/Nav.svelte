@@ -101,7 +101,7 @@
 
 <style>
 	nav {
-		background-color: #3c8085;
+		background-color: #6e5773;
 		padding: 0.35rem 1rem;
 		display: flex;
 		flex-direction: row;

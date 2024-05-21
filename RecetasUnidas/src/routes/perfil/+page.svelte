@@ -85,7 +85,7 @@
 <body>
 	<div class="container">
 		<section id="profileSection">
-			<h1>Perfil de {usuario}</h1>
+			<h1>{usuario}</h1>
 			<Modal bind:isOpen src={profilePicture} on:close={closeModal} />
 			<button id="profilePictureButton" on:click={openModal}>
 				<img id="profilePicture" src={profilePicture} alt="Foto de perfil" />
@@ -137,9 +137,13 @@
 
 <style>
 	.container {
-		padding: 1rem;
 		display: grid;
 		grid-template-columns: 40% 60%;
+		height: 100%;
+	}
+
+	h1 {
+		font-size: 3rem;
 	}
 
 	#publicacion {
@@ -198,12 +202,13 @@
 	}
 
 	#profileSection {
-		padding-top: 1rem;
+		padding: 2rem;
+		background-color: #d0d7e9;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
-		align-items: flex-start;
-		gap: 1rem;
+		align-items: center;
+		gap: 2rem;
 	}
 
 	#profilePictureButton {
@@ -222,7 +227,7 @@
 
 	#profilePicture {
 		border-radius: 50%;
-		width: 12.5rem;
+		width: 100%;
 		aspect-ratio: 1;
 		border: #000 2px solid;
 	}

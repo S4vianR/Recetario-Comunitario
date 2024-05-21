@@ -236,6 +236,6 @@
 	}
 
 	.green {
-		background-color: #236569;
+		background-color: #6e5773;
 	}
 </style>
