@@ -90,7 +90,7 @@
 	.right_pane > form {
 		border: 3px solid #000;
 		padding: 2rem;
-		width: 50%;
+		width: 55%;
 		aspect-ratio: 3/2;
 		display: flex;
 		flex-direction: column;

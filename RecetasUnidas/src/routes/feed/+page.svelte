@@ -9,7 +9,8 @@
 	let profilePicture =
 		'https://kaonlhtranrfojpknofp.supabase.co/storage/v1/object/sign/Fotos%20de%20Perfil/Captura%20desde%202024-05-01%2013-02-36.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJGb3RvcyBkZSBQZXJmaWwvQ2FwdHVyYSBkZXNkZSAyMDI0LTA1LTAxIDEzLTAyLTM2LnBuZyIsImlhdCI6MTcxNDU5MTAwMSwiZXhwIjoyMDI5OTUxMDAxfQ.rLin9wagYkBo0n8twib4ejm7CwrFibSDhw4Fs3y4o-U&t=2024-05-01T19%3A16%3A41.998Z';
 	let usuarios = data.usuarios;
-		
+	let imageRecetaURL: any;
+
 	const handleCrearRecetaButton = () => {
 		window.location.href = '/crearReceta';
 	};
@@ -39,13 +40,16 @@
 		// Obtiene el id de la receta
 		for (let receta of data.recetas) {
 			const recetaID = receta.idreceta;
+			const recetaName = receta.tituloreceta;
 			handleUserLiked(recetaID);
+			handleImageRecovery(recetaID ,recetaName);
 		}
 
 		const { data: existingUser } = await supabase
 			.from('usuarios')
-			.select()
-			.eq('correousuario', correo);
+			.select('usuario')
+			.eq('correo', correo);
+		console.log(usuario);
 		// If user does not exist, insert new user
 		if (!existingUser || existingUser.length === 0) {
 			const { error: insertError } = await supabase.from('usuarios').insert([
@@ -62,6 +66,34 @@
 			}
 		}
 	});
+
+	const handleImageRecovery = async (idReceta: number ,nombreReceta: string) => {
+		let imagenReceta = document.getElementById(`imagenReceta-${idReceta}`) as HTMLImageElement;
+		// const { data } = supabase.storage.from('public-bucket').getPublicUrl('/avatar1.png');
+		// Following the example above, you can get the public URL of the image and set it to the imageRecetaURL variable, the name of the image is the same as the name of the recipe but in lowercase and spaced with hyphens
+
+		//const nombreImagen = data.recetas[0].tituloreceta.toLowerCase().replace(/ /g, '-');
+		// For each recipe, get the image
+
+		let nombreImagen: any;
+		nombreImagen = nombreReceta.toLowerCase().replace(/ /g, '-');
+
+		// The file format can be anything, like .png, .jpg, .jpeg, etc.
+		const { data: imagen } = await supabase.storage
+			.from('fotosRecetas')
+			.getPublicUrl(`${nombreImagen}.jpg`);
+
+		console.log(imagen);
+
+		for (let receta of data.recetas) {
+			if (receta.idreceta === idReceta) {
+				if (imagen) {
+					imagenReceta.src = imagen.publicUrl;
+				}
+			}
+		}
+		
+	};
 
 	const handleUserLiked = async (recetaID: number) => {
 		const userID = (await supabase.auth.getSession()).data.session?.user?.id;
@@ -178,7 +210,7 @@
 						</div>
 						<div>
 							{#if receta.imagenreceta}
-								<img src={receta.imagenreceta} alt={receta.tituloreceta} />
+								<img alt={receta.tituloreceta} id={`imagenReceta-${receta.idreceta}`} />
 							{:else}
 								<img src={food_stand_day} alt="food_stand_day" />
 							{/if}
