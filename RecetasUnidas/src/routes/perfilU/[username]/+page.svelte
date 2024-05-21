@@ -123,7 +123,7 @@
 
 	#publicacion img {
 		border-radius: 0.5rem;
-		width: 230px;
+		width: 14.375rem;
 		aspect-ratio: 1;
 	}
 
@@ -186,7 +186,7 @@
 
 	#profilePicture {
 		border-radius: 50%;
-		width: 25rem;
+		width: 100%;
 		aspect-ratio: 1;
 		border: #000 2px solid;
 	}

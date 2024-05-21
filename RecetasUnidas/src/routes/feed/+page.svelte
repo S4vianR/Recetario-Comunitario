@@ -150,7 +150,7 @@
 		<div id="profile">
 			{#each usuarios as usuario}
 				<div id="user">
-					<img src={profilePicture} width="80" height="80" alt="Profile"/>
+					<img class="profileImg" src={profilePicture} alt="Profile"/>
 					<div>
 						<h4>{usuario.nombreusuario}</h4>
 						<a href="/perfilU/{usuario.nombreusuario}">Ver perfil</a>
@@ -206,7 +206,7 @@
 <style>
 	main {
 		display: grid;
-		grid-template-columns: 13% 87%;
+		grid-template-columns: auto auto;
 		height: 93svh;
 	}
 
@@ -276,8 +276,8 @@
 
 	#publicacion img {
 		border-radius: 0.5rem;
-		width: 320px;
-		height: 220px;
+		width: 20rem;
+		height: 13.75rem;
 	}
 
 	#publicacion > #likeContainer {
@@ -363,7 +363,7 @@
 		align-items: center;
 		gap: 0.875rem;
 		border: 1px solid #000;
-		width: 100%;
+		width: 12rem;
 	}
 
 	#profile #user > div {
@@ -415,5 +415,11 @@
 		color: black;
 		text-decoration: none;
 		font-weight: 600;
+	}
+	
+	.profileImg {
+		border-radius: 50%;
+		width: 4rem;
+		height: 4rem;
 	}
 </style>

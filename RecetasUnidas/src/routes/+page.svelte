@@ -3,7 +3,6 @@
 	import { supabase } from '$lib/supabaseClient';
 	import { onMount } from 'svelte';
 	import logo from '/src/lib/assets/logo-removebg.png';
-	import vegetable_recipe_book from '/src/lib/assets/vegetable-recipe-book.png';
 
 	// Variables
 	let correo = '';
@@ -20,18 +19,18 @@
 			email: correo,
 			password: password
 		});
-    if (error) {
-        alert('Error al iniciar sesión');
-    } else {
-        window.location.href = '/feed';
-    }
-}
+		if (error) {
+			alert('Error al iniciar sesión');
+		} else {
+			window.location.href = '/feed';
+		}
+	}
 </script>
 
 <main class="white">
 	<section>
-		<section class="purple left_pane">
-			<img alt="" src={logo} class="logo" />
+		<section class="left_pane">
+			<img id="logo" src={logo} class="logo" alt="Logo" />
 		</section>
 		<section class="right_pane">
 			<h2>Inicio de sesión</h2>
@@ -53,25 +52,24 @@
 				</section>
 			</form>
 		</section>
-		<img src={vegetable_recipe_book} alt="Vegetable Recipe Book" id="vegetable_recipe_book" />
 	</section>
 </main>
 
 <style>
 	main > section:nth-child(1) {
 		display: grid;
-		grid-template-columns: 30% 70%;
+		grid-template-columns: 40rem auto;
 		height: 100svh;
 	}
 
 	.left_pane {
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		padding: 1rem;
+		background-color: #236569;
 	}
 
-	.left_pane > img {
-		height: 100px;
-		aspect-ratio: 1.01;
-	}
 
 	.right_pane {
 		padding: 1rem;
@@ -90,7 +88,7 @@
 	}
 
 	.right_pane > form {
-		border: 1px solid #000;
+		border: 3px solid #000;
 		padding: 2rem;
 		width: 50%;
 		aspect-ratio: 3/2;
@@ -128,7 +126,7 @@
 		outline: none;
 		border: 0.12rem solid #3f3f3f;
 		border-radius: 0.5rem;
-		width: 25rem;
+		width: 100%;
 		height: 2.575rem;
 		flex-shrink: 0;
 		padding: 0.5rem;
@@ -164,14 +162,6 @@
 	#mensaje_registro > a {
 		color: #801c02;
 	}
-
-	#vegetable_recipe_book {
-		position: absolute;
-		left: 10rem;
-		top: 13rem;
-		border-radius: 3rem;
-	}
-
 	.white {
 		background-color: #faf9f6;
 	}
