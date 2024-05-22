@@ -379,8 +379,8 @@
 	}
 
 	#profile {
-		display: flex;
-		flex-direction: column;
+		display: grid;
+		grid-template-rows: repeat(3, 1fr);
 		gap: 0.875rem;
 		justify-content: center;
 		align-items: center;
@@ -388,12 +388,10 @@
 
 	#profile #user {
 		padding: 0.5rem;
-		display: flex;
-		flex: content;
-		flex-direction: row;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
 		justify-content: center;
 		align-items: center;
-		gap: 0.875rem;
 		background-color: #e9e2d0;
 		border: 0.01px solid #8a8a8a;
 		width: 12rem;
