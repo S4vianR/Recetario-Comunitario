@@ -147,7 +147,6 @@
 					.eq('idusuario', userID);
 				// Cambia la imagen del botón
 				buttonLikeImg.src = '/icons/thumb-up-unchecked.svg';
-				// Decrementa el contador de likes
 			}
 		} else {
 			// Si el usuario no le ha dado like a la receta, le da like
@@ -410,10 +409,6 @@
 		justify-content: center;
 		align-items: flex-start;
 		gap: 0.5rem;
-	}
-
-	#profile h4 {
-		font-size: 1rem;
 	}
 
 	#mensajeContainer {

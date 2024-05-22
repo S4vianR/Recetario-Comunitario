@@ -5,9 +5,6 @@
 	import food_stand_day from '/src/lib/assets/food-stand-day.png';
 
 	let usuario: string = '';
-	let password: string = '';
-	let name: string = '';
-	let mail: string;
 	let dataRecetas: any[] = [];
 	let profilePicture =
 		'https://kaonlhtranrfojpknofp.supabase.co/storage/v1/object/sign/Fotos%20de%20Perfil/Captura%20desde%202024-05-01%2013-02-36.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJGb3RvcyBkZSBQZXJmaWwvQ2FwdHVyYSBkZXNkZSAyMDI0LTA1LTAxIDEzLTAyLTM2LnBuZyIsImlhdCI6MTcxNDU5MTAwMSwiZXhwIjoyMDI5OTUxMDAxfQ.rLin9wagYkBo0n8twib4ejm7CwrFibSDhw4Fs3y4o-U&t=2024-05-01T19%3A16%3A41.998Z';
@@ -48,26 +45,6 @@
 		}
 	});
 
-	const handleFormSubmit = async (event: any) => {
-		event.preventDefault();
-		const { data, error } = await supabase.auth.updateUser({
-			// Update user's email and first_name metadata
-			email: mail
-		});
-		if (error) {
-			alert('Error al cambiar datos');
-		} else {
-			alert('Cambios guardados');
-			handleFormReset(event);
-		}
-	};
-
-	const handleFormReset = (event: any) => {
-		event.preventDefault();
-		const form = document.querySelector('form') as HTMLFormElement;
-		form.reset();
-	};
-
 	import Modal from './modal.svelte';
 
 	let isOpen = false;
@@ -85,24 +62,12 @@
 <body>
 	<div class="container">
 		<section id="profileSection">
-			<h1>{usuario}</h1>
+			<h1>{usuario}<a id="settings" href="/ajustes" title="Ajustes"><img src="/icons/settings.svg" alt="Settings" /></a></h1>
 			<Modal bind:isOpen src={profilePicture} on:close={closeModal} />
 			<button id="profilePictureButton" on:click={openModal}>
 				<img id="profilePicture" src={profilePicture} alt="Foto de perfil" />
 			</button>
 			<div id="profile">
-				<form on:submit={handleFormSubmit} method="get">
-					<h3>Modificar Datos</h3>
-					<div>
-						<label for="email">Correo electrónico:</label>
-						<input id="email" type="email" bind:value={mail} />
-					</div>
-					<div>
-						<label for="password">Contraseña:</label>
-						<input id="password" type="password" bind:value={password} />
-					</div>
-					<button type="submit">Guardar Cambios</button>
-				</form>
 			</div>
 		</section>
 		<section id="publicacion_section">
@@ -112,11 +77,6 @@
 					<div id="publicacion">
 						<div>
 							<h3>{receta.tituloreceta}</h3>
-							{#if receta.valoracionreceta == null || receta.valoracionreceta === 0}
-								<p><span>Valoración:</span> Sin valoración</p>
-							{:else}
-								<p><span>Valoración:</span> {receta.valoracionreceta}</p>
-							{/if}
 							<span>{receta.descripcionreceta}</span>
 							<p><span>Tiempo de preparación:</span> {receta.tiempopreparacionreceta} minutos</p>
 							<p><span>Dificultad:</span> {receta.dificultadreceta}</p>
@@ -144,6 +104,10 @@
 
 	h1 {
 		font-size: 3rem;
+	}
+
+	#settings{
+		padding-left: 1rem;
 	}
 
 	#publicacion {
@@ -230,62 +194,5 @@
 		width: 100%;
 		aspect-ratio: 1;
 		border: #000 2px solid;
-	}
-
-	form button {
-		padding: 0.5rem 1rem;
-		background-color: #3c8085;
-		color: #fff;
-		font-size: 1.1rem;
-		border: 1px solid rgba(0, 0, 0, 0.5);
-		border-radius: 0.5rem;
-		cursor: pointer;
-		transition: background-color 0.5s ease-in-out;
-		width: 15rem;
-	}
-
-	form button:hover {
-		background-color: #4a9ca2;
-	}
-
-	form input[type='email'],
-	form input[type='password'] {
-		width: 100%;
-		border-radius: 0.3875rem;
-		border: 1px solid #000;
-		padding: 0.7rem;
-	}
-
-	form label,
-	form input[type='email'],
-	form input[type='password'] {
-		font-size: 1rem;
-	}
-
-	form label {
-		font-weight: 600;
-	}
-
-	form {
-		padding: 1rem;
-		display: flex;
-		flex-direction: column;
-		width: 25rem;
-		justify-content: center;
-		align-items: flex-end;
-		gap: 1rem;
-	}
-
-	form h3 {
-		align-self: flex-start;
-	}
-
-	form div {
-		width: 100%;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: flex-start;
-		gap: 0.5rem;
 	}
 </style>
