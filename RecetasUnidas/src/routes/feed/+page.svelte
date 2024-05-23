@@ -42,7 +42,7 @@
 			const recetaID = receta.idreceta;
 			const recetaName = receta.tituloreceta;
 			handleUserLiked(recetaID);
-			handleImageRecovery(recetaID ,recetaName);
+			handleImageRecovery(recetaID, recetaName);
 		}
 
 		const { data: existingUser } = await supabase
@@ -67,7 +67,7 @@
 		}
 	});
 
-	const handleImageRecovery = async (idReceta: number ,nombreReceta: string) => {
+	const handleImageRecovery = async (idReceta: number, nombreReceta: string) => {
 		let imagenReceta = document.getElementById(`imagenReceta-${idReceta}`) as HTMLImageElement;
 		// const { data } = supabase.storage.from('public-bucket').getPublicUrl('/avatar1.png');
 		// Following the example above, you can get the public URL of the image and set it to the imageRecetaURL variable, the name of the image is the same as the name of the recipe but in lowercase and spaced with hyphens
@@ -92,7 +92,6 @@
 				}
 			}
 		}
-		
 	};
 
 	const handleUserLiked = async (recetaID: number) => {
@@ -119,7 +118,7 @@
 		// Obtiene el botón de like y la imagen del botón
 		const buttonLikeImg = document.getElementById(`buttonLikeImg-${idreceta}`) as HTMLImageElement;
 		// Obtiene el contador de likes
-		const likeCounter = document.getElementById('likeCounter') as HTMLSpanElement;
+		const likeCounter = document.getElementById(`likeCounter-${idreceta}`) as HTMLSpanElement;
 
 		// Check if the user already liked the recipe
 		const { data } = await supabase
@@ -164,10 +163,13 @@
 			} else {
 				// Cambia la imagen del botón
 				buttonLikeImg.src = '/icons/thumb-up-checked.svg';
+				// Incrementa el contador de likes
+				numlikes++;
 			}
 		}
 
-		likeCounter.innerHTML = numlikes.toString();
+		// Actualiza el contador de likes en la interfaz
+		likeCounter.textContent = numlikes.toString();
 	};
 
 	const handleButtonRefresh = () => {
@@ -182,11 +184,15 @@
 		<div id="profile">
 			{#each usuarios as usuario}
 				<div id="user">
-					<img class="profileImg" src={profilePicture} alt="Profile"/>
+					<img class="profileImg" src={profilePicture} alt="Profile" />
 					<div>
-						<h5>{usuario.	nombreusuario}</h5>
-						<button class="profileButton" on:click={() => window.location.href = `/perfilU/${usuario.nombreusuario}`}>Ver perfil</button>
-					</div>	
+						<h5>{usuario.nombreusuario}</h5>
+						<button
+							class="profileButton"
+							on:click={() => (window.location.href = `/perfilU/${usuario.nombreusuario}`)}
+							>Ver perfil</button
+						>
+					</div>
 				</div>
 			{/each}
 		</div>
@@ -226,7 +232,7 @@
 									id={`buttonLikeImg-${receta.idreceta}`}
 								/>
 							</button>
-							<p><span id="likeCounter">{receta.numlikes}</span>likes</p>
+							<p><span id={`likeCounter-${receta.idreceta}`}>{receta.numlikes}</span>likes</p>
 						</div>
 					</div>
 				{/each}
@@ -248,7 +254,7 @@
 	}
 
 	main > section:nth-child(1) {
-		background-color:#d0d7e9;
+		background-color: #d0d7e9;
 		width: 100%;
 		display: flex;
 		flex-direction: column;
@@ -379,8 +385,8 @@
 	}
 
 	#profile {
-		display: flex;
-		flex-direction: column;
+		display: grid;
+		grid-template-rows: repeat(3, 1fr);
 		gap: 0.875rem;
 		justify-content: center;
 		align-items: center;
@@ -388,12 +394,10 @@
 
 	#profile #user {
 		padding: 0.5rem;
-		display: flex;
-		flex: content;
-		flex-direction: row;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
 		justify-content: center;
 		align-items: center;
-		gap: 0.875rem;
 		background-color: #e9e2d0;
 		border: 0.01px solid #8a8a8a;
 		width: 12rem;
@@ -405,10 +409,6 @@
 		justify-content: center;
 		align-items: flex-start;
 		gap: 0.5rem;
-	}
-
-	#profile h4 {
-		font-size: 1rem;
 	}
 
 	#mensajeContainer {
@@ -450,14 +450,14 @@
 		font-size: 0.7rem;
 		font-weight: 600;
 	}
-	
+
 	.profileImg {
 		border-radius: 50%;
 		width: 4rem;
 		height: 4rem;
 	}
 
-	.profileButton{
+	.profileButton {
 		border: none;
 		width: fit-content;
 		height: fit-content;
