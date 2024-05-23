@@ -188,7 +188,7 @@
 		outline: none;
 		border: 0.12rem solid #3f3f3f;
 		border-radius: 0.5rem;
-		width: 25rem;
+		width: 55%;
 		height: 2.575rem;
 		flex-shrink: 0;
 		padding: 0.5rem;
