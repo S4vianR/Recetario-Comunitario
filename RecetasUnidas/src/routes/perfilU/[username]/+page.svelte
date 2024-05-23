@@ -11,7 +11,7 @@
 	let profilePicture =
 		'https://kaonlhtranrfojpknofp.supabase.co/storage/v1/object/sign/Fotos%20de%20Perfil/Captura%20desde%202024-05-01%2013-02-36.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJGb3RvcyBkZSBQZXJmaWwvQ2FwdHVyYSBkZXNkZSAyMDI0LTA1LTAxIDEzLTAyLTM2LnBuZyIsImlhdCI6MTcxNDU5MTAwMSwiZXhwIjoyMDI5OTUxMDAxfQ.rLin9wagYkBo0n8twib4ejm7CwrFibSDhw4Fs3y4o-U&t=2024-05-01T19%3A16%3A41.998Z';
 
-    const { params } = $page;
+	const { params } = $page;
 	const username = params.username;
 	onMount(async () => {
 		const logoElement = (document.getElementById('logo') as HTMLElement) || null;
@@ -25,10 +25,12 @@
 		// Obtén el usuario
 		const user = await supabase.from('usuarios').select('*').eq('nombreusuario', username);
 		desc = user.data?.[0]?.descripcion;
-        console.log(user);
 		// Si el usuario está autenticado, obtén su ID
 		// Query para obtener las recetas del usuario
-        const { data } = await supabase.from('recetas').select('*').eq('idusuario', user.data?.[0]?.usuario_uuid);
+		const { data } = await supabase
+			.from('recetas')
+			.select('*')
+			.eq('idusuario', user.data?.[0]?.usuario_uuid);
 
 		if (data) {
 			dataRecetas = data;
@@ -70,7 +72,9 @@
 			<button id="profilePictureButton" on:click={openModal}>
 				<img id="profilePicture" src={profilePicture} alt="Foto de perfil" />
 			</button>
-			<p id="descripcion">{desc}</p>
+			{#if desc}
+				<p id="descripcion">{desc}</p>
+			{/if}
 		</section>
 		<section id="publicacion_section">
 			<h2>Publicaciones</h2>
@@ -104,9 +108,9 @@
 		height: 100%;
 	}
 
-    h1 {
-        font-size: 3rem;
-    }
+	h1 {
+		font-size: 3rem;
+	}
 
 	#descripcion {
 		font-size: 1.5rem;

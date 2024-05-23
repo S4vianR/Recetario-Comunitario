@@ -21,7 +21,7 @@
 		const userFirstName = usuario?.identities[0].identity_data?.first_name;
 		const correo = usuario?.identities[0].identity_data?.email;
 
-		usuarios = usuarios.filter((usuario: any) => usuario.correousuario !== correo);
+		usuarios = usuarios.filter((usuario: any) => usuario.nombreusuario !== userFirstName);
 		// Cuando la url tiene un parámetro get, significa que el usuario está buscando algo
 		const urlParams = new URLSearchParams(window.location.search);
 		const searchQuery = urlParams.get('search');
@@ -47,8 +47,8 @@
 
 		const { data: existingUser } = await supabase
 			.from('usuarios')
-			.select('usuario')
-			.eq('correo', correo);
+			.select('*')
+			.eq('nombreusuario', userFirstName);
 		console.log(usuario);
 		// If user does not exist, insert new user
 		if (!existingUser || existingUser.length === 0) {
@@ -56,7 +56,6 @@
 				{
 					usuario_uuid: userID,
 					nombreusuario: userFirstName,
-					correousuario: correo,
 					usuario_admin: false
 				}
 			]);

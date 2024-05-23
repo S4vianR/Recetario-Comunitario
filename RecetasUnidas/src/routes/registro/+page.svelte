@@ -106,10 +106,11 @@
 					</div>
 					<div class="footer-form">
 						<button on:click={handleSignUp}> Registrarte</button>
-						<div id="mensaje_registro">
-							<p>¿Ya tienes una cuenta?</p>
-							<a href="/">¡Ingresa ahora mismo!</a>
-						</div>
+						
+					</div>
+					<div id="mensaje_registro">
+						<p>¿Ya tienes una cuenta?</p>
+						<a href="/">¡Ingresa ahora mismo!</a>
 					</div>
 				</section>
 			</div>
@@ -153,7 +154,7 @@
 		border: 1px solid #000;
 		padding: 2rem;
 		width: 55%;
-		aspect-ratio: 4/3;
+
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -165,7 +166,6 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: normal;
-		gap: 4rem;
 		width: fit-content;
 	}
 
@@ -173,6 +173,7 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: flex-end;
+		margin-top: 2rem;
 		gap: 1rem;
 		align-items: center;
 	}
@@ -189,7 +190,7 @@
 		border: 0.12rem solid #3f3f3f;
 		border-radius: 0.5rem;
 		width: 55%;
-		height: 2.575rem;
+		height: 80%;
 		flex-shrink: 0;
 		padding: 0.5rem;
 		font-size: 1rem;

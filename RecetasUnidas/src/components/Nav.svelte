@@ -17,8 +17,13 @@
 
 	onMount(() => {
 		const logoElement = (document.getElementById('logo') as HTMLElement) || null;
+		const feedElement = (document.getElementById('feed') as HTMLElement) || null;
 
 		logoElement.addEventListener('click', () => {
+			window.location.href = '/feed';
+		});
+
+		feedElement.addEventListener('click', () => {
 			window.location.href = '/feed';
 		});
 
@@ -92,7 +97,7 @@
 			</button>
 		</div>
 		<ul>
-			<li><a href="/feed">Inicio</a></li>
+			<li><a href="/feed" id="feed">Inicio</a></li>
 			<li><a href="/perfil">Perfil</a></li>
 			<li><a href="/cerrarSesion">Cerrar sesión</a></li>
 		</ul>
