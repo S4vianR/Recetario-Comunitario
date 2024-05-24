@@ -306,10 +306,16 @@
 		font-weight: 600;
 	}
 
-	#publicacion img {
+	#publicacion div:nth-child(2){
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	#publicacion div:nth-child(2) img {
 		border-radius: 0.5rem;
 		width: 20rem;
-		height: 13.75rem;
+		aspect-ratio: 7/5;
 	}
 
 	#publicacion > #likeContainer {
@@ -396,6 +402,7 @@
 		background-color: #e9e2d0;
 		border: 0.01px solid #8a8a8a;
 		width: 12rem;
+		border-radius: 0.2rem;
 	}
 
 	#profile #user > div {
@@ -439,10 +446,50 @@
 		background: #7e2719;
 	}
 
+	/* @keyframes rainbowBorder {
+		0% {
+			border-color: #ff0000;
+		}
+		10% {
+			border-color: #ff7f00;
+		}
+		20% {
+			border-color: #ffff00;
+		}
+		30% {
+			border-color: #00ff00;
+		}
+		40% {
+			border-color: #0000ff;
+		}
+		50% {
+			border-color: #4b0082;
+		}
+		60% {
+			border-color: #9400d3;
+		}
+		70% {
+			border-color: #ee82ee;
+		}
+		80% {
+			border-color: #ff1493;
+		}
+		90% {
+			border-color: #ff4500;
+		}
+		100% {
+			border-color: #ff0000;
+		}
+	} */
+
 	.profileImg {
 		border-radius: 50%;
 		width: 4rem;
 		height: 4rem;
+		/* border: 2px solid transparent;
+		animation: rainbowBorder 3s infinite;
+		animation-timing-function: ease-out;
+		animation-delay: 0.5s; */
 	}
 
 	.profileButton {

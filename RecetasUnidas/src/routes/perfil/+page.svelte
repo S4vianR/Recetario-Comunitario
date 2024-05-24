@@ -62,13 +62,17 @@
 <body>
 	<div class="container">
 		<section id="profileSection">
-			<h1>{usuario}<a id="settings" href="/ajustes" title="Ajustes"><img src="/icons/settings.svg" alt="Settings" /></a></h1>
+			<div class="usernameContainer">
+				<h1>{usuario}</h1>
+				<a id="settings" href="/ajustes" title="Ajustes"
+					><img src="/icons/settings.svg" alt="Settings" /></a
+				>
+			</div>
 			<Modal bind:isOpen src={profilePicture} on:close={closeModal} />
 			<button id="profilePictureButton" on:click={openModal}>
 				<img id="profilePicture" src={profilePicture} alt="Foto de perfil" />
 			</button>
-			<div id="profile">
-			</div>
+			<div id="profile"></div>
 		</section>
 		<section id="publicacion_section">
 			<h2>Publicaciones</h2>
@@ -102,11 +106,19 @@
 		height: 100%;
 	}
 
+	.usernameContainer {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		gap: 0.275rem;
+	}
+
 	h1 {
 		font-size: 3rem;
 	}
 
-	#settings{
+	#settings {
 		padding-left: 1rem;
 	}
 
