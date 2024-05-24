@@ -5,7 +5,7 @@
 	// Variables
 	let nombrePlatillo: string;
 	let descripcionPlatilloValue = '';
-	let imagenReceta: string;
+	let files: FileList;
 	let tiempoPreparacion: number;
 	let dificultad: string;
 	let numeroRacionesValue: number;
@@ -85,18 +85,33 @@
 			alert('Error al enviar el formulario');
 			console.error(error);
 		} else {
-			handleImageUploadBucket;
 			alert('Formulario enviado');
 			handleFormReset(event);
 			window.location.href = '/feed';
 		}
 	};
 
-	const handleImageUploadBucket = async () => {
-		// Upload the images upload to the bucket
-		const { data, error } = await supabase.storage
-			.from('avatars')
-			.createSignedUrl('folder/avatar1.png', 60);
+	const handleImageUploadBucket = async (event: any) => {
+		event.preventDefault();
+
+		const imageName = nombrePlatillo.toLowerCase().replace(/ /g, '-');
+		if (files && files.length > 0) {
+			const file = files[0]; // Si solo se permite seleccionar un archivo
+			const { data, error } = await supabase.storage.from('fotosRecetas').upload(`${imageName}.png`, file, {
+				contentType: 'image/png',
+				cacheControl: '3600',
+				upsert: false
+			});
+			if (error) {
+				console.error('Error al subir la imagen:', error);
+				alert('Error al subir la imagen');
+			} else {
+				console.log(data);
+				handleFormSubmit(event);
+			}
+		} else {
+			alert('No se ha seleccionado ninguna imagen');
+		}
 	};
 </script>
 
@@ -111,7 +126,7 @@
 		Volver atrás
 	</a>
 	<div class="formWrapper">
-		<form on:submit={handleFormSubmit} method="get">
+		<form on:submit={handleImageUploadBucket}>
 			<h2>Creación de platillo</h2>
 			<div>
 				<label for="nombrePlatillo">Nombre platillo:</label>
@@ -136,13 +151,7 @@
 			</div>
 			<div>
 				<label for="imagenReceta">Imagén de la receta:</label>
-				<input
-					type="file"
-					name="imagenReceta"
-					id="imagenReceta"
-					accept="image/*"
-					bind:value={imagenReceta}
-				/>
+				<input type="file" name="imagenReceta" id="imagenReceta" accept="image/*" bind:files />
 			</div>
 			<div>
 				<label for="tiempoPreparacion">Tiempo de preparación:</label>
@@ -199,7 +208,7 @@
 <style>
 	.hidden {
 		display: none;
-		visibility: collapse;
+		visibility: hidden;
 	}
 
 	main {
@@ -292,22 +301,29 @@
 	}
 
 	.formWrapper {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
+		/* display: grid;
+		grid-template-columns: repeat(2, 1fr); */
+		display: flex;
+		flex-direction: row;
+		justify-content: space-evenly;
+		align-items: start;
+		gap: 5rem;
 	}
 
 	#descripcion {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		align-items: flex-end;
-		gap: 1.875rem;
+		align-items: flex-start;
+		gap: 1.275rem;
 	}
 
 	#descripcion textarea {
 		padding: 0.5rem;
 		resize: none;
 		border-radius: 0.3875rem;
+		width: 50rem;
+		height: 30rem;
 	}
 
 	#descripcion textarea:focus {
@@ -333,11 +349,12 @@
 		opacity: 0.5;
 	}
 
-	/* #descripcion .buttonWrapper {
+	.descriptionButtonWrapper {
+		width: 100%;
 		display: flex;
 		flex-direction: row;
-		justify-content: flex-end;
+		justify-content: flex-start;
 		align-items: center;
 		gap: 1rem;
-	} */
+	}
 </style>
