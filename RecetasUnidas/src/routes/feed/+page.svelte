@@ -21,7 +21,7 @@
 		const userFirstName = usuario?.identities[0].identity_data?.first_name;
 		const correo = usuario?.identities[0].identity_data?.email;
 
-		usuarios = usuarios.filter((usuario: any) => usuario.correousuario !== correo);
+		usuarios = usuarios.filter((usuario: any) => usuario.nombreusuario !== userFirstName);
 		// Cuando la url tiene un parámetro get, significa que el usuario está buscando algo
 		const urlParams = new URLSearchParams(window.location.search);
 		const searchQuery = urlParams.get('search');
@@ -43,13 +43,12 @@
 			const recetaName = receta.tituloreceta;
 			handleUserLiked(recetaID);
 			handleImageRecovery(recetaID, recetaName);
-			handleImageRecovery(recetaID, recetaName);
 		}
 
 		const { data: existingUser } = await supabase
 			.from('usuarios')
-			.select('usuario')
-			.eq('correo', correo);
+			.select('*')
+			.eq('nombreusuario', userFirstName);
 		console.log(usuario);
 		// If user does not exist, insert new user
 		if (!existingUser || existingUser.length === 0) {
@@ -57,7 +56,6 @@
 				{
 					usuario_uuid: userID,
 					nombreusuario: userFirstName,
-					correousuario: correo,
 					usuario_admin: false
 				}
 			]);
@@ -73,15 +71,18 @@
 		// const { data } = supabase.storage.from('public-bucket').getPublicUrl('/avatar1.png');
 		// Following the example above, you can get the public URL of the image and set it to the imageRecetaURL variable, the name of the image is the same as the name of the recipe but in lowercase and spaced with hyphens
 
+		//const nombreImagen = data.recetas[0].tituloreceta.toLowerCase().replace(/ /g, '-');
+		// For each recipe, get the image
+
 		let nombreImagen: any;
 		nombreImagen = nombreReceta.toLowerCase().replace(/ /g, '-');
 
-		// The file format can be anything, like .jpg2
+		// The file format can be anything, like .png, .jpg, .jpeg, etc.
 		const { data: imagen } = await supabase.storage
 			.from('fotosRecetas')
 			.getPublicUrl(`${nombreImagen}.png`);
 
-		console.log(imagen.publicUrl)
+		// console.log(imagen);
 
 		for (let receta of data.recetas) {
 			if (receta.idreceta === idReceta) {
@@ -183,10 +184,13 @@
 			{#each usuarios as usuario}
 				<div id="user">
 					<img class="profileImg" src={profilePicture} alt="Profile" />
-					<img class="profileImg" src={profilePicture} alt="Profile" />
 					<div>
-						<h4>{usuario.nombreusuario}</h4>
-						<a href="/perfilU/{usuario.nombreusuario}">Ver perfil</a>
+						<h5>{usuario.nombreusuario}</h5>
+						<button
+							class="profileButton"
+							on:click={() => (window.location.href = `/perfilU/${usuario.nombreusuario}`)}
+							>Ver perfil</button
+						>
 					</div>
 				</div>
 			{/each}
@@ -434,14 +438,6 @@
 		cursor: pointer;
 		background: #7e2719;
 	}
-
-	a {
-		color: black;
-		text-decoration: none;
-		font-size: 0.7rem;
-		font-weight: 600;
-	}
-
 
 	.profileImg {
 		border-radius: 50%;
