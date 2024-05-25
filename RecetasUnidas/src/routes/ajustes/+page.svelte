@@ -4,12 +4,30 @@
 	import Nav from '../../components/Nav.svelte';
 
 	let usuario: string = '';
+	let originalUsuario: string = '';
+	let userID;
 	let password: string = '';
 	let desc = '';
 	let mail: string;
-	let dataRecetas: any[] = [];
 	let profilePicture =
 		'https://kaonlhtranrfojpknofp.supabase.co/storage/v1/object/sign/Fotos%20de%20Perfil/Captura%20desde%202024-05-01%2013-02-36.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJGb3RvcyBkZSBQZXJmaWwvQ2FwdHVyYSBkZXNkZSAyMDI0LTA1LTAxIDEzLTAyLTM2LnBuZyIsImlhdCI6MTcxNDU5MTAwMSwiZXhwIjoyMDI5OTUxMDAxfQ.rLin9wagYkBo0n8twib4ejm7CwrFibSDhw4Fs3y4o-U&t=2024-05-01T19%3A16%3A41.998Z';
+
+	let editing = false;
+
+	let usuarioWidth = 0;
+
+	function updateUsuario(event: any) {
+		usuarioWidth = event.target.value.length * 30 + 20;
+	}
+
+	function toggleEditing() {
+		if (editing) {
+			usuario = originalUsuario; // Restablece el nombre de usuario al valor original cuando se cancela la edición
+		} else {
+			originalUsuario = usuario; // Guarda el valor original del nombre de usuario antes de comenzar la edición
+		}
+		editing = !editing;
+	}
 
 	onMount(async () => {
 		const logoElement = (document.getElementById('logo') as HTMLElement) || null;
@@ -18,30 +36,37 @@
 			window.location.href = '/feed';
 		});
 
-		handleSupabaseVariables();
-
 		// Obtén el usuario actual
 		const user = supabase.auth.getUser();
 
 		// Si el usuario está autenticado, obtén su ID
-		const userID = (await user).data.user?.id;
+		userID = (await user).data.user?.id;
 		const userD = await supabase.from('usuarios').select('*').eq('usuario_uuid', userID);
 		desc = userD.data?.[0]?.descripcion;
-		console.log(desc);
+		usuario = userD.data?.[0]?.nombreusuario;
 	});
 
-	const handleSupabaseVariables = async () => {
-		const { data, error } = await supabase.auth.getUserIdentities();
-		usuario = data?.identities[0].identity_data?.first_name;
-	};
-
 	supabase.auth.onAuthStateChange((event) => {
-		if (event === 'SIGNED_IN') {
-			handleSupabaseVariables();
-		} else if (event === 'SIGNED_OUT') {
+		if (event === 'SIGNED_OUT') {
 			window.location.href = '/login';
 		}
 	});
+
+	const handleUsernameSubmit = async () => {
+		const user = supabase.auth.getUser();
+		const { data, error } = await supabase
+			.from('usuarios')
+			.update({ nombreusuario: usuario })
+			.eq('usuario_uuid', (await user).data.user?.id);
+		console.log(data);
+		if (error) {
+			alert('Error al guardar nombre de usuario');
+		} else {
+			alert('Nombre de usuario guardado');
+			window.location.reload();
+			toggleEditing();
+		}
+	};
 
 	const handleEmailFormSubmit = async (event: any) => {
 		event.preventDefault();
@@ -77,8 +102,10 @@
 
 	const handleDescriptionSubmit = async () => {
 		const user = supabase.auth.getUser();
-		const { data, error } = await supabase.from('usuarios').update({ descripcion: desc }).eq('usuario_uuid', (await user).data.user?.id);
-		console.log(data);
+		const { data, error } = await supabase
+			.from('usuarios')
+			.update({ descripcion: desc })
+			.eq('usuario_uuid', (await user).data.user?.id);
 		if (error) {
 			alert('Error al guardar descripción');
 		} else {
@@ -92,15 +119,39 @@
 	<div class="container">
 		<section id="profileSection">
 			<div class="usernameContainer">
-				<h1>{usuario}</h1>
-				<a href="/perfil"><img src="/icons/close.svg" alt="Cancelar" /></a>
+				{#if editing}
+					<input
+						type="text"
+						class="dynamic-input"
+						bind:value={usuario}
+						on:input={updateUsuario}
+						style="width: {usuarioWidth}px;"
+					/>
+					<button type="button" on:click={handleUsernameSubmit}>
+						<img src="/icons/confirm.svg" alt="Confirmar" title="Confirmar" />
+					</button>
+					<button type="button" on:click={toggleEditing}>
+						<img src="/icons/cancel.svg" alt="Cancelar" title="Cancelar" />
+					</button>
+				{:else}
+					<h1>{usuario}</h1>
+					<button type="button" on:click={toggleEditing}>
+						<img src="/icons/pencil.svg" alt="Cambiar nombre" title="Cambiar nombre" />
+					</button>
+				{/if}
 			</div>
 			<img id="profilePicture" src={profilePicture} alt="Foto de perfil" />
 			<textarea id="descripcion" bind:value={desc}></textarea>
 			<button id="submit" on:click={handleDescriptionSubmit}>Guardar descripcion</button>
 		</section>
 		<section id="settingsSection">
-			<h2>Modificar Datos</h2>
+			<div id="title">
+				<h2>
+					Modificar Datos <a href="/perfil"
+						><img src="/icons/close.svg" alt="Cancelar" title="Cancelar" /></a
+					>
+				</h2>
+			</div>
 			<form on:submit={handleEmailFormSubmit} method="get">
 				<div>
 					<label for="email">Correo electrónico:</label>
@@ -134,6 +185,31 @@
 		gap: 0.275rem;
 	}
 
+	.usernameContainer button {
+		background-color: transparent;
+		margin-left: 0.5rem;
+		border: none;
+		cursor: pointer;
+	}
+
+	.usernameContainer input[type='text'] {
+		font-size: 3rem;
+		text-align: center;
+		padding-top: 0.4rem;
+		padding-bottom: 0.4rem;
+		width: 15rem;
+		border-radius: 2rem;
+		border: none;
+		text-align: center;
+	}
+
+	.dynamic-input {
+		/* width: fit-content; */
+		min-width: 20rem;
+		max-width: 30rem;
+		padding: 0.5rem;
+	}
+
 	h1 {
 		font-size: 3rem;
 	}
@@ -151,9 +227,10 @@
 		border: none;
 		padding: 1rem;
 		font-size: large;
+		text-align: center;
 	}
 
-	#submit{
+	#submit {
 		padding: 0.5rem 1rem;
 		background-color: #9f76a8;
 		color: #fff;
@@ -173,10 +250,16 @@
 	#settingsSection {
 		width: 100%;
 		padding: 1rem;
-
 		justify-content: flex-start;
 		align-items: flex-start;
 		gap: 1rem;
+	}
+
+	#title {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
 	}
 
 	#profileSection {

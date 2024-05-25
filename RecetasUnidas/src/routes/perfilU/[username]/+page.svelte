@@ -1,11 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { supabase } from '$lib/supabaseClient';
-	import { onMount } from 'svelte';
+	import { onMount, afterUpdate } from 'svelte';
 	import Nav from '../../../components/Nav.svelte';
 	import food_stand_day from '/src/lib/assets/food-stand-day.png';
 
-	let usuario: string = '';
 	let desc = '';
 	let dataRecetas: any[] = [];
 	let profilePicture =
@@ -19,8 +18,6 @@
 		logoElement.addEventListener('click', () => {
 			window.location.href = '/feed';
 		});
-
-		handleSupabaseVariables();
 
 		// Obtén el usuario
 		const user = await supabase.from('usuarios').select('*').eq('nombreusuario', username);
@@ -37,15 +34,14 @@
 		}
 	});
 
-	const handleSupabaseVariables = async () => {
-		const { data, error } = await supabase.auth.getUserIdentities();
-		usuario = data?.identities[0].identity_data?.first_name;
-	};
+	afterUpdate(() => {
+		for (let receta of dataRecetas) {
+			handleImageRecovery(receta.idreceta, receta.tituloreceta);
+		}
+	});
 
 	supabase.auth.onAuthStateChange((event) => {
-		if (event === 'SIGNED_IN') {
-			handleSupabaseVariables();
-		} else if (event === 'SIGNED_OUT') {
+		if (event === 'SIGNED_OUT') {
 			window.location.href = '/login';
 		}
 	});
@@ -61,6 +57,38 @@
 	function closeModal() {
 		isOpen = false;
 	}
+
+	const handleImageRecovery = async (idReceta: number, nombreReceta: string) => {
+		// console.log("Receta ID: ", idReceta, "Receta Name: ", nombreReceta);
+		let imagenReceta = document.getElementById(`imagenReceta-${idReceta}`) as HTMLImageElement || null;
+		// console.log(imagenReceta.alt);
+		// const { data } = supabase.storage.from('public-bucket').getPublicUrl('/avatar1.png');
+		// Following the example above, you can get the public URL of the image and set it to the imageRecetaURL variable, the name of the image is the same as the name of the recipe but in lowercase and spaced with hyphens
+
+		//const nombreImagen = data.recetas[0].tituloreceta.toLowerCase().replace(/ /g, '-');
+		// For each recipe, get the image
+
+		let nombreImagen: any;
+		nombreImagen = nombreReceta.toLowerCase().replace(/ /g, '-');
+		// console.log(nombreImagen);
+
+		// The file format can be anything, like .png, .jpg, .jpeg, etc.
+		const { data: imagen } = await supabase.storage
+			.from('fotosRecetas')
+			.getPublicUrl(`${nombreImagen}.png`);
+
+		// console.log(imagen.publicUrl);
+
+		for (let receta of dataRecetas) {
+			if (receta.idreceta === idReceta) {
+				if (imagen) {
+					imagenReceta.src = imagen.publicUrl;
+				} else {
+					imagenReceta.src = food_stand_day;
+				}
+			}
+		}
+	};
 </script>
 
 <Nav />
@@ -88,11 +116,7 @@
 							<p><span>Dificultad:</span> {receta.dificultadreceta}</p>
 						</div>
 						<div>
-							{#if receta.imagenreceta}
-								<img src={receta.imagenreceta} alt={receta.tituloreceta} />
-							{:else}
-								<img src={food_stand_day} alt="food_stand_day" />
-							{/if}
+							<img alt={receta.tituloreceta} id={`imagenReceta-${receta.idreceta}`} />
 						</div>
 					</div>
 				{/each}
@@ -113,7 +137,9 @@
 	}
 
 	#descripcion {
-		font-size: 1.5rem;
+		width: 80%;
+		font-size: 1.75rem;
+		text-align: center;
 	}
 	#publicacion {
 		border: 1px solid #363636;
@@ -131,10 +157,10 @@
 		font-weight: 600;
 	}
 
-	#publicacion img {
+	#publicacion div:nth-child(2) img {
 		border-radius: 0.5rem;
-		width: 14.375rem;
-		aspect-ratio: 1;
+		width: 20rem;
+		aspect-ratio: 7/5;
 	}
 
 	#publicaciones_container {

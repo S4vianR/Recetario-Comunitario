@@ -3,13 +3,11 @@
 	import { supabase } from '$lib/supabaseClient';
 	import { onMount } from 'svelte';
 	import Nav from '../../components/Nav.svelte';
-	import food_stand_day from '/src/lib/assets/food-stand-day.png';
 
 	let respuesta: boolean;
 	let profilePicture =
 		'https://kaonlhtranrfojpknofp.supabase.co/storage/v1/object/sign/Fotos%20de%20Perfil/Captura%20desde%202024-05-01%2013-02-36.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJGb3RvcyBkZSBQZXJmaWwvQ2FwdHVyYSBkZXNkZSAyMDI0LTA1LTAxIDEzLTAyLTM2LnBuZyIsImlhdCI6MTcxNDU5MTAwMSwiZXhwIjoyMDI5OTUxMDAxfQ.rLin9wagYkBo0n8twib4ejm7CwrFibSDhw4Fs3y4o-U&t=2024-05-01T19%3A16%3A41.998Z';
 	let usuarios = data.usuarios;
-	let imageRecetaURL: any;
 
 	const handleCrearRecetaButton = () => {
 		window.location.href = '/crearReceta';
@@ -19,7 +17,6 @@
 		const { data: usuario } = await supabase.auth.getUserIdentities();
 		const userID = usuario?.identities[0].user_id;
 		const userFirstName = usuario?.identities[0].identity_data?.first_name;
-		const correo = usuario?.identities[0].identity_data?.email;
 
 		usuarios = usuarios.filter((usuario: any) => usuario.usuario_uuid !== userID);
 		// Cuando la url tiene un parámetro get, significa que el usuario está buscando algo
