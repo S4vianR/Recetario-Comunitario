@@ -5,6 +5,7 @@
 	import food_stand_day from '/src/lib/assets/food-stand-day.png';
 
 	let usuario: string = '';
+	let desc = '';
 	let dataRecetas: any[] = [];
 	let profilePicture =
 		'https://kaonlhtranrfojpknofp.supabase.co/storage/v1/object/sign/Fotos%20de%20Perfil/Captura%20desde%202024-05-01%2013-02-36.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJGb3RvcyBkZSBQZXJmaWwvQ2FwdHVyYSBkZXNkZSAyMDI0LTA1LTAxIDEzLTAyLTM2LnBuZyIsImlhdCI6MTcxNDU5MTAwMSwiZXhwIjoyMDI5OTUxMDAxfQ.rLin9wagYkBo0n8twib4ejm7CwrFibSDhw4Fs3y4o-U&t=2024-05-01T19%3A16%3A41.998Z';
@@ -16,13 +17,13 @@
 			window.location.href = '/feed';
 		});
 
-		handleSupabaseVariables();
-
-		// Obtén el usuario actual
 		const user = supabase.auth.getUser();
-
-		// Si el usuario está autenticado, obtén su ID
 		const userID = (await user).data.user?.id;
+
+		const userD = await supabase.from('usuarios').select('*').eq('usuario_uuid', userID);
+		desc = userD.data?.[0]?.descripcion;
+
+		handleSupabaseVariables();
 
 		// Query para obtener las recetas del usuario
 		const { data } = await supabase.from('recetas').select('*').eq('idusuario', userID);
@@ -72,7 +73,9 @@
 			<button id="profilePictureButton" on:click={openModal}>
 				<img id="profilePicture" src={profilePicture} alt="Foto de perfil" />
 			</button>
-			<div id="profile"></div>
+			{#if desc}
+				<p id="descripcion">{desc}</p>
+			{/if}
 		</section>
 		<section id="publicacion_section">
 			<h2>Publicaciones</h2>

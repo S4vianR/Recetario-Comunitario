@@ -165,8 +165,4 @@
 	.white {
 		background-color: #faf9f6;
 	}
-
-	.purple {
-		background-color: #9196da;
-	}
 </style>

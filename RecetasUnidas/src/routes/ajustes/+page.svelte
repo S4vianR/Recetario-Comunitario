@@ -5,6 +5,7 @@
 
 	let usuario: string = '';
 	let password: string = '';
+	let desc = '';
 	let mail: string;
 	let dataRecetas: any[] = [];
 	let profilePicture =
@@ -24,13 +25,9 @@
 
 		// Si el usuario está autenticado, obtén su ID
 		const userID = (await user).data.user?.id;
-
-		// Query para obtener las recetas del usuario
-		const { data } = await supabase.from('recetas').select('*').eq('idusuario', userID);
-
-		if (data) {
-			dataRecetas = data;
-		}
+		const userD = await supabase.from('usuarios').select('*').eq('usuario_uuid', userID);
+		desc = userD.data?.[0]?.descripcion;
+		console.log(desc);
 	});
 
 	const handleSupabaseVariables = async () => {
@@ -77,6 +74,17 @@
 		const form = document.querySelector('form') as HTMLFormElement;
 		form.reset();
 	};
+
+	const handleDescriptionSubmit = async () => {
+		const user = supabase.auth.getUser();
+		const { data, error } = await supabase.from('usuarios').update({ descripcion: desc }).eq('usuario_uuid', (await user).data.user?.id);
+		console.log(data);
+		if (error) {
+			alert('Error al guardar descripción');
+		} else {
+			alert('Descripción guardada');
+		}
+	};
 </script>
 
 <Nav />
@@ -88,6 +96,8 @@
 				<a href="/perfil"><img src="/icons/close.svg" alt="Cancelar" /></a>
 			</div>
 			<img id="profilePicture" src={profilePicture} alt="Foto de perfil" />
+			<textarea id="descripcion" bind:value={desc}></textarea>
+			<button id="submit" on:click={handleDescriptionSubmit}>Guardar descripcion</button>
 		</section>
 		<section id="settingsSection">
 			<h2>Modificar Datos</h2>
@@ -130,6 +140,34 @@
 	h2 {
 		font-size: 3rem;
 		align-self: self-start;
+	}
+
+	#descripcion {
+		width: 75%;
+		height: 25%;
+		font-size: 1.5rem;
+		resize: none;
+		border-radius: 1rem;
+		border: none;
+		padding: 1rem;
+		font-size: large;
+	}
+
+	#submit{
+		padding: 0.5rem 1rem;
+		background-color: #9f76a8;
+		color: #fff;
+		font-size: 1.1rem;
+		font-weight: 500;
+		border-radius: 0.5rem;
+		border: none;
+		cursor: pointer;
+		transition: background-color 0.3s ease-in-out;
+		width: 15rem;
+	}
+
+	#submit:hover {
+		background-color: #6f5275;
 	}
 
 	#settingsSection {
