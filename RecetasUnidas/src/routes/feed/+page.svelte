@@ -21,7 +21,7 @@
 		const userFirstName = usuario?.identities[0].identity_data?.first_name;
 		const correo = usuario?.identities[0].identity_data?.email;
 
-		usuarios = usuarios.filter((usuario: any) => usuario.nombreusuario !== userFirstName);
+		usuarios = usuarios.filter((usuario: any) => usuario.usuario_uuid !== userID);
 		// Cuando la url tiene un parámetro get, significa que el usuario está buscando algo
 		const urlParams = new URLSearchParams(window.location.search);
 		const searchQuery = urlParams.get('search');
