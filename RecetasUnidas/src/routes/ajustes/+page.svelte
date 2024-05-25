@@ -90,7 +90,10 @@
 <body>
 	<div class="container">
 		<section id="profileSection">
-			<h1>{usuario}</h1>
+			<div class="usernameContainer">
+				<h1>{usuario}</h1>
+				<a href="/perfil"><img src="/icons/close.svg" alt="Cancelar" /></a>
+			</div>
 			<img id="profilePicture" src={profilePicture} alt="Foto de perfil" />
 			<textarea id="descripcion" value={desc}></textarea>
 			<button id="submit" on:click={handleDescriptionSubmit}>Guardar descripcion</button>
@@ -120,6 +123,14 @@
 		display: grid;
 		grid-template-columns: 40% 60%;
 		height: 100%;
+	}
+
+	.usernameContainer {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		gap: 0.275rem;
 	}
 
 	h1 {

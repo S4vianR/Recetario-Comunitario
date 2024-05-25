@@ -76,8 +76,8 @@
 
 <nav>
 	<div class="first_div">
-		<img src={logo} alt="Logo" id="logo" />
-		<p id="nombreUsuario">{usuario}</p>
+		<img src={logo} alt="Logo" id="logo" title="Página de inicio"/>
+		<p id="nombreUsuario" title="Ir a tu página de usuario">{usuario}</p>
 	</div>
 	<div class="second_div">
 		<div id="searchBarContainer">
@@ -130,18 +130,24 @@
 		flex-direction: row;
 		justify-content: flex-start;
 		align-items: center;
+		gap: 0.375rem;
 	}
-
+	
 	nav .first_div > p {
 		font-size: 1rem;
 		font-weight: 600;
 		color: #fff;
-
+		text-decoration: underline;
+		text-decoration-thickness: 0.1rem;
+		text-decoration-color: transparent;
+		
+		border: 1px solid transparent;
 		transition: all 0.5s ease-in-out;
 	}
 
 	nav .first_div > p:hover {
 		transform: translateY(-2px);
+		text-decoration-color: #fff;
 	}
 
 	nav .second_div {
