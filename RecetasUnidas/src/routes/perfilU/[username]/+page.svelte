@@ -5,7 +5,6 @@
 	import Nav from '../../../components/Nav.svelte';
 	import food_stand_day from '/src/lib/assets/food-stand-day.png';
 
-	let usuario: string = '';
 	let desc = '';
 	let dataRecetas: any[] = [];
 	let profilePicture =
@@ -19,8 +18,6 @@
 		logoElement.addEventListener('click', () => {
 			window.location.href = '/feed';
 		});
-
-		handleSupabaseVariables();
 
 		// Obtén el usuario
 		const user = await supabase.from('usuarios').select('*').eq('nombreusuario', username);
@@ -37,15 +34,8 @@
 		}
 	});
 
-	const handleSupabaseVariables = async () => {
-		const { data, error } = await supabase.auth.getUserIdentities();
-		usuario = data?.identities[0].identity_data?.first_name;
-	};
-
 	supabase.auth.onAuthStateChange((event) => {
-		if (event === 'SIGNED_IN') {
-			handleSupabaseVariables();
-		} else if (event === 'SIGNED_OUT') {
+		if (event === 'SIGNED_OUT') {
 			window.location.href = '/login';
 		}
 	});
@@ -113,7 +103,9 @@
 	}
 
 	#descripcion {
-		font-size: 1.5rem;
+		width: 80%;
+		font-size: 1.75rem;
+		text-align: center;
 	}
 	#publicacion {
 		border: 1px solid #363636;

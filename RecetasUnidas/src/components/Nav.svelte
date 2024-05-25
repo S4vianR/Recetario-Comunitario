@@ -4,14 +4,16 @@
 	import logo from '/src/lib/assets/logo-removebg.png';
 
 	let usuario = '';
-
+	let userD;
 	const handleMensajeUsuario = async () => {
-		const { data, error } = await supabase.auth.getUserIdentities();
+		const { data, error } = await supabase.auth.getUser();
 
 		if (error) {
 			console.error(error);
 		} else {
-			usuario = data?.identities[0].identity_data?.first_name;
+			const userID = data.user?.id;
+			userD = await supabase.from('usuarios').select('*').eq('usuario_uuid', userID);
+			usuario = userD.data?.[0]?.nombreusuario;
 		}
 	};
 
