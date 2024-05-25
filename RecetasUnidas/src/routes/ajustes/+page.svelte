@@ -27,7 +27,7 @@
 		const userID = (await user).data.user?.id;
 		const userD = await supabase.from('usuarios').select('*').eq('usuario_uuid', userID);
 		desc = userD.data?.[0]?.descripcion;
-
+		console.log(desc);
 	});
 
 	const handleSupabaseVariables = async () => {
@@ -77,7 +77,8 @@
 
 	const handleDescriptionSubmit = async () => {
 		const user = supabase.auth.getUser();
-		const { data, error } = await supabase.from('usuarios').update({ descripcion: desc }).eq('nombreusuario', (await user).data.user?.id);
+		const { data, error } = await supabase.from('usuarios').update({ descripcion: desc }).eq('usuario_uuid', (await user).data.user?.id);
+		console.log(data);
 		if (error) {
 			alert('Error al guardar descripción');
 		} else {
@@ -95,7 +96,7 @@
 				<a href="/perfil"><img src="/icons/close.svg" alt="Cancelar" /></a>
 			</div>
 			<img id="profilePicture" src={profilePicture} alt="Foto de perfil" />
-			<textarea id="descripcion" value={desc}></textarea>
+			<textarea id="descripcion" bind:value={desc}></textarea>
 			<button id="submit" on:click={handleDescriptionSubmit}>Guardar descripcion</button>
 		</section>
 		<section id="settingsSection">
