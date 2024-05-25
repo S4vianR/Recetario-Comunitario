@@ -22,8 +22,7 @@
 
 		const userD = await supabase.from('usuarios').select('*').eq('usuario_uuid', userID);
 		desc = userD.data?.[0]?.descripcion;
-
-		handleSupabaseVariables();
+		usuario = userD.data?.[0]?.nombreusuario;
 
 		// Query para obtener las recetas del usuario
 		const { data } = await supabase.from('recetas').select('*').eq('idusuario', userID);
@@ -33,15 +32,8 @@
 		}
 	});
 
-	const handleSupabaseVariables = async () => {
-		const { data, error } = await supabase.auth.getUserIdentities();
-		usuario = data?.identities[0].identity_data?.first_name;
-	};
-
 	supabase.auth.onAuthStateChange((event) => {
-		if (event === 'SIGNED_IN') {
-			handleSupabaseVariables();
-		} else if (event === 'SIGNED_OUT') {
+		if (event === 'SIGNED_OUT') {
 			window.location.href = '/login';
 		}
 	});
