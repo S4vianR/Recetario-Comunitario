@@ -162,6 +162,7 @@
 					placeholder="El número debe de ser en minutos"
 					title="El número debe de ser en minutos"
 					required
+					min="1"
 					bind:value={tiempoPreparacion}
 				/>
 			</div>
@@ -181,6 +182,7 @@
 					id="numeroRaciones"
 					required
 					placeholder="El número de raciones"
+					min="1"
 					bind:value={numeroRacionesValue}
 				/>
 			</div>
