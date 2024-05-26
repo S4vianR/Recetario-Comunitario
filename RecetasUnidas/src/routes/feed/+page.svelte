@@ -225,6 +225,11 @@
 								/>
 							</button>
 							<p><span id={`likeCounter-${receta.idreceta}`}>{receta.numlikes}</span>likes</p>
+							<a
+								id="recipeButton"
+								on:click={() => (window.location.href = `/receta/${receta.idreceta}`)}
+								>Ver Receta
+							</a>
 						</div>
 					</div>
 				{/each}
@@ -303,7 +308,7 @@
 		font-weight: 600;
 	}
 
-	#publicacion div:nth-child(2){
+	#publicacion div:nth-child(2) {
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -354,6 +359,24 @@
 		justify-content: center;
 		align-items: flex-start;
 		gap: 0.2rem;
+	}
+
+	#recipeButton {
+		border: none;
+		width: fit-content;
+		height: fit-content;
+		padding: .5rem;
+		border-radius: 2rem;
+		background: #9f76a8;
+		color: #fff;
+		text-align: center;
+		font-weight: 700;
+		transition: background-color 0.2s ease-in-out;
+		margin-left: 18rem;
+	}
+	#recipeButton:hover {
+		cursor: pointer;
+		background: #6f5275;
 	}
 
 	#publicaciones_container {

@@ -51,6 +51,39 @@
 	function closeModal() {
 		isOpen = false;
 	}
+
+	const handleImageRecovery = async (idReceta: number, nombreReceta: string) => {
+		// console.log("Receta ID: ", idReceta, "Receta Name: ", nombreReceta);
+		let imagenReceta =
+			(document.getElementById(`imagenReceta-${idReceta}`) as HTMLImageElement) || null;
+		// console.log(imagenReceta.alt);
+		// const { data } = supabase.storage.from('public-bucket').getPublicUrl('/avatar1.png');
+		// Following the example above, you can get the public URL of the image and set it to the imageRecetaURL variable, the name of the image is the same as the name of the recipe but in lowercase and spaced with hyphens
+
+		//const nombreImagen = data.recetas[0].tituloreceta.toLowerCase().replace(/ /g, '-');
+		// For each recipe, get the image
+
+		let nombreImagen: any;
+		nombreImagen = nombreReceta.toLowerCase().replace(/ /g, '-');
+		// console.log(nombreImagen);
+
+		// The file format can be anything, like .png, .jpg, .jpeg, etc.
+		const { data: imagen } = await supabase.storage
+			.from('fotosRecetas')
+			.getPublicUrl(`${nombreImagen}.png`);
+
+		// console.log(imagen.publicUrl);
+
+		for (let receta of dataRecetas) {
+			if (receta.idreceta === idReceta) {
+				if (imagen) {
+					imagenReceta.src = imagen.publicUrl;
+				} else {
+					imagenReceta.src = food_stand_day;
+				}
+			}
+		}
+	};
 </script>
 
 <Nav />
@@ -84,6 +117,11 @@
 								<img src={food_stand_day} alt="food_stand_day" />
 							{/if}
 						</div>
+						<a
+							id="recipeButton"
+							on:click={() => (window.location.href = `/receta/${receta.idreceta}`)}
+							>Ver Receta
+						</a>
 					</div>
 				{/each}
 			</div>
@@ -152,6 +190,24 @@
 		align-items: flex-end;
 	}
 
+	#publicacion a {
+		padding: 0.5rem 1rem;
+		width: fit-content;
+		background-color: #9f76a8;
+		color: #fff;
+		font-size: 1.1rem;
+		border: none;
+		border-radius: 2rem;
+		cursor: pointer;
+		transition: background-color 0.5s ease-in-out, opacity 0.5s ease-in-out;
+		margin-left: 40rem;
+	}
+
+	#publicacion a:hover {
+		cursor: pointer;
+		background: #6f5275;
+	}
+
 	#publicacion_section {
 		width: 100%;
 		padding: 1rem;
@@ -170,6 +226,11 @@
 		justify-content: flex-start;
 		align-items: center;
 		gap: 2rem;
+	}
+
+	#profileSection p {
+		font-size: 2.5rem;
+		font-weight: 450;
 	}
 
 	#profilePictureButton {
