@@ -315,6 +315,7 @@
 	}
 
 	#publicacion div:nth-child(2) img {
+		margin-top: 2rem;
 		border-radius: 0.5rem;
 		width: 20rem;
 		aspect-ratio: 7/5;
@@ -326,6 +327,7 @@
 		justify-content: flex-start;
 		align-items: center;
 		gap: 0.5rem;
+		margin-top: -1rem;
 	}
 
 	#publicacion #likeContainer > button {
@@ -372,7 +374,7 @@
 		text-align: center;
 		font-weight: 700;
 		transition: background-color 0.2s ease-in-out;
-		margin-left: 18rem;
+		margin-left: 10rem;
 	}
 	#recipeButton:hover {
 		cursor: pointer;

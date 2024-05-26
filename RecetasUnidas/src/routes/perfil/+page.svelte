@@ -58,7 +58,8 @@
 
 	const handleImageRecovery = async (idReceta: number, nombreReceta: string) => {
 		// console.log("Receta ID: ", idReceta, "Receta Name: ", nombreReceta);
-		let imagenReceta = document.getElementById(`imagenReceta-${idReceta}`) as HTMLImageElement || null;
+		let imagenReceta =
+			(document.getElementById(`imagenReceta-${idReceta}`) as HTMLImageElement) || null;
 		// console.log(imagenReceta.alt);
 		// const { data } = supabase.storage.from('public-bucket').getPublicUrl('/avatar1.png');
 		// Following the example above, you can get the public URL of the image and set it to the imageRecetaURL variable, the name of the image is the same as the name of the recipe but in lowercase and spaced with hyphens
@@ -113,7 +114,14 @@
 				{#each dataRecetas as receta}
 					<div id="publicacion">
 						<div>
-							<h3>{receta.tituloreceta}</h3>
+							<h3>
+								{receta.tituloreceta}<a
+									id="editarReceta"
+									on:click={() => (window.location.href = `/receta/${receta.idreceta}/editar`)}
+									title="Editar receta"
+									><img src="/icons/pencil.svg" alt="Editar receta" />
+								</a>
+							</h3>
 							<span>{receta.descripcionreceta}</span>
 							<p><span>Tiempo de preparación:</span> {receta.tiempopreparacionreceta} minutos</p>
 							<p><span>Dificultad:</span> {receta.dificultadreceta}</p>
@@ -122,10 +130,10 @@
 							<img alt={receta.tituloreceta} id={`imagenReceta-${receta.idreceta}`} />
 						</div>
 						<a
-						id="recipeButton"
-						on:click={() => (window.location.href = `/receta/${receta.idreceta}`)}
-						>Ver Receta
-					</a>
+							id="recipeButton"
+							on:click={() => (window.location.href = `/receta/${receta.idreceta}`)}
+							>Ver Receta
+						</a>
 					</div>
 				{/each}
 			</div>
@@ -182,14 +190,15 @@
 		border: none;
 		width: fit-content;
 		height: fit-content;
-		padding: .5rem;
+		padding: 0.5rem;
 		border-radius: 2rem;
 		background: #9f76a8;
 		color: #fff;
 		text-align: center;
 		font-weight: 700;
 		transition: background-color 0.2s ease-in-out;
-		margin-left: 30rem;
+		margin-left: 26rem;
+		margin-top: -2.5rem;
 	}
 	#recipeButton:hover {
 		cursor: pointer;
