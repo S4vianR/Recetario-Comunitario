@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { supabase } from '$lib/supabaseClient';
-	import { onMount, afterUpdate } from 'svelte';
+	import { afterUpdate, onMount } from 'svelte';
 	import Nav from '../../../components/Nav.svelte';
 	import food_stand_day from '/src/lib/assets/food-stand-day.png';
 
@@ -118,6 +118,11 @@
 						<div>
 							<img alt={receta.tituloreceta} id={`imagenReceta-${receta.idreceta}`} />
 						</div>
+						<a
+							id="recipeButton"
+							on:click={() => (window.location.href = `/receta/${receta.idreceta}`)}
+							>Ver Receta
+						</a>
 					</div>
 				{/each}
 			</div>
@@ -186,6 +191,24 @@
 		align-items: flex-end;
 	}
 
+	#publicacion a {
+		padding: 0.5rem 1rem;
+		width: fit-content;
+		background-color: #9f76a8;
+		color: #fff;
+		font-size: 1.1rem;
+		border: none;
+		border-radius: 2rem;
+		cursor: pointer;
+		transition: background-color 0.5s ease-in-out, opacity 0.5s ease-in-out;
+		margin-left: 40rem;
+	}
+
+	#publicacion a:hover {
+		cursor: pointer;
+		background: #6f5275;
+	}
+
 	#publicacion_section {
 		width: 100%;
 		padding: 1rem;
@@ -204,6 +227,11 @@
 		justify-content: flex-start;
 		align-items: center;
 		gap: 2rem;
+	}
+
+	#profileSection p {
+		font-size: 2.5rem;
+		font-weight: 450;
 	}
 
 	#profilePictureButton {

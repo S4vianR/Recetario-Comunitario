@@ -169,9 +169,9 @@
 			<div>
 				<label for="dificultad">Dificultad:</label>
 				<select name="dificultad" id="dificultad" required bind:value={dificultad}>
-					<option value="facil">Fácil</option>
-					<option value="medio">Medio</option>
-					<option value="dificil">Difícil</option>
+					<option value="Facil">Fácil</option>
+					<option value="Medio">Medio</option>
+					<option value="Dificil">Difícil</option>
 				</select>
 			</div>
 			<div>
