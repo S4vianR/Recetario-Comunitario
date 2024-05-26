@@ -204,9 +204,9 @@
 	}
 
 	.dynamic-input {
-		width: auto;
-		min-width: 15rem;
-		max-width: 18.75rem;
+		/* width: fit-content; */
+		min-width: 20rem;
+		max-width: 30rem;
 		padding: 0.5rem;
 	}
 

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { supabase } from '$lib/supabaseClient';
-	import { onMount } from 'svelte';
+	import { afterUpdate, onMount } from 'svelte';
 	import Nav from '../../../components/Nav.svelte';
 	import food_stand_day from '/src/lib/assets/food-stand-day.png';
 
@@ -34,6 +34,12 @@
 		}
 	});
 
+	afterUpdate(() => {
+		for (let receta of dataRecetas) {
+			handleImageRecovery(receta.idreceta, receta.tituloreceta);
+		}
+	});
+
 	supabase.auth.onAuthStateChange((event) => {
 		if (event === 'SIGNED_OUT') {
 			window.location.href = '/login';
@@ -54,8 +60,7 @@
 
 	const handleImageRecovery = async (idReceta: number, nombreReceta: string) => {
 		// console.log("Receta ID: ", idReceta, "Receta Name: ", nombreReceta);
-		let imagenReceta =
-			(document.getElementById(`imagenReceta-${idReceta}`) as HTMLImageElement) || null;
+		let imagenReceta = document.getElementById(`imagenReceta-${idReceta}`) as HTMLImageElement || null;
 		// console.log(imagenReceta.alt);
 		// const { data } = supabase.storage.from('public-bucket').getPublicUrl('/avatar1.png');
 		// Following the example above, you can get the public URL of the image and set it to the imageRecetaURL variable, the name of the image is the same as the name of the recipe but in lowercase and spaced with hyphens
@@ -111,11 +116,7 @@
 							<p><span>Dificultad:</span> {receta.dificultadreceta}</p>
 						</div>
 						<div>
-							{#if receta.imagenreceta}
-								<img src={receta.imagenreceta} alt={receta.tituloreceta} />
-							{:else}
-								<img src={food_stand_day} alt="food_stand_day" />
-							{/if}
+							<img alt={receta.tituloreceta} id={`imagenReceta-${receta.idreceta}`} />
 						</div>
 						<a
 							id="recipeButton"
@@ -161,10 +162,10 @@
 		font-weight: 600;
 	}
 
-	#publicacion img {
+	#publicacion div:nth-child(2) img {
 		border-radius: 0.5rem;
-		width: 14.375rem;
-		aspect-ratio: 1;
+		width: 20rem;
+		aspect-ratio: 7/5;
 	}
 
 	#publicaciones_container {
