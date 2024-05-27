@@ -18,6 +18,28 @@
 		const userID = usuario?.identities[0].user_id;
 		const userFirstName = usuario?.identities[0].identity_data?.first_name;
 
+
+		const { data: existingUser } = await supabase
+			.from('usuarios')
+			.select('*')
+			.eq('usuario_uuid', userID);
+		console.log(usuario);
+		// If user does not exist, insert new user
+		if (!existingUser || existingUser.length === 0) {
+			const { error: insertError } = await supabase.from('usuarios').insert([
+				{
+					usuario_uuid: userID,
+					nombreusuario: userFirstName,
+					usuario_admin: false
+				}
+			]);
+
+			if (insertError) {
+				console.error('Error inserting user:', insertError);
+			}
+			window.location.reload;
+		}
+
 		usuarios = usuarios.filter((usuario: any) => usuario.usuario_uuid !== userID);
 		// Cuando la url tiene un parámetro get, significa que el usuario está buscando algo
 		const urlParams = new URLSearchParams(window.location.search);
@@ -42,25 +64,6 @@
 			handleImageRecovery(recetaID, recetaName);
 		}
 
-		const { data: existingUser } = await supabase
-			.from('usuarios')
-			.select('*')
-			.eq('nombreusuario', userFirstName);
-		console.log(usuario);
-		// If user does not exist, insert new user
-		if (!existingUser || existingUser.length === 0) {
-			const { error: insertError } = await supabase.from('usuarios').insert([
-				{
-					usuario_uuid: userID,
-					nombreusuario: userFirstName,
-					usuario_admin: false
-				}
-			]);
-
-			if (insertError) {
-				console.error('Error inserting user:', insertError);
-			}
-		}
 	});
 
 	const handleImageRecovery = async (idReceta: number, nombreReceta: string) => {
@@ -315,6 +318,7 @@
 	}
 
 	#publicacion div:nth-child(2) img {
+		margin-top: 2rem;
 		border-radius: 0.5rem;
 		width: 20rem;
 		aspect-ratio: 7/5;
@@ -326,6 +330,7 @@
 		justify-content: flex-start;
 		align-items: center;
 		gap: 0.5rem;
+		margin-top: -1rem;
 	}
 
 	#publicacion #likeContainer > button {
@@ -372,7 +377,7 @@
 		text-align: center;
 		font-weight: 700;
 		transition: background-color 0.2s ease-in-out;
-		margin-left: 18rem;
+		margin-left: 10rem;
 	}
 	#recipeButton:hover {
 		cursor: pointer;

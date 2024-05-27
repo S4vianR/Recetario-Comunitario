@@ -201,7 +201,8 @@
 		border-radius: 2rem;
 		cursor: pointer;
 		transition: background-color 0.5s ease-in-out, opacity 0.5s ease-in-out;
-		margin-left: 40rem;
+		margin-left: 31rem;
+		margin-top: -2.5rem;
 	}
 
 	#publicacion a:hover {
