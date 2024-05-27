@@ -18,6 +18,27 @@
 		const userID = usuario?.identities[0].user_id;
 		const userFirstName = usuario?.identities[0].identity_data?.first_name;
 
+
+		const { data: existingUser } = await supabase
+			.from('usuarios')
+			.select('*')
+			.eq('usuario_uuid', userID);
+		console.log(usuario);
+		// If user does not exist, insert new user
+		if (!existingUser || existingUser.length === 0) {
+			const { error: insertError } = await supabase.from('usuarios').insert([
+				{
+					usuario_uuid: userID,
+					nombreusuario: userFirstName,
+					usuario_admin: false
+				}
+			]);
+
+			if (insertError) {
+				console.error('Error inserting user:', insertError);
+			}
+		}
+
 		usuarios = usuarios.filter((usuario: any) => usuario.usuario_uuid !== userID);
 		// Cuando la url tiene un parámetro get, significa que el usuario está buscando algo
 		const urlParams = new URLSearchParams(window.location.search);
@@ -42,25 +63,6 @@
 			handleImageRecovery(recetaID, recetaName);
 		}
 
-		const { data: existingUser } = await supabase
-			.from('usuarios')
-			.select('*')
-			.eq('nombreusuario', userFirstName);
-		console.log(usuario);
-		// If user does not exist, insert new user
-		if (!existingUser || existingUser.length === 0) {
-			const { error: insertError } = await supabase.from('usuarios').insert([
-				{
-					usuario_uuid: userID,
-					nombreusuario: userFirstName,
-					usuario_admin: false
-				}
-			]);
-
-			if (insertError) {
-				console.error('Error inserting user:', insertError);
-			}
-		}
 	});
 
 	const handleImageRecovery = async (idReceta: number, nombreReceta: string) => {
