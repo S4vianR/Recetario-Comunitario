@@ -120,6 +120,8 @@ handleImageRecovery(Number(idreceta), tituloReceta);
 
     #descripcion_section p {
         font-size: 1.5rem;
+		white-space: pre-wrap;
+
     }
 
 	#recetaSection {

@@ -115,12 +115,12 @@
 					<div id="publicacion">
 						<div>
 							<h3>
-								{receta.tituloreceta}<a
+								{receta.tituloreceta}<button
 									id="editarReceta"
-									on:click={() => (window.location.href = `/receta/${receta.idreceta}/editar`)}
+									on:click={() => (window.location.href = `/editarReceta/${receta.idreceta}`)}
 									title="Editar receta"
 									><img src="/icons/pencil.svg" alt="Editar receta" />
-								</a>
+							</button>
 							</h3>
 							<span>{receta.descripcionreceta}</span>
 							<p><span>Tiempo de preparación:</span> {receta.tiempopreparacionreceta} minutos</p>
@@ -129,11 +129,11 @@
 						<div>
 							<img alt={receta.tituloreceta} id={`imagenReceta-${receta.idreceta}`} />
 						</div>
-						<a
+						<button
 							id="recipeButton"
 							on:click={() => (window.location.href = `/receta/${receta.idreceta}`)}
 							>Ver Receta
-						</a>
+					</button>
 					</div>
 				{/each}
 			</div>
@@ -272,5 +272,12 @@
 		width: 100%;
 		aspect-ratio: 1;
 		border: #000 2px solid;
+	}
+
+	#editarReceta {
+		margin-left: 0.7rem;
+		background-color: transparent;
+		border: none;
+		cursor: pointer;
 	}
 </style>

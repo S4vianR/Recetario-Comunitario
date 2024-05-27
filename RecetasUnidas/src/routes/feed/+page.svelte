@@ -37,6 +37,7 @@
 			if (insertError) {
 				console.error('Error inserting user:', insertError);
 			}
+			window.location.reload;
 		}
 
 		usuarios = usuarios.filter((usuario: any) => usuario.usuario_uuid !== userID);

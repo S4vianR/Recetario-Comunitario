@@ -86,6 +86,7 @@
 			console.error(error);
 		} else {
 			alert('Formulario enviado');
+			console.log(recetas);
 			handleFormReset(event);
 			window.location.href = '/feed';
 		}
@@ -106,7 +107,6 @@
 				console.error('Error al subir la imagen:', error);
 				alert('Error al subir la imagen');
 			} else {
-				console.log(data);
 				handleFormSubmit(event);
 			}
 		} else {

@@ -78,12 +78,18 @@
 
 <nav>
 	<div class="first_div">
-		<img src={logo} alt="Logo" id="logo" title="Página de inicio"/>
-		<p id="nombreUsuario" title="Ir a tu página de usuario">{usuario}</p>
+		<img src={logo} alt="Logo" id="logo" title="Página de inicio" />
+		<a id="nombreUsuario" href="/perfil" title="Ir a tu página de usuario">{usuario}</a>
 	</div>
 	<div class="second_div">
 		<div id="searchBarContainer">
-			<input on:keydown={handleSearchEnter} type="search" name="searchBar" id="searchBar" placeholder="Buscar receta" />
+			<input
+				on:keydown={handleSearchEnter}
+				type="search"
+				name="searchBar"
+				id="searchBar"
+				placeholder="Buscar receta"
+			/>
 			<button on:click={handleSearch}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -99,9 +105,12 @@
 			</button>
 		</div>
 		<ul>
-			<li><a href="/feed" id="feed">Inicio</a></li>
-			<li><a href="/perfil">Perfil</a></li>
-			<li><a href="/cerrarSesion">Cerrar sesión</a></li>
+			<li><a href="/perfil"><img src="/icons/user.svg" alt="Perfil" title="Perfil" /> </a></li>
+			<li>
+				<a href="/cerrarSesion"
+					><img src="/icons/logout.svg" alt="Cerrar sesión" title="Cerrar sesión" /></a
+				>
+			</li>
 		</ul>
 	</div>
 </nav>
@@ -112,15 +121,21 @@
 		padding: 0.35rem 1rem;
 		display: flex;
 		flex-direction: row;
+		vertical-align: center;
 		align-items: center;
 		justify-content: space-between;
-		height: 3.5rem;
+		height: fit-content;
 		position: sticky;
 		top: 0;
 		right: 0;
 		left: 0;
 		bottom: 0;
 		transition: border-radius 0.1s ease-in-out;
+	}
+
+	nav #logo {
+		width: 3.5rem;
+		height: 3.5rem;
 	}
 
 	nav #logo:hover {
@@ -134,20 +149,20 @@
 		align-items: center;
 		gap: 0.375rem;
 	}
-	
-	nav .first_div > p {
-		font-size: 1rem;
+
+	nav .first_div > a {
+		font-size: 2rem;
 		font-weight: 600;
 		color: #fff;
 		text-decoration: underline;
 		text-decoration-thickness: 0.1rem;
 		text-decoration-color: transparent;
-		
+
 		border: 1px solid transparent;
 		transition: all 0.5s ease-in-out;
 	}
 
-	nav .first_div > p:hover {
+	nav .first_div > a:hover {
 		transform: translateY(-2px);
 		text-decoration-color: #fff;
 	}
@@ -194,7 +209,7 @@
 	nav ul {
 		display: flex;
 		flex-direction: row;
-		gap: 1rem;
+		gap: 2rem;
 	}
 
 	nav ul li {
@@ -210,6 +225,8 @@
 		color: white;
 		text-decoration: none;
 		font-weight: 600;
+		display: flex;
+		align-items: center;
 	}
 
 	img {

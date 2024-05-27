@@ -2,16 +2,15 @@
 	import { page } from '$app/stores';
 	import { supabase } from '$lib/supabaseClient';
 	import { afterUpdate, onMount } from 'svelte';
-	import Nav from '../../../../components/Nav.svelte';
+	import Nav from '../../../components/Nav.svelte';
 	import food_stand_day from '/src/lib/assets/food-stand-day.png';
 
 	let desc = '';
 	let tituloReceta = '';
 	let tiempopreparacionreceta = '';
 	let dificultadreceta = '';
+	let numeroRaciones = 0;
 	let receta: any;
-	let editing = false;
-	let usuarioWidth = 0;
 	const { params } = $page;
 	const idreceta = params.idReceta;
 	onMount(async () => {
@@ -27,6 +26,8 @@
 		tituloReceta = receta.data?.[0]?.tituloreceta;
 		tiempopreparacionreceta = receta.data?.[0]?.tiempopreparacionreceta;
 		dificultadreceta = receta.data?.[0]?.dificultadreceta;
+		numeroRaciones = receta.data?.[0]?.racionesreceta;
+
 		// Si el usuario está autenticado, obtén su ID
 		// Query para obtener las recetas del usuario
 		const usuario = await supabase
@@ -40,8 +41,6 @@
 			window.location.href = '/login';
 		}
 	});
-
-	let isOpen = false;
 
 	afterUpdate(() => {
 		handleImageRecovery(Number(idreceta), tituloReceta);
@@ -75,20 +74,83 @@
 			imagenReceta.src = food_stand_day;
 		}
 	};
+
+	const handleRecipeSave = async () => {
+		const { data, error } = await supabase
+			.from('recetas')
+			.update({
+				tiempopreparacionreceta: tiempopreparacionreceta,
+				dificultadreceta: dificultadreceta,
+				racionesreceta: numeroRaciones,
+				descripcionreceta: desc
+			})
+			.eq('idreceta', idreceta);
+		if (error) {
+			alert('Error al guardar receta');
+		} else {
+			alert('Receta guardada');
+			window.location.href = '/perfil';
+		}
+	};
 </script>
 
-<Nav />
 <body>
+	<Nav />
+
 	<div class="container">
 		<section id="recetaSection">
 			<h1>{tituloReceta}</h1>
-			<img alt={tituloReceta} id={`imagenReceta-${idreceta}`} />
+			<img class="imagenReceta" alt={tituloReceta} id={`imagenReceta-${idreceta}`} />
 		</section>
 		<section id="descripcion_section">
-			<h1>Descripción</h1>
-			<p><b>Tiempo de preparación:</b> {tiempopreparacionreceta} minutos</p>
-			<p><b>Dificultad:</b> {dificultadreceta}</p>
-			<p>{desc}</p>
+			<h1>
+				Descripción
+				<a href="/perfil"><img src="/icons/close.svg" alt="Cancelar" title="Cancelar" /></a>
+				<a id="guardar" on:click={handleRecipeSave}><img src="/icons/save.svg" alt="Guardar" title="Guardar" /></a>
+			</h1>
+			<p>
+				<b>Tiempo de preparación:</b>
+				<input
+					type="number"
+					name="editTiempoPreparación"
+					id="editTiempoPreparacion"
+					title="El número debe de ser en minutos"
+					required
+					min="1"
+					bind:value={tiempopreparacionreceta}
+				/>
+			</p>
+
+			<p>
+				<b>Dificultad:</b>
+				<select name="dificultad" id="dificultad" required bind:value={dificultadreceta}>
+					<option value="Facil">Fácil</option>
+					<option value="Medio">Medio</option>
+					<option value="Dificil">Difícil</option>
+				</select>
+			</p>
+
+			<p>
+				<b>Raciones:</b>
+				<input
+					type="number"
+					name="numeroRaciones"
+					id="numeroRaciones"
+					required
+					placeholder="El número de raciones"
+					min="1"
+					bind:value={numeroRaciones}
+				/>
+			</p>
+			<p>
+				<textarea
+					id="descripcionTextArea"
+					name="descripcionTextArea"
+					rows="40"
+					cols="120"
+					bind:value={desc}
+				/>
+			</p>
 		</section>
 	</div>
 </body>
@@ -97,17 +159,71 @@
 	.container {
 		display: grid;
 		grid-template-columns: 40% 60%;
-		height: 100%;
+		height: 80%;
 	}
 
 	h1 {
 		font-size: 3rem;
 	}
+	
+	a:hover {
+		cursor: pointer;
+	}
 
-	img {
+	.imagenReceta {
 		width: 90%;
 		height: auto;
 		aspect-ratio: 7/5;
+	}
+
+	input {
+		width: 5rem;
+		font-size: 1.1rem;
+		border-radius: 0.3875rem;
+		border: 1px solid #000;
+		padding: 0.2rem;
+	}
+
+	select {
+		width: 25rem;
+		font-size: 1.1rem;
+		border-radius: 0.3875rem;
+		border: 1px solid #000;
+		padding: 0.2rem;
+	}
+
+	textarea {
+		resize: none;
+		width: 100%;
+		font-size: 1.5rem;
+		border-radius: 0.3875rem;
+		border: 1px solid #000;
+		padding: 0.2rem;
+	}
+
+	.dynamic-input {
+		/* width: fit-content; */
+		min-width: 20rem;
+		max-width: 30rem;
+		padding: 0.5rem;
+	}
+
+	#recetaSection button {
+		background-color: transparent;
+		margin-left: 0.5rem;
+		border: none;
+		cursor: pointer;
+	}
+
+	#recetaSection input[type='text'] {
+		font-size: 3rem;
+		text-align: center;
+		padding-top: 0.4rem;
+		padding-bottom: 0.4rem;
+		width: 15rem;
+		border-radius: 2rem;
+		border: none;
+		text-align: center;
 	}
 
 	#descripcion_section {
