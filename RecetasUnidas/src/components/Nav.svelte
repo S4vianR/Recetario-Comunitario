@@ -25,10 +25,6 @@
 			window.location.href = '/feed';
 		});
 
-		feedElement.addEventListener('click', () => {
-			window.location.href = '/feed';
-		});
-
 		const nombreUsuario = (document.getElementById('nombreUsuario') as HTMLElement) || null;
 
 		nombreUsuario?.addEventListener('click', () => {
@@ -91,25 +87,24 @@
 				placeholder="Buscar receta"
 			/>
 			<button on:click={handleSearch}>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 24 24"
-					width="32"
-					height="32"
-					fill="currentColor"
-				>
-					<path
-						d="M18.031 16.6168L22.3137 20.8995L20.8995 22.3137L16.6168 18.031C15.0769 19.263 13.124 20 11 20C6.032 20 2 15.968 2 11C2 6.032 6.032 2 11 2C15.968 2 20 6.032 20 11C20 13.124 19.263 15.0769 18.031 16.6168ZM16.0247 15.8748C17.2475 14.6146 18 12.8956 18 11C18 7.1325 14.8675 4 11 4C7.1325 4 4 7.1325 4 11C4 14.8675 7.1325 18 11 18C12.8956 18 14.6146 17.2475 15.8748 16.0247L16.0247 15.8748Z"
-					></path>
-				</svg>
+				<img src="/icons/search.svg" alt="Icono de búsqueda">
 			</button>
 		</div>
 		<ul>
-			<li><a href="/perfil"><img src="/icons/user.svg" alt="Perfil" title="Perfil" /> </a></li>
 			<li>
-				<a href="/cerrarSesion"
-					><img src="/icons/logout.svg" alt="Cerrar sesión" title="Cerrar sesión" /></a
-				>
+				<a href="/feed" title="Página de inicio">
+					<img src="/icons/home.svg" alt="homeIcon" />
+				</a>
+			</li>
+			<li>
+				<a href="/perfil" title="Perfil">
+					<img src="/icons/user.svg" alt="Perfil" />
+				</a>
+			</li>
+			<li>
+				<a href="/cerrarSesion" title="Cerrar sesión">
+					<img src="/icons/logout.svg" alt="Cerrar sesión" />
+				</a>
 			</li>
 		</ul>
 	</div>
@@ -151,7 +146,7 @@
 	}
 
 	nav .first_div > a {
-		font-size: 2rem;
+		font-size: 1.2rem;
 		font-weight: 600;
 		color: #fff;
 		text-decoration: underline;
@@ -159,7 +154,7 @@
 		text-decoration-color: transparent;
 
 		border: 1px solid transparent;
-		transition: all 0.5s ease-in-out;
+		transition: transform 0.5s ease-in-out, text-decoration-color 0.5s ease-in-out;
 	}
 
 	nav .first_div > a:hover {
@@ -230,7 +225,7 @@
 	}
 
 	img {
-		width: 2.5rem;
-		height: 2.5rem;
+		width: 2rem;
+		aspect-ratio: 1;
 	}
 </style>

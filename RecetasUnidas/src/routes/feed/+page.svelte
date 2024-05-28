@@ -17,7 +17,6 @@
 		const userID = usuario?.identities[0].user_id;
 		const userFirstName = usuario?.identities[0].identity_data?.first_name;
 
-
 		const { data: existingUser } = await supabase
 			.from('usuarios')
 			.select('*')
@@ -62,7 +61,6 @@
 			handleUserLiked(recetaID);
 			handleImageRecovery(recetaID, recetaName);
 		}
-
 	});
 
 	beforeUpdate(() => {
@@ -179,7 +177,7 @@
 	};
 
 	const fetchProfilePicture = async () => {
-		const { data:imagen } = supabase.storage.from('fotosPerfil').getPublicUrl('default.png');
+		const { data: imagen } = supabase.storage.from('fotosPerfil').getPublicUrl('default.png');
 		profilePicture = imagen.publicUrl;
 	};
 </script>
@@ -225,22 +223,30 @@
 							<img alt={receta.tituloreceta} id={`imagenReceta-${receta.idreceta}`} />
 						</div>
 						<div id="likeContainer">
-							<button
-								id={`buttonLike-${receta.idreceta}`}
-								on:click={() => handleLike(receta.idreceta, receta.numlikes)}
-							>
-								<img
-									src="/icons/thumb-up-unchecked.svg"
-									alt="icono like"
-									id={`buttonLikeImg-${receta.idreceta}`}
-								/>
-							</button>
-							<p><span id={`likeCounter-${receta.idreceta}`}>{receta.numlikes}</span>likes</p>
-							<a
+							<div>
+								<button
+									id={`buttonLike-${receta.idreceta}`}
+									on:click={() => handleLike(receta.idreceta, receta.numlikes)}
+								>
+									<img
+										src="/icons/thumb-up-unchecked.svg"
+										alt="icono like"
+										id={`buttonLikeImg-${receta.idreceta}`}
+									/>
+								</button>
+								<p><span id={`likeCounter-${receta.idreceta}`}>{receta.numlikes}</span>likes</p>
+							</div>
+							<!-- <a
 								id="recipeButton"
 								on:click={() => (window.location.href = `/receta/${receta.idreceta}`)}
 								>Ver Receta
-							</a>
+							</a> -->
+							<button
+								id="recipeButton"
+								on:click={() => (window.location.href = `/receta/${receta.idreceta}`)}
+							>
+								Ver Receta
+							</button>
 						</div>
 					</div>
 				{/each}
@@ -293,6 +299,7 @@
 		padding: 0.5rem 1rem;
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem;
 		min-height: 20rem;
 	}
 
@@ -313,11 +320,12 @@
 
 	#publicacion div:nth-child(1) p {
 		text-transform: capitalize;
+		font-weight: 500;
 	}
 
-	#publicacion div:nth-child(1) p > span {
+	/* #publicacion div:nth-child(1) p > span {
 		font-weight: 600;
-	}
+	} */
 
 	#publicacion div:nth-child(2) {
 		display: flex;
@@ -333,15 +341,16 @@
 	}
 
 	#publicacion > #likeContainer {
+		grid-column: 1 / -1;
+		width: 100%;
 		display: flex;
 		flex-direction: row;
-		justify-content: flex-start;
+		justify-content: space-between;
 		align-items: center;
 		gap: 0.5rem;
-		margin-top: -1rem;
 	}
 
-	#publicacion #likeContainer > button {
+	#publicacion #likeContainer > div > button {
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -353,30 +362,57 @@
 		transition: background-color 0.1s ease-in-out;
 	}
 
-	#publicacion #likeContainer > button:hover {
+	#publicacion #likeContainer > div {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 0.5rem;
+	
+	}
+
+	#publicacion #likeContainer > div > button:hover {
 		cursor: pointer;
 		background-color: #f0f0f0;
 	}
 
-	#publicacion #likeContainer > button:active {
+	#publicacion #likeContainer > div > button:active {
 		background-color: #cecece;
 	}
 
-	#publicacion #likeContainer > button img {
+	#publicacion #likeContainer > div > button img {
 		width: 1.2rem;
 		aspect-ratio: 1;
 	}
 
-	#publicacion #likeContainer p {
+	#publicacion #likeContainer > div p {
 		display: flex;
 		justify-content: center;
 		align-items: flex-start;
 		gap: 0.2rem;
 	}
 
-	#recipeButton {
+	#publicacion #likeContainer > button:last-child {
 		border: none;
-		width: fit-content;
+		width: 8rem;
+		height: fit-content;
+		padding: 0.5rem;
+		border-radius: 2rem;
+		background: #9f76a8;
+		color: #fff;
+		text-align: center;
+		font-weight: 700;
+		transition: background-color 0.2s ease-in-out;
+		margin-left: 10rem;
+	}
+
+	#publicacion #likeContainer > button:last-child:hover {
+		cursor: pointer;
+		background: #6f5275;
+	}
+
+	/* #recipeButton {
+		border: none;
+		width: 8rem;
 		height: fit-content;
 		padding: .5rem;
 		border-radius: 2rem;
@@ -387,10 +423,11 @@
 		transition: background-color 0.2s ease-in-out;
 		margin-left: 10rem;
 	}
+
 	#recipeButton:hover {
 		cursor: pointer;
 		background: #6f5275;
-	}
+	} */
 
 	#publicaciones_container {
 		display: grid;
