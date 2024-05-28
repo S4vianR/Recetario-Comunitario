@@ -117,7 +117,7 @@
 
 <style>
 	nav {
-		background-color: #6e5773;
+		background-color: #36454F;
 		padding: 0.35rem 1rem;
 		display: flex;
 		flex-direction: row;
@@ -153,7 +153,7 @@
 	nav .first_div > a {
 		font-size: 2rem;
 		font-weight: 600;
-		color: #fff;
+		color: #FFFFFF;
 		text-decoration: underline;
 		text-decoration-thickness: 0.1rem;
 		text-decoration-color: transparent;
@@ -164,7 +164,7 @@
 
 	nav .first_div > a:hover {
 		transform: translateY(-2px);
-		text-decoration-color: #fff;
+		text-decoration-color: #FFFFFF;
 	}
 
 	nav .second_div {
@@ -222,7 +222,7 @@
 	}
 
 	nav ul li a {
-		color: white;
+		color: #FFFFFF;
 		text-decoration: none;
 		font-weight: 600;
 		display: flex;

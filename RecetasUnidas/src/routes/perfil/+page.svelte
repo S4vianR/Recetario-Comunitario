@@ -192,7 +192,7 @@
 		height: fit-content;
 		padding: 0.5rem;
 		border-radius: 2rem;
-		background: #9f76a8;
+		background: #8B0000;
 		color: #fff;
 		text-align: center;
 		font-weight: 700;
@@ -202,7 +202,7 @@
 	}
 	#recipeButton:hover {
 		cursor: pointer;
-		background: #6f5275;
+		background: #A52A2A;
 	}
 
 	#publicaciones_container {
@@ -240,7 +240,7 @@
 
 	#profileSection {
 		padding: 2rem;
-		background-color: #d0d7e9;
+		background-color: #698497;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;

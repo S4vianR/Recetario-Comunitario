@@ -194,7 +194,7 @@
 	#publicacion a {
 		padding: 0.5rem 1rem;
 		width: fit-content;
-		background-color: #9f76a8;
+		background-color: #8B0000;
 		color: #fff;
 		font-size: 1.1rem;
 		border: none;
@@ -207,7 +207,7 @@
 
 	#publicacion a:hover {
 		cursor: pointer;
-		background: #6f5275;
+		background: #A52A2A;
 	}
 
 	#publicacion_section {
@@ -222,7 +222,7 @@
 
 	#profileSection {
 		padding: 2rem;
-		background-color: #d0d7e9;
+		background-color: #698497;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
