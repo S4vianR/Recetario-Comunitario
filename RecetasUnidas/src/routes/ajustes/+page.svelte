@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { supabase } from '$lib/supabaseClient';
-	import { onMount, beforeUpdate } from 'svelte';
+	import { beforeUpdate, onMount } from 'svelte';
 	import Nav from '../../components/Nav.svelte';
 
 	let usuario: string = '';
@@ -360,7 +360,7 @@
 
 	#submit {
 		padding: 0.5rem 1rem;
-		background-color: #9f76a8;
+		background-color: #8B0000;
 		color: #fff;
 		font-size: 1.1rem;
 		font-weight: 500;
@@ -372,7 +372,7 @@
 	}
 
 	#submit:hover {
-		background-color: #6f5275;
+		background-color: #A52A2A;
 	}
 
 	#settingsSection {
@@ -392,7 +392,7 @@
 
 	#profileSection {
 		padding: 2rem;
-		background-color: #d0d7e9;
+		background-color: #698497;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
@@ -464,7 +464,7 @@
 
 	#settingsSection > form button {
 		padding: 0.5rem 1rem;
-		background-color: #9f76a8;
+		background-color: #8B0000;
 		color: #fff;
 		font-size: 1.1rem;
 		font-weight: 500;
@@ -476,7 +476,7 @@
 	}
 
 	#settingsSection > form button:hover {
-		background-color: #6f5275;
+		background-color: #A52A2A;
 	}
 
 	#settingsSection > form input[type='email'],

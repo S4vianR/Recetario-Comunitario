@@ -215,7 +215,7 @@
 					<div id="publicacion">
 						<div>
 							<h3>{receta.tituloreceta}</h3>
-							<span>{receta.descripcionreceta}</span>
+							<span class="description">{receta.descripcionreceta}</span>
 							<p><span>Tiempo de preparación:</span> {receta.tiempopreparacionreceta} minutos</p>
 							<p><span>Dificultad:</span> {receta.dificultadreceta}</p>
 						</div>
@@ -268,7 +268,7 @@
 	}
 
 	main > section:nth-child(1) {
-		background-color: #d0d7e9;
+		background-color: #698497;
 		width: 100%;
 		display: flex;
 		flex-direction: column;
@@ -293,6 +293,14 @@
 		justify-self: center;
 		align-self: flex-start;
 	}
+
+	.description {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Número de líneas que deseas mostrar */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 	#publicacion {
 		border: 1px solid #363636;
@@ -416,18 +424,19 @@
 		height: fit-content;
 		padding: .5rem;
 		border-radius: 2rem;
-		background: #9f76a8;
+		background: #8B0000;
 		color: #fff;
 		text-align: center;
 		font-weight: 700;
+		font-size: 0.9rem;
 		transition: background-color 0.2s ease-in-out;
 		margin-left: 10rem;
 	}
 
 	#recipeButton:hover {
 		cursor: pointer;
-		background: #6f5275;
-	} */
+		background: #A52A2A;
+	}
 
 	#publicaciones_container {
 		display: grid;
@@ -442,7 +451,7 @@
 		width: 9.6875rem;
 		height: 2.5625rem;
 		border-radius: 3.125rem;
-		background: #9f76a8;
+		background: #8B0000;
 		color: #fff;
 		text-align: center;
 		font-size: 0.775rem;
@@ -452,7 +461,7 @@
 
 	#crearRecetaButton:hover {
 		cursor: pointer;
-		background: #6f5275;
+		background: #A52A2A;
 	}
 
 	#profile {
@@ -568,7 +577,7 @@
 		height: fit-content;
 		padding: 0.2rem;
 		border-radius: 2.125rem;
-		background: #9f76a8;
+		background: #8B0000;
 		color: #fff;
 		text-align: center;
 		font-size: 0.775rem;
@@ -577,6 +586,6 @@
 	}
 	.profileButton:hover {
 		cursor: pointer;
-		background: #6f5275;
+		background: #A52A2A;
 	}
 </style>
