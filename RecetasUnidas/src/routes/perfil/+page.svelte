@@ -1,14 +1,13 @@
 <script lang="ts">
 	import { supabase } from '$lib/supabaseClient';
-	import { afterUpdate, onMount } from 'svelte';
+	import { onMount, afterUpdate, beforeUpdate } from 'svelte';
 	import Nav from '../../components/Nav.svelte';
 	import food_stand_day from '/src/lib/assets/food-stand-day.png';
 
 	let usuario: string = '';
 	let desc = '';
 	let dataRecetas: any[] = [];
-	let profilePicture =
-		'https://kaonlhtranrfojpknofp.supabase.co/storage/v1/object/sign/Fotos%20de%20Perfil/Captura%20desde%202024-05-01%2013-02-36.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJGb3RvcyBkZSBQZXJmaWwvQ2FwdHVyYSBkZXNkZSAyMDI0LTA1LTAxIDEzLTAyLTM2LnBuZyIsImlhdCI6MTcxNDU5MTAwMSwiZXhwIjoyMDI5OTUxMDAxfQ.rLin9wagYkBo0n8twib4ejm7CwrFibSDhw4Fs3y4o-U&t=2024-05-01T19%3A16%3A41.998Z';
+	let profilePicture: string;
 
 	onMount(async () => {
 		const logoElement = (document.getElementById('logo') as HTMLElement) || null;
@@ -36,6 +35,10 @@
 		for (let receta of dataRecetas) {
 			handleImageRecovery(receta.idreceta, receta.tituloreceta);
 		}
+	});
+
+	beforeUpdate(() => {
+		fetchProfilePicture();
 	});
 
 	supabase.auth.onAuthStateChange((event) => {
@@ -86,6 +89,25 @@
 					imagenReceta.src = food_stand_day;
 				}
 			}
+		}
+	};
+
+	const fetchProfilePicture = async () => {
+		// const { data: imagen } = supabase.storage.from('fotosPerfil').getPublicUrl('default.png');
+		// First, get the user's ID
+		const user = supabase.auth.getUser();
+		const userID = (await user).data.user?.id;
+
+		// Then, get the user's profile picture
+		const { data: imagen } = await supabase.storage
+			.from('fotosPerfil')
+			.getPublicUrl(`${userID}.png`);
+
+		// console.log(imagen.publicUrl);
+		if (imagen){
+			profilePicture = imagen.publicUrl;
+		} else {
+			profilePicture = await supabase.storage.from('fotosPerfil').getPublicUrl('default.png').data.publicUrl;
 		}
 	};
 </script>
@@ -268,9 +290,10 @@
 	}
 
 	#profilePicture {
-		border-radius: 50%;
-		width: 100%;
-		aspect-ratio: 1;
+		border-radius: 10%;
+		height: 18rem;
+		/* width: 17rem; */
+		aspect-ratio: 9/15;
 		border: #000 2px solid;
 	}
 

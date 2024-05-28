@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { supabase } from '$lib/supabaseClient';
-	import { onMount } from 'svelte';
+	import { beforeUpdate, onMount } from 'svelte';
 	import Nav from '../../components/Nav.svelte';
 
 	let usuario: string = '';
@@ -9,12 +9,14 @@
 	let password: string = '';
 	let desc = '';
 	let mail: string;
-	let profilePicture =
-		'https://kaonlhtranrfojpknofp.supabase.co/storage/v1/object/sign/Fotos%20de%20Perfil/Captura%20desde%202024-05-01%2013-02-36.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJGb3RvcyBkZSBQZXJmaWwvQ2FwdHVyYSBkZXNkZSAyMDI0LTA1LTAxIDEzLTAyLTM2LnBuZyIsImlhdCI6MTcxNDU5MTAwMSwiZXhwIjoyMDI5OTUxMDAxfQ.rLin9wagYkBo0n8twib4ejm7CwrFibSDhw4Fs3y4o-U&t=2024-05-01T19%3A16%3A41.998Z';
+	let profilePicture: string;
+	let fileInput: HTMLInputElement;
 
 	let editing = false;
 
 	let usuarioWidth = 0;
+
+	let previewSelectedImage: HTMLImageElement;
 
 	function updateUsuario(event: any) {
 		usuarioWidth = event.target.value.length * 30 + 20;
@@ -44,6 +46,10 @@
 		const userD = await supabase.from('usuarios').select('*').eq('usuario_uuid', userID);
 		desc = userD.data?.[0]?.descripcion;
 		usuario = userD.data?.[0]?.nombreusuario;
+	});
+
+	beforeUpdate(() => {
+		fetchProfilePicture();
 	});
 
 	supabase.auth.onAuthStateChange((event) => {
@@ -112,6 +118,81 @@
 			alert('Descripción guardada');
 		}
 	};
+
+	const fetchProfilePicture = async () => {
+		// const { data: imagen } = supabase.storage.from('fotosPerfil').getPublicUrl('default.png');
+		// First, get the user's ID
+		const user = supabase.auth.getUser();
+		const userID = (await user).data.user?.id;
+
+		// Then, get the user's profile picture
+		const { data: imagen } = await supabase.storage
+			.from('fotosPerfil')
+			.getPublicUrl(`${userID}.png`);
+
+		// console.log(imagen.publicUrl);
+		if (imagen) {
+			profilePicture = imagen.publicUrl;
+		} else {
+			profilePicture = await supabase.storage.from('fotosPerfil').getPublicUrl('default.png').data
+				.publicUrl;
+		}
+	};
+
+	const handleProfilePictureUpdate = async (e: any) => {
+		e.preventDefault();
+
+		const user = supabase.auth.getUser();
+		const userID = (await user).data.user?.id;
+		const file = fileInput.files?.[0];
+
+		const { data, error } = await supabase.storage
+			.from('fotosPerfil')
+			.update(`${userID}.png`, file || '', {
+				cacheControl: '3600',
+				upsert: true
+			});
+
+		if(!error) {
+			alert('Foto de perfil actualizada');
+			window.location.href = '/perfil';
+		} else {
+			alert('Error al actualizar foto de perfil');
+		}
+	};
+
+	const handlePreviewImage = () => {
+		// Preview the selected image
+		previewSelectedImage = document.getElementById('previewSelectedImage') as HTMLImageElement;
+
+		const file = fileInput.files?.[0];
+		const reader = new FileReader();
+
+		reader.onload = () => {
+			previewSelectedImage.src = reader.result as string;
+		};
+
+		if (file) {
+			reader.readAsDataURL(file);
+		}
+
+		previewSelectedImage.classList.remove('hidden');
+		previewSelectedImage.classList.add('visible');
+	};
+
+	const handleProfileFormReset = (e: any) => {
+		e.preventDefault();
+		const form = document.querySelector('form') as HTMLFormElement;
+		form.reset();
+		const previewSelectedImage = document.getElementById('previewSelectedImage') as HTMLImageElement;
+		previewSelectedImage.src = '';
+		previewSelectedImage.classList.remove('visible');
+		previewSelectedImage.classList.add('hidden');
+	};
+
+	function triggerFileSelect() {
+		fileInput.click();
+	}
 </script>
 
 <Nav />
@@ -140,7 +221,32 @@
 					</button>
 				{/if}
 			</div>
-			<img id="profilePicture" src={profilePicture} alt="Foto de perfil" />
+			<div id="profilePictureForm">
+				<form class="profilePictureContainer" on:submit={handleProfilePictureUpdate} on:reset={handleProfileFormReset}>
+					<img id="profilePicture" src={profilePicture} alt="Foto de perfil" />
+					<div class="editButtons">
+						<button id="cancelConfirmButton" type="reset">
+							<img src="/icons/close.svg" alt="Subir imágen" width="24" height="24" />
+						</button>
+						<button id="uploadProfilePictureButton" type="button" on:click={triggerFileSelect}>
+							<img src="/icons/upload.svg" alt="Subir imágen" />
+						</button>
+						<button id="confirmProfilePictureButton" type="submit">
+							<img src="/icons/check.svg" alt="Subir imágen" width="24" height="24" />
+						</button>
+						<input
+							type="file"
+							name="photoFile"
+							id="photoFile"
+							bind:this={fileInput}
+							accept="image/png"
+							style="display: none; visibility: collapse;"
+							on:change={handlePreviewImage}
+						/>
+					</div>
+				</form>
+				<img id="previewSelectedImage" alt="No hay foto de perfil seleccionada" class="hidden"/>
+			</div>
 			<textarea id="descripcion" bind:value={desc}></textarea>
 			<button id="submit" on:click={handleDescriptionSubmit}>Guardar descripcion</button>
 		</section>
@@ -171,6 +277,16 @@
 </body>
 
 <style>
+	.hidden {
+		display: none;
+		visibility: collapse;
+	}
+
+	.visible {
+		display: block;
+		visibility: visible;
+	}
+	
 	.container {
 		display: grid;
 		grid-template-columns: 40% 60%;
@@ -272,19 +388,69 @@
 		gap: 2rem;
 	}
 
-	#profilePicture {
+	.profilePictureContainer {
 		border-radius: 10rem;
-		width: 20rem;
-		aspect-ratio: 1;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		position: relative;
+	}
+
+	.editButtons {
+		border-radius: 10%;
+		background-color: rgba(54, 69, 79, 0.6);
+		width: 99%;
+		aspect-ratio: 9/15;
+		position: absolute;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	.editButtons button {
+		background-color: #c1c1c1;
+		border-radius: 30rem;
+		border: none;
+		cursor: pointer;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 0.2875rem;
+	}
+
+	.editButtons button:hover {
+		background-color: #a1a1a1;
+	}
+
+	#profilePicture,
+	#previewSelectedImage {
+		position: relative;
+		border-radius: 10rem;
 		background-color: transparent;
 		border: none;
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
 		align-items: center;
+		border-radius: 10%;
+		height: 18rem;
+		/* width: 17rem; */
+		aspect-ratio: 9/15;
+		border: #000 2px solid;
 	}
 
-	form button {
+	#profilePictureForm {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		gap: 2rem;
+	}
+
+	#settingsSection > form button {
 		padding: 0.5rem 1rem;
 		background-color: #8B0000;
 		color: #fff;
@@ -297,35 +463,35 @@
 		width: 15rem;
 	}
 
-	form button:hover {
+	#settingsSection > form button:hover {
 		background-color: #A52A2A;
 	}
 
-	form input[type='email'],
-	form input[type='password'] {
+	#settingsSection > form input[type='email'],
+	#settingsSection > form input[type='password'] {
 		width: 100%;
 		border-radius: 0.3875rem;
 		border: 1px solid #000;
 		padding: 0.7rem;
 	}
 
-	form input[type='email']:focus,
-	form input[type='password']:focus {
+	#settingsSection > form input[type='email']:focus,
+	#settingsSection > form input[type='password']:focus {
 		background-color: #e2e6f0;
 		color: #000;
 	}
 
-	form label,
-	form input[type='email'],
-	form input[type='password'] {
+	#settingsSection > form label,
+	#settingsSection > form input[type='email'],
+	#settingsSection > form input[type='password'] {
 		font-size: 1.5rem;
 	}
 
-	form label {
+	#settingsSection > form label {
 		font-weight: 600;
 	}
 
-	form {
+	#settingsSection > form {
 		padding: 1rem;
 		display: flex;
 		flex-direction: column;
@@ -335,7 +501,7 @@
 		gap: 1rem;
 	}
 
-	form div {
+	#settingsSection > form div {
 		width: 100%;
 		display: flex;
 		flex-direction: column;

@@ -1,14 +1,13 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { supabase } from '$lib/supabaseClient';
-	import { afterUpdate, onMount } from 'svelte';
+	import { onMount, afterUpdate, beforeUpdate } from 'svelte';
 	import Nav from '../../../components/Nav.svelte';
 	import food_stand_day from '/src/lib/assets/food-stand-day.png';
 
 	let desc = '';
 	let dataRecetas: any[] = [];
-	let profilePicture =
-		'https://kaonlhtranrfojpknofp.supabase.co/storage/v1/object/sign/Fotos%20de%20Perfil/Captura%20desde%202024-05-01%2013-02-36.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJGb3RvcyBkZSBQZXJmaWwvQ2FwdHVyYSBkZXNkZSAyMDI0LTA1LTAxIDEzLTAyLTM2LnBuZyIsImlhdCI6MTcxNDU5MTAwMSwiZXhwIjoyMDI5OTUxMDAxfQ.rLin9wagYkBo0n8twib4ejm7CwrFibSDhw4Fs3y4o-U&t=2024-05-01T19%3A16%3A41.998Z';
+	let profilePicture: any;
 
 	const { params } = $page;
 	const username = params.username;
@@ -38,6 +37,10 @@
 		for (let receta of dataRecetas) {
 			handleImageRecovery(receta.idreceta, receta.tituloreceta);
 		}
+	});
+
+	beforeUpdate(() => {
+		fetchProfilePicture();
 	});
 
 	supabase.auth.onAuthStateChange((event) => {
@@ -88,6 +91,11 @@
 				}
 			}
 		}
+	};
+
+	const fetchProfilePicture = async () => {
+		const { data:imagen } = supabase.storage.from('fotosPerfil').getPublicUrl('default.png');
+		profilePicture = imagen.publicUrl;
 	};
 </script>
 
