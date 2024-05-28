@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { supabase } from '$lib/supabaseClient';
-	import { onMount, afterUpdate, beforeUpdate } from 'svelte';
+	import { afterUpdate, beforeUpdate, onMount } from 'svelte';
 	import Nav from '../../../components/Nav.svelte';
 	import food_stand_day from '/src/lib/assets/food-stand-day.png';
 

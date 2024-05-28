@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { supabase } from '$lib/supabaseClient';
-	import { onMount, afterUpdate, beforeUpdate } from 'svelte';
+	import { afterUpdate, beforeUpdate, onMount } from 'svelte';
 	import Nav from '../../components/Nav.svelte';
 	import food_stand_day from '/src/lib/assets/food-stand-day.png';
 
@@ -290,9 +290,9 @@
 	}
 
 	#profilePicture {
-		border-radius: 10%;
+		border-radius: 10rem;
 		height: 18rem;
-		/* width: 17rem; */
+		width: 18rem;
 		aspect-ratio: 9/15;
 		border: #000 2px solid;
 	}
