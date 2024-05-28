@@ -123,7 +123,7 @@
 							</button>
 							</h3>
 							<span>{receta.descripcionreceta}</span>
-							<p><span>Tiempo de preparación:</span> {receta.tiempopreparacionreceta} minutos</p>
+							<p><span>Tiempo de preparación: </span> {receta.tiempopreparacionreceta} minutos</p>
 							<p><span>Dificultad:</span> {receta.dificultadreceta}</p>
 						</div>
 						<div>
