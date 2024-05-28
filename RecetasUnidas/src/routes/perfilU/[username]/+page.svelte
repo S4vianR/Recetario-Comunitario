@@ -40,8 +40,27 @@
 	});
 
 	beforeUpdate(() => {
+		profilePicture = "https://kaonlhtranrfojpknofp.supabase.co/storage/v1/object/public/fotosPerfil/default.png";
 		fetchProfilePicture();
 	});
+
+	const fetchProfilePicture = async () => {
+		// First, get the user's ID from the user recovered from the database
+		const user = await supabase.from('usuarios').select('*').eq('nombreusuario', username);
+		const userID = user.data?.[0]?.usuario_uuid
+
+		// Then, get the user's profile picture
+		const { data: imagen } = await supabase.storage
+			.from('fotosPerfil')
+			.getPublicUrl(`${userID}.png`);
+
+		if (imagen) {
+			profilePicture = imagen.publicUrl;
+		} else {
+			profilePicture = await supabase.storage.from('fotosPerfil').getPublicUrl('default.png').data
+				.publicUrl;
+		}
+	};
 
 	supabase.auth.onAuthStateChange((event) => {
 		if (event === 'SIGNED_OUT') {
@@ -63,7 +82,8 @@
 
 	const handleImageRecovery = async (idReceta: number, nombreReceta: string) => {
 		// console.log("Receta ID: ", idReceta, "Receta Name: ", nombreReceta);
-		let imagenReceta = document.getElementById(`imagenReceta-${idReceta}`) as HTMLImageElement || null;
+		let imagenReceta =
+			(document.getElementById(`imagenReceta-${idReceta}`) as HTMLImageElement) || null;
 		// console.log(imagenReceta.alt);
 		// const { data } = supabase.storage.from('public-bucket').getPublicUrl('/avatar1.png');
 		// Following the example above, you can get the public URL of the image and set it to the imageRecetaURL variable, the name of the image is the same as the name of the recipe but in lowercase and spaced with hyphens
@@ -91,11 +111,6 @@
 				}
 			}
 		}
-	};
-
-	const fetchProfilePicture = async () => {
-		const { data:imagen } = supabase.storage.from('fotosPerfil').getPublicUrl('default.png');
-		profilePicture = imagen.publicUrl;
 	};
 </script>
 
@@ -126,11 +141,13 @@
 						<div>
 							<img alt={receta.tituloreceta} id={`imagenReceta-${receta.idreceta}`} />
 						</div>
-						<a
-							id="recipeButton"
-							on:click={() => (window.location.href = `/receta/${receta.idreceta}`)}
-							>Ver Receta
-						</a>
+						<div id="recipeButtonContainer">
+							<button
+								id="recipeButton"
+								on:click={() => (window.location.href = `/receta/${receta.idreceta}`)}
+								>Ver Receta
+							</button>
+						</div>
 					</div>
 				{/each}
 			</div>
@@ -160,6 +177,7 @@
 		width: 100%;
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem;
 	}
 
 	#publicacion p {
@@ -199,21 +217,27 @@
 		align-items: flex-end;
 	}
 
-	#publicacion a {
-		padding: 0.5rem 1rem;
-		width: fit-content;
-		background-color: #8B0000;
-		color: #fff;
-		font-size: 1.1rem;
-		border: none;
-		border-radius: 2rem;
-		cursor: pointer;
-		transition: background-color 0.5s ease-in-out, opacity 0.5s ease-in-out;
-		margin-left: 31rem;
-		margin-top: -2.5rem;
+	#recipeButtonContainer {
+		grid-column: 1/-1;
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
 	}
 
-	#publicacion a:hover {
+	#publicacion #recipeButton {
+		border: none;
+		width: 8rem;
+		height: fit-content;
+		padding: 0.5rem;
+		border-radius: 2rem;
+		background: #9f76a8;
+		color: #fff;
+		text-align: center;
+		font-weight: 700;
+		transition: background-color 0.2s ease-in-out;
+	}
+
+	#publicacion #reciteButton:hover {
 		cursor: pointer;
 		background: #A52A2A;
 	}
@@ -258,9 +282,10 @@
 	}
 
 	#profilePicture {
-		border-radius: 50%;
-		width: 100%;
-		aspect-ratio: 1;
+		border-radius: 10%;
+		height: 18rem;
+		/* width: 17rem; */
+		aspect-ratio: 9/15;
 		border: #000 2px solid;
 	}
 </style>

@@ -104,10 +104,10 @@
 			.getPublicUrl(`${userID}.png`);
 
 		// console.log(imagen.publicUrl);
-		if (imagen){
+		if (imagen) {
 			profilePicture = imagen.publicUrl;
 		} else {
-			profilePicture = await supabase.storage.from('fotosPerfil').getPublicUrl('default.png').data.publicUrl;
+			console.error('No hay imágen');
 		}
 	};
 </script>

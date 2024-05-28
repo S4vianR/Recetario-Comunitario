@@ -48,7 +48,7 @@
 		usuario = userD.data?.[0]?.nombreusuario;
 	});
 
-	beforeUpdate(() => {
+	beforeUpdate(async () => {
 		fetchProfilePicture();
 	});
 
@@ -134,37 +134,76 @@
 		if (imagen) {
 			profilePicture = imagen.publicUrl;
 		} else {
-			profilePicture = await supabase.storage.from('fotosPerfil').getPublicUrl('default.png').data
-				.publicUrl;
+			console.error('No hay imágen');
 		}
 	};
 
+	// const handleProfilePictureUpdate = async (e: any) => {
+	// 	e.preventDefault();
+	// 	const user = await supabase.auth.getUser();
+	// 	if (!user?.data?.user?.id) {
+	// 		console.error('No se pudo obtener el ID del usuario');
+	// 		return;
+	// 	}
+	// 	const userID = user.data.user.id;
+	// 	const file = fileInput.files?.[0];
+	// 	if (!file) {
+	// 		alert('Por favor, selecciona un archivo antes de intentar actualizar la foto de perfil.');
+	// 		return;
+	// 	}
+
+	// 	const { error } = await supabase.storage.from('fotosPerfil').upload(`${userID}.png`, file, {
+	// 		cacheControl: '600',
+	// 		contentType: 'image/png',
+	// 		upsert: true
+	// 	});
+
+	// 	if (error) {
+	// 		const { error } = await supabase.storage.from('fotosPerfil').update(`${userID}.png`, file, {
+	// 			cacheControl: '600',
+	// 			contentType: 'image/png',
+	// 			upsert: true
+	// 		});
+
+	// 		if (!error) {
+	// 			alert('Foto agregada exitosamente');
+	// 			window.location.href = '/perfil';
+	// 		}
+	// 	} else {
+	// 		alert('Foto agregada exitosamente');
+	// 		window.location.href = '/perfil';
+	// 	}
+	// };
+
 	const handleProfilePictureUpdate = async (e: any) => {
 		e.preventDefault();
-
 		const user = await supabase.auth.getUser();
-		const userID = user.data.user?.id;
+		if (!user?.data?.user?.id) {
+			console.error('No se pudo obtener el ID del usuario');
+			return;
+		}
+		const userID = user.data.user.id;
 		const file = fileInput.files?.[0];
-
 		if (!file) {
 			alert('Por favor, selecciona un archivo antes de intentar actualizar la foto de perfil.');
 			return;
 		}
 
-		console.log(file);
-		// const { data, error } = await supabase.storage
-		// 	.from('fotosPerfil')
-		// 	.update(`${userID}.png`, file, {
-		// 		cacheControl: '3600',
-		// 		upsert: true
-		// 	});
+		const fileName = `${userID}.png`;
+		const bucketName = 'fotosPerfil';
 
-		// if (!error) {
-		// 	alert('Foto de perfil actualizada');
-		// 	window.location.href = '/perfil';
-		// } else {
-		// 	alert('Error al actualizar foto de perfil');
-		// }
+		const { error } = await supabase.storage.from(bucketName).upload(fileName, file, {
+			cacheControl: '0',
+			contentType: 'image/png',
+			upsert: true
+		});
+
+		if (error){
+			console.error("Error al subir la imágen", error)
+		} else {
+			alert("La foto se ha subido exitosamente, favor de aguardar un rato en lo que se actualiza la imagen");
+			window.location.href = "/perfil";
+		}
 	};
 
 	const handlePreviewImage = () => {
@@ -175,7 +214,7 @@
 		const reader = new FileReader();
 
 		reader.onload = () => {
-			previewSelectedImage.src = reader.result as string;
+			previewSele¿Cuál es tu experiencia con la migración de bases de datos a nuevas plataformas o tecnologías?ctedImage.src = reader.result as string;
 		};
 
 		if (file) {
