@@ -142,23 +142,29 @@
 	const handleProfilePictureUpdate = async (e: any) => {
 		e.preventDefault();
 
-		const user = supabase.auth.getUser();
-		const userID = (await user).data.user?.id;
+		const user = await supabase.auth.getUser();
+		const userID = user.data.user?.id;
 		const file = fileInput.files?.[0];
 
-		const { data, error } = await supabase.storage
-			.from('fotosPerfil')
-			.update(`${userID}.png`, file || '', {
-				cacheControl: '3600',
-				upsert: true
-			});
-
-		if(!error) {
-			alert('Foto de perfil actualizada');
-			window.location.href = '/perfil';
-		} else {
-			alert('Error al actualizar foto de perfil');
+		if (!file) {
+			alert('Por favor, selecciona un archivo antes de intentar actualizar la foto de perfil.');
+			return;
 		}
+
+		console.log(file);
+		// const { data, error } = await supabase.storage
+		// 	.from('fotosPerfil')
+		// 	.update(`${userID}.png`, file, {
+		// 		cacheControl: '3600',
+		// 		upsert: true
+		// 	});
+
+		// if (!error) {
+		// 	alert('Foto de perfil actualizada');
+		// 	window.location.href = '/perfil';
+		// } else {
+		// 	alert('Error al actualizar foto de perfil');
+		// }
 	};
 
 	const handlePreviewImage = () => {
@@ -184,7 +190,9 @@
 		e.preventDefault();
 		const form = document.querySelector('form') as HTMLFormElement;
 		form.reset();
-		const previewSelectedImage = document.getElementById('previewSelectedImage') as HTMLImageElement;
+		const previewSelectedImage = document.getElementById(
+			'previewSelectedImage'
+		) as HTMLImageElement;
 		previewSelectedImage.src = '';
 		previewSelectedImage.classList.remove('visible');
 		previewSelectedImage.classList.add('hidden');
@@ -222,7 +230,11 @@
 				{/if}
 			</div>
 			<div id="profilePictureForm">
-				<form class="profilePictureContainer" on:submit={handleProfilePictureUpdate} on:reset={handleProfileFormReset}>
+				<form
+					class="profilePictureContainer"
+					on:submit={handleProfilePictureUpdate}
+					on:reset={handleProfileFormReset}
+				>
 					<img id="profilePicture" src={profilePicture} alt="Foto de perfil" />
 					<div class="editButtons">
 						<button id="cancelConfirmButton" type="reset">
@@ -245,7 +257,7 @@
 						/>
 					</div>
 				</form>
-				<img id="previewSelectedImage" alt="No hay foto de perfil seleccionada" class="hidden"/>
+				<img id="previewSelectedImage" alt="No hay foto de perfil seleccionada" class="hidden" />
 			</div>
 			<textarea id="descripcion" bind:value={desc}></textarea>
 			<button id="submit" on:click={handleDescriptionSubmit}>Guardar descripcion</button>
@@ -286,7 +298,7 @@
 		display: block;
 		visibility: visible;
 	}
-	
+
 	.container {
 		display: grid;
 		grid-template-columns: 40% 60%;
