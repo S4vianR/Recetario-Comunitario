@@ -67,7 +67,7 @@
 		justify-content: center;
 		align-items: center;
 		padding: 1rem;
-		background-color: #6e5773;
+		background-color: #36454F;
 	}
 
 
