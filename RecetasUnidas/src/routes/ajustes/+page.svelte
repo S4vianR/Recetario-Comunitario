@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { supabase } from '$lib/supabaseClient';
-	import { onMount, beforeUpdate } from 'svelte';
+	import { beforeUpdate, onMount } from 'svelte';
 	import Nav from '../../components/Nav.svelte';
 
 	let usuario: string = '';
@@ -142,23 +142,29 @@
 	const handleProfilePictureUpdate = async (e: any) => {
 		e.preventDefault();
 
-		const user = supabase.auth.getUser();
-		const userID = (await user).data.user?.id;
+		const user = await supabase.auth.getUser();
+		const userID = user.data.user?.id;
 		const file = fileInput.files?.[0];
 
-		const { data, error } = await supabase.storage
-			.from('fotosPerfil')
-			.update(`${userID}.png`, file || '', {
-				cacheControl: '3600',
-				upsert: true
-			});
-
-		if(!error) {
-			alert('Foto de perfil actualizada');
-			window.location.href = '/perfil';
-		} else {
-			alert('Error al actualizar foto de perfil');
+		if (!file) {
+			alert('Por favor, selecciona un archivo antes de intentar actualizar la foto de perfil.');
+			return;
 		}
+
+		console.log(file);
+		// const { data, error } = await supabase.storage
+		// 	.from('fotosPerfil')
+		// 	.update(`${userID}.png`, file, {
+		// 		cacheControl: '3600',
+		// 		upsert: true
+		// 	});
+
+		// if (!error) {
+		// 	alert('Foto de perfil actualizada');
+		// 	window.location.href = '/perfil';
+		// } else {
+		// 	alert('Error al actualizar foto de perfil');
+		// }
 	};
 
 	const handlePreviewImage = () => {
@@ -184,7 +190,9 @@
 		e.preventDefault();
 		const form = document.querySelector('form') as HTMLFormElement;
 		form.reset();
-		const previewSelectedImage = document.getElementById('previewSelectedImage') as HTMLImageElement;
+		const previewSelectedImage = document.getElementById(
+			'previewSelectedImage'
+		) as HTMLImageElement;
 		previewSelectedImage.src = '';
 		previewSelectedImage.classList.remove('visible');
 		previewSelectedImage.classList.add('hidden');
@@ -222,7 +230,11 @@
 				{/if}
 			</div>
 			<div id="profilePictureForm">
-				<form class="profilePictureContainer" on:submit={handleProfilePictureUpdate} on:reset={handleProfileFormReset}>
+				<form
+					class="profilePictureContainer"
+					on:submit={handleProfilePictureUpdate}
+					on:reset={handleProfileFormReset}
+				>
 					<img id="profilePicture" src={profilePicture} alt="Foto de perfil" />
 					<div class="editButtons">
 						<button id="cancelConfirmButton" type="reset">
@@ -245,7 +257,7 @@
 						/>
 					</div>
 				</form>
-				<img id="previewSelectedImage" alt="No hay foto de perfil seleccionada" class="hidden"/>
+				<img id="previewSelectedImage" alt="No hay foto de perfil seleccionada" class="hidden" />
 			</div>
 			<textarea id="descripcion" bind:value={desc}></textarea>
 			<button id="submit" on:click={handleDescriptionSubmit}>Guardar descripcion</button>
@@ -286,7 +298,7 @@
 		display: block;
 		visibility: visible;
 	}
-	
+
 	.container {
 		display: grid;
 		grid-template-columns: 40% 60%;
@@ -348,7 +360,7 @@
 
 	#submit {
 		padding: 0.5rem 1rem;
-		background-color: #9f76a8;
+		background-color: #8B0000;
 		color: #fff;
 		font-size: 1.1rem;
 		font-weight: 500;
@@ -360,7 +372,7 @@
 	}
 
 	#submit:hover {
-		background-color: #6f5275;
+		background-color: #A52A2A;
 	}
 
 	#settingsSection {
@@ -380,7 +392,7 @@
 
 	#profileSection {
 		padding: 2rem;
-		background-color: #d0d7e9;
+		background-color: #698497;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
@@ -452,7 +464,7 @@
 
 	#settingsSection > form button {
 		padding: 0.5rem 1rem;
-		background-color: #9f76a8;
+		background-color: #8B0000;
 		color: #fff;
 		font-size: 1.1rem;
 		font-weight: 500;
@@ -464,7 +476,7 @@
 	}
 
 	#settingsSection > form button:hover {
-		background-color: #6f5275;
+		background-color: #A52A2A;
 	}
 
 	#settingsSection > form input[type='email'],

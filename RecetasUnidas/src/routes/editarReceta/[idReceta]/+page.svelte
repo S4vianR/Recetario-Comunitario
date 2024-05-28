@@ -242,7 +242,7 @@
 
 	#recetaSection {
 		padding: 2rem;
-		background-color: #d0d7e9;
+		background-color: #698497;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;

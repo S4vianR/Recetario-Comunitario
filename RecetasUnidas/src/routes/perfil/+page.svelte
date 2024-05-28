@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { supabase } from '$lib/supabaseClient';
-	import { onMount, afterUpdate, beforeUpdate } from 'svelte';
+	import { afterUpdate, beforeUpdate, onMount } from 'svelte';
 	import Nav from '../../components/Nav.svelte';
 	import food_stand_day from '/src/lib/assets/food-stand-day.png';
 
@@ -145,7 +145,7 @@
 							</button>
 							</h3>
 							<span>{receta.descripcionreceta}</span>
-							<p><span>Tiempo de preparación:</span> {receta.tiempopreparacionreceta} minutos</p>
+							<p><span>Tiempo de preparación: </span> {receta.tiempopreparacionreceta} minutos</p>
 							<p><span>Dificultad:</span> {receta.dificultadreceta}</p>
 						</div>
 						<div>
@@ -179,7 +179,7 @@
 	}
 
 	h1 {
-		font-size: 3rem;
+		font-size: 2.4rem;
 	}
 
 	#settings {
@@ -214,7 +214,7 @@
 		height: fit-content;
 		padding: 0.5rem;
 		border-radius: 2rem;
-		background: #9f76a8;
+		background: #8B0000;
 		color: #fff;
 		text-align: center;
 		font-weight: 700;
@@ -224,7 +224,7 @@
 	}
 	#recipeButton:hover {
 		cursor: pointer;
-		background: #6f5275;
+		background: #A52A2A;
 	}
 
 	#publicaciones_container {
@@ -262,7 +262,7 @@
 
 	#profileSection {
 		padding: 2rem;
-		background-color: #d0d7e9;
+		background-color: #698497;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
@@ -271,7 +271,7 @@
 	}
 
 	#profileSection p {
-		font-size: 2.5rem;
+		font-size: 1.575rem;
 		font-weight: 450;
 	}
 
@@ -290,9 +290,9 @@
 	}
 
 	#profilePicture {
-		border-radius: 10%;
+		border-radius: 10rem;
 		height: 18rem;
-		/* width: 17rem; */
+		width: 18rem;
 		aspect-ratio: 9/15;
 		border: #000 2px solid;
 	}
