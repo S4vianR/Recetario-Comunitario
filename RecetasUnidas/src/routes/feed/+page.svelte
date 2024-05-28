@@ -1,12 +1,11 @@
 <script lang="ts">
 	export let data;
 	import { supabase } from '$lib/supabaseClient';
-	import { onMount } from 'svelte';
+	import { onMount, beforeUpdate } from 'svelte';
 	import Nav from '../../components/Nav.svelte';
 
 	let respuesta: boolean;
-	let profilePicture =
-		'https://kaonlhtranrfojpknofp.supabase.co/storage/v1/object/sign/Fotos%20de%20Perfil/Captura%20desde%202024-05-01%2013-02-36.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJGb3RvcyBkZSBQZXJmaWwvQ2FwdHVyYSBkZXNkZSAyMDI0LTA1LTAxIDEzLTAyLTM2LnBuZyIsImlhdCI6MTcxNDU5MTAwMSwiZXhwIjoyMDI5OTUxMDAxfQ.rLin9wagYkBo0n8twib4ejm7CwrFibSDhw4Fs3y4o-U&t=2024-05-01T19%3A16%3A41.998Z';
+	let profilePicture: string;
 	let usuarios = data.usuarios;
 
 	const handleCrearRecetaButton = () => {
@@ -64,6 +63,10 @@
 			handleImageRecovery(recetaID, recetaName);
 		}
 
+	});
+
+	beforeUpdate(() => {
+		fetchProfilePicture();
 	});
 
 	const handleImageRecovery = async (idReceta: number, nombreReceta: string) => {
@@ -173,6 +176,11 @@
 
 	const handleButtonRefresh = () => {
 		window.location.href = '/feed';
+	};
+
+	const fetchProfilePicture = async () => {
+		const { data:imagen } = supabase.storage.from('fotosPerfil').getPublicUrl('default.png');
+		profilePicture = imagen.publicUrl;
 	};
 </script>
 
