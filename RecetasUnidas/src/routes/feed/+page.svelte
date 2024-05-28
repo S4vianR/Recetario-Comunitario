@@ -457,7 +457,7 @@
 		background-color: #e9e2d0;
 		border: 0.01px solid #8a8a8a;
 		width: 12rem;
-		border-radius: 0.2rem;
+		border-radius: 0.7rem;
 	}
 
 	#profile #user > div {
