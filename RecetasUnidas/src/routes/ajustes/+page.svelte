@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { supabase } from '$lib/supabaseClient';
-	import { beforeUpdate, onMount } from 'svelte';
+	import { onMount, beforeUpdate } from 'svelte';
 	import Nav from '../../components/Nav.svelte';
 
 	let usuario: string = '';
@@ -214,7 +214,7 @@
 		const reader = new FileReader();
 
 		reader.onload = () => {
-			previewSele¿Cuál es tu experiencia con la migración de bases de datos a nuevas plataformas o tecnologías?ctedImage.src = reader.result as string;
+			previewSelectedImage.src = reader.result as string;
 		};
 
 		if (file) {
@@ -399,7 +399,7 @@
 
 	#submit {
 		padding: 0.5rem 1rem;
-		background-color: #8B0000;
+		background-color: #9f76a8;
 		color: #fff;
 		font-size: 1.1rem;
 		font-weight: 500;
@@ -411,7 +411,7 @@
 	}
 
 	#submit:hover {
-		background-color: #A52A2A;
+		background-color: #6f5275;
 	}
 
 	#settingsSection {
@@ -431,7 +431,7 @@
 
 	#profileSection {
 		padding: 2rem;
-		background-color: #698497;
+		background-color: #d0d7e9;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
@@ -449,10 +449,10 @@
 	}
 
 	.editButtons {
-		border-radius: 10%;
 		background-color: rgba(54, 69, 79, 0.6);
-		width: 99%;
-		aspect-ratio: 9/15;
+		border-radius: 10%;
+		width: 10rem;
+		aspect-ratio: 8/13;
 		position: absolute;
 		display: flex;
 		flex-direction: row;
@@ -479,17 +479,9 @@
 	#profilePicture,
 	#previewSelectedImage {
 		position: relative;
-		border-radius: 10rem;
-		background-color: transparent;
-		border: none;
-		display: flex;
-		flex-direction: row;
-		justify-content: center;
-		align-items: center;
 		border-radius: 10%;
-		height: 18rem;
-		/* width: 17rem; */
-		aspect-ratio: 9/15;
+		width: 10rem;
+		aspect-ratio: 8/13;
 		border: #000 2px solid;
 	}
 
@@ -503,7 +495,7 @@
 
 	#settingsSection > form button {
 		padding: 0.5rem 1rem;
-		background-color: #8B0000;
+		background-color: #9f76a8;
 		color: #fff;
 		font-size: 1.1rem;
 		font-weight: 500;
@@ -515,7 +507,7 @@
 	}
 
 	#settingsSection > form button:hover {
-		background-color: #A52A2A;
+		background-color: #6f5275;
 	}
 
 	#settingsSection > form input[type='email'],

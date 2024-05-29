@@ -263,7 +263,7 @@
 	}
 
 	#profileSection p {
-		font-size: 2.5rem;
+		font-size: 1.575rem;
 		font-weight: 450;
 	}
 
@@ -283,9 +283,8 @@
 
 	#profilePicture {
 		border-radius: 10%;
-		height: 18rem;
-		/* width: 17rem; */
-		aspect-ratio: 9/15;
+		width: 10rem;
+		aspect-ratio: 8/13;
 		border: #000 2px solid;
 	}
 </style>

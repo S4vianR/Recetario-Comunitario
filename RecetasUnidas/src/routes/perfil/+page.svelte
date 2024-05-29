@@ -290,10 +290,9 @@
 	}
 
 	#profilePicture {
-		border-radius: 10rem;
-		height: 18rem;
-		width: 18rem;
-		aspect-ratio: 9/15;
+		border-radius: 10%;
+		width: 10rem;
+		aspect-ratio: 8/13;
 		border: #000 2px solid;
 	}
 
