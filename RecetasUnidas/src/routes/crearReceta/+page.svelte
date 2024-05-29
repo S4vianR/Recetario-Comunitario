@@ -85,8 +85,7 @@
 			alert('Error al enviar el formulario');
 			console.error(error);
 		} else {
-			alert('Formulario enviado');
-			console.log(recetas);
+			alert('Receta Publicada');
 			handleFormReset(event);
 			window.location.href = '/feed';
 		}

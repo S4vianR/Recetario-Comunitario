@@ -5,11 +5,11 @@
 	import Nav from '../../../components/Nav.svelte';
 	import food_stand_day from '/src/lib/assets/food-stand-day.png';
 
-	let desc = '';
-	let tituloReceta = '';
-	let tiempopreparacionreceta = '';
-	let dificultadreceta = '';
-	let numeroRaciones = 0;
+	let desc: string;
+	let tituloReceta: string;
+	let tiempopreparacion: number;
+	let dificultadreceta: string;
+	let numeroRaciones: number;
 	let receta: any;
 	const { params } = $page;
 	const idreceta = params.idReceta;
@@ -24,7 +24,7 @@
 		receta = await supabase.from('recetas').select('*').eq('idreceta', idreceta);
 		desc = receta.data?.[0]?.descripcionreceta;
 		tituloReceta = receta.data?.[0]?.tituloreceta;
-		tiempopreparacionreceta = receta.data?.[0]?.tiempopreparacionreceta;
+		tiempopreparacion = receta.data?.[0]?.tiempopreparacionreceta;
 		dificultadreceta = receta.data?.[0]?.dificultadreceta;
 		numeroRaciones = receta.data?.[0]?.racionesreceta;
 
@@ -75,20 +75,21 @@
 		}
 	};
 
-	const handleRecipeSave = async () => {
+	const handleRecipeSave = async (event: any) => {
+		event.preventDefault();
 		const { data, error } = await supabase
 			.from('recetas')
 			.update({
-				tiempopreparacionreceta: tiempopreparacionreceta,
+				tiempopreparacionreceta: tiempopreparacion,
 				dificultadreceta: dificultadreceta,
 				racionesreceta: numeroRaciones,
 				descripcionreceta: desc
 			})
 			.eq('idreceta', idreceta);
 		if (error) {
-			alert('Error al guardar receta');
+			alert('Error al Guardar Cambios');
 		} else {
-			alert('Receta guardada');
+			alert('Cambios Guardados');
 			window.location.href = '/perfil';
 		}
 	};
@@ -103,54 +104,59 @@
 			<img class="imagenReceta" alt={tituloReceta} id={`imagenReceta-${idreceta}`} />
 		</section>
 		<section id="descripcion_section">
-			<h1>
-				Descripción
-				<a href="/perfil"><img src="/icons/close.svg" alt="Cancelar" title="Cancelar" /></a>
-				<a id="guardar" on:click={handleRecipeSave}><img src="/icons/save.svg" alt="Guardar" title="Guardar" /></a>
-			</h1>
-			<p>
-				<b>Tiempo de preparación:</b>
-				<input
-					type="number"
-					name="editTiempoPreparación"
-					id="editTiempoPreparacion"
-					title="El número debe de ser en minutos"
-					required
-					min="1"
-					bind:value={tiempopreparacionreceta}
-				/>
-			</p>
+			<form on:submit={handleRecipeSave}>
+				<h1>
+					Descripción
+					<button class="iconButton" href="/perfil"><img src="/icons/close.svg" alt="Cancelar" title="Cancelar" /></button>
+					<button class="iconButton" type="submit"
+						><img src="/icons/save.svg" alt="Guardar" title="Guardar" /></button
+					>
+				</h1>
+				<p>
+					<label for="tiempoPreparacion"><b>Tiempo de preparación:</b></label>
+					<input
+						type="number"
+						name="tiempoPreparación"
+						id="tiempoPreparacion"
+						placeholder="El número debe de ser en minutos"
+						title="El número debe de ser en minutos"
+						required
+						min="1"
+						bind:value={tiempopreparacion}
+					/>
+				</p>
 
-			<p>
-				<b>Dificultad:</b>
-				<select name="dificultad" id="dificultad" required bind:value={dificultadreceta}>
-					<option value="Facil">Fácil</option>
-					<option value="Medio">Medio</option>
-					<option value="Dificil">Difícil</option>
-				</select>
-			</p>
+				<p>
+					<b>Dificultad:</b>
+					<select name="dificultad" id="dificultad" required bind:value={dificultadreceta}>
+						<option value="Facil">Fácil</option>
+						<option value="Medio">Medio</option>
+						<option value="Dificil">Difícil</option>
+					</select>
+				</p>
 
-			<p>
-				<b>Raciones:</b>
-				<input
-					type="number"
-					name="numeroRaciones"
-					id="numeroRaciones"
-					required
-					placeholder="El número de raciones"
-					min="1"
-					bind:value={numeroRaciones}
-				/>
-			</p>
-			<p>
-				<textarea
-					id="descripcionTextArea"
-					name="descripcionTextArea"
-					rows="40"
-					cols="120"
-					bind:value={desc}
-				/>
-			</p>
+				<p>
+					<b>Raciones:</b>
+					<input
+						type="number"
+						name="numeroRaciones"
+						id="numeroRaciones"
+						required
+						placeholder="El número de raciones"
+						min="1"
+						bind:value={numeroRaciones}
+					/>
+				</p>
+				<p>
+					<textarea
+						id="descripcionTextArea"
+						name="descripcionTextArea"
+						rows="40"
+						cols="120"
+						bind:value={desc}
+					/>
+				</p>
+			</form>
 		</section>
 	</div>
 </body>
@@ -165,7 +171,7 @@
 	h1 {
 		font-size: 3rem;
 	}
-	
+
 	a:hover {
 		cursor: pointer;
 	}
@@ -200,30 +206,23 @@
 		border: 1px solid #000;
 		padding: 0.2rem;
 	}
-
-	.dynamic-input {
-		/* width: fit-content; */
-		min-width: 20rem;
-		max-width: 30rem;
-		padding: 0.5rem;
+	form {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: flex-start;
+		gap: 2rem;
 	}
 
-	#recetaSection button {
-		background-color: transparent;
-		margin-left: 0.5rem;
-		border: none;
+	.iconButton {
+		background: none;
 		cursor: pointer;
+		transition: transform 0.3s ease-in-out;
+		border: none;
 	}
 
-	#recetaSection input[type='text'] {
-		font-size: 3rem;
-		text-align: center;
-		padding-top: 0.4rem;
-		padding-bottom: 0.4rem;
-		width: 15rem;
-		border-radius: 2rem;
-		border: none;
-		text-align: center;
+	.iconButton:hover{
+		transform: translateY(-2px);
 	}
 
 	#descripcion_section {
