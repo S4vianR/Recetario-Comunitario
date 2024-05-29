@@ -107,7 +107,7 @@
 			<form on:submit={handleRecipeSave}>
 				<h1>
 					Descripción
-					<button class="iconButton" href="/perfil"><img src="/icons/close.svg" alt="Cancelar" title="Cancelar" /></button>
+					<button class="iconButton" on:click={() => (window.location.href = '/perfil')}><img src="/icons/close.svg" alt="Cancelar" title="Cancelar" /></button>
 					<button class="iconButton" type="submit"
 						><img src="/icons/save.svg" alt="Guardar" title="Guardar" /></button
 					>
