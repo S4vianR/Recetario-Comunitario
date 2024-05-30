@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { supabase } from '$lib/supabaseClient';
-	import { onMount, beforeUpdate } from 'svelte';
+	import { beforeUpdate, onMount } from 'svelte';
 	import Nav from '../../components/Nav.svelte';
 
 	let usuario: string = '';
@@ -399,7 +399,7 @@
 
 	#submit {
 		padding: 0.5rem 1rem;
-		background-color: #9f76a8;
+		background-color: #8b0000;
 		color: #fff;
 		font-size: 1.1rem;
 		font-weight: 500;
@@ -411,7 +411,7 @@
 	}
 
 	#submit:hover {
-		background-color: #6f5275;
+		background-color: #A52A2A;
 	}
 
 	#settingsSection {
@@ -440,7 +440,7 @@
 	}
 
 	.profilePictureContainer {
-		border-radius: 10rem;
+		border-radius: 100%;
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
@@ -450,8 +450,9 @@
 
 	.editButtons {
 		background-color: rgba(54, 69, 79, 0.6);
-		border-radius: 10%;
-		width: 10rem;
+		border-radius: 100%;
+		width: 15rem;
+		height: 15rem;
 		aspect-ratio: 8/13;
 		position: absolute;
 		display: flex;
@@ -479,8 +480,9 @@
 	#profilePicture,
 	#previewSelectedImage {
 		position: relative;
-		border-radius: 10%;
-		width: 10rem;
+		border-radius: 100%;
+		width: 15rem;
+		height: 15rem;
 		aspect-ratio: 8/13;
 		border: #000 2px solid;
 	}
@@ -495,7 +497,7 @@
 
 	#settingsSection > form button {
 		padding: 0.5rem 1rem;
-		background-color: #9f76a8;
+		background-color: #8b0000;
 		color: #fff;
 		font-size: 1.1rem;
 		font-weight: 500;
@@ -507,7 +509,7 @@
 	}
 
 	#settingsSection > form button:hover {
-		background-color: #6f5275;
+		background-color: #A52A2A;
 	}
 
 	#settingsSection > form input[type='email'],

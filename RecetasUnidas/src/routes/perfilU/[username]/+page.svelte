@@ -230,7 +230,7 @@
 		height: fit-content;
 		padding: 0.5rem;
 		border-radius: 2rem;
-		background: #9f76a8;
+		background: #8b0000;
 		color: #fff;
 		text-align: center;
 		font-weight: 700;
@@ -282,9 +282,9 @@
 	}
 
 	#profilePicture {
-		border-radius: 10%;
-		width: 10rem;
-		aspect-ratio: 8/13;
+		border-radius: 100%;
+		width: 20rem;
+		height: 20rem;
 		border: #000 2px solid;
 	}
 </style>

@@ -405,7 +405,7 @@
 		height: fit-content;
 		padding: 0.5rem;
 		border-radius: 2rem;
-		background: #9f76a8;
+		background: #8b0000;
 		color: #fff;
 		text-align: center;
 		font-weight: 700;
@@ -415,7 +415,7 @@
 
 	#publicacion #likeContainer > button:last-child:hover {
 		cursor: pointer;
-		background: #6f5275;
+		background: #A52A2A;
 	}
 
 	/* #recipeButton {
@@ -435,7 +435,7 @@
 
 	#recipeButton:hover {
 		cursor: pointer;
-		background: #6f5275;
+		background: #A52A2A;
 	} */
 
 	#publicaciones_container {
